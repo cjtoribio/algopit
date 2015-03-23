@@ -1,0 +1,15 @@
+.alert {
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+.alert.top-right {
+  position: fixed;
+  top: 30px;
+  right: 0;
+  margin: 20px;
+  z-index: 1050;
+  outline: none;
+}
+.alert.top-right.close {
+    padding-left: 10px
+}

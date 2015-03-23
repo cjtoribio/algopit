@@ -1,0 +1,6 @@
+<paged-table ng-controller="LabController" open="open" collection="[{name:'Carlos',hobbies:[1,2,3,4]},{name:'Juan',hobbies:[1,2,3]},{name:'Jose',hobbies:[1]}]">
+    <column-def header="Name" type="text" property="name"></column-def>
+    <column-def header="Link" type="link" property="name" link-property="name"></column-def>
+    <column-def header="List" type="list" property="hobbies" separator=", "></column-def>
+    <column-def header="Actions" type="actions" open="open"></column-def>
+</paged-table>

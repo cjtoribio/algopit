@@ -1,0 +1,69 @@
+<html ng-app="TodoApp">
+    <head>
+        
+        <base href="/">
+        
+        <link rel="shortcut icon" href="favicon.ico?v=2" />
+        <title>Algopit</title>
+        
+        <script type="text/javascript" src="vendor/jquery/jquery-1.11.2.min.js"></script>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/custom.css">
+        
+        <!--<script type="text/javascript" src="vendor/angular/angular.min.js"></script>-->
+        <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>-->
+        <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>-->
+
+
+        <script type="text/javascript" 
+                src="vendor/bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" 
+                src="vendor/bower_components/angular-bindonce/bindonce.min.js"></script>
+        <script type="text/javascript" 
+                src="vendor/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script type="text/javascript" 
+                src="vendor/bower_components/angular-resource/angular-resource.min.js"></script>
+        <script type="text/javascript" 
+                src="vendor/bower_components/angular-strap/dist/angular-strap.js"></script>
+        <script type="text/javascript" 
+                src="vendor/bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+        <script type="text/javascript" 
+                src="vendor/bower_components/angular-cookies/angular-cookies.min.js"></script>
+        <script type="text/javascript" 
+                src="vendor/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script type="text/javascript" 
+                src="vendor/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script type="text/javascript" 
+                src="vendor/bower_components/ng-lodash/build/ng-lodash.min.js"></script>
+                
+        
+        
+        <script type="text/javascript" src="app.js"></script>
+        
+        <script type="text/javascript" src="directives/paging.js"></script>
+        <script type="text/javascript" src="directives/tabs.js"></script>
+        
+        <script type="text/javascript" src="services/ProblemsService.js"></script>
+        <script type="text/javascript" src="services/AuthService.js"></script>
+        
+        
+        <!--<script type="text/javascript" src="controllers/RootController.js"></script>-->
+        <script type="text/javascript" src="controllers/NavbarController.js"></script>
+        <script type="text/javascript" src="controllers/ProblemsController.js"></script>
+        <script type="text/javascript" src="controllers/LabController.js"></script>
+        <script type="text/javascript" src="controllers/LoginController.js"></script>
+        <script type="text/javascript" src="controllers/SettingsController.js"></script>
+    </head>
+    
+    <body>
+        
+        <div ui-view="header"></div>
+        <div ui-view="body"></div>
+        <div position="">
+            
+        </div>
+        
+    </body>
+</html>
