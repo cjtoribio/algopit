@@ -2,14 +2,17 @@ TodoApp.factory('Auth', ['$http','$alert', '$rootScope','$cookieStore', '$locati
 function($http, $alert, $rootScope, $cookieStore, $location){
     
     var user = $cookieStore.get('user');
-    $cookieStore.remove('user');
+    // $cookieStore.remove('user');
     
     
     var service = {};
     service.currentUser = user;
     service.isAuthenticated = function(){
         return service.currentUser != null;
-    }
+    };
+    service.getUserId = function(){
+        return (service.currentUser || {_id:0})._id;
+    };
     service.login = function (user) {
         var service = this;
         $http.post('/api/login', user)

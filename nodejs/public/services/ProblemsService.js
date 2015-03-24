@@ -5,7 +5,9 @@ TodoApp.factory('ProblemsService', ['$resource',function($resource){
         {
             id:'@_id'
         }, 
-        {'update': { method:'PUT' }}
+        {
+            'update': { method:'PUT' }
+        }
     );
     
     service.Category =  $resource(
@@ -22,6 +24,13 @@ TodoApp.factory('ProblemsService', ['$resource',function($resource){
             id:'@_id'
         }, 
         {'update': { method:'PUT' }}
+    );
+    
+    service.UserProblem = $resource(
+        '/api/userProb/:id', { id:'@_id'},
+        {
+            'queryByUser': {method: 'GET', url:'/api/userProb/user/:id', isArray:true}
+        }
     );
     
     return service;

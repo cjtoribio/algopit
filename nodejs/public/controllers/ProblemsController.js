@@ -1,53 +1,31 @@
-TodoApp.controller('ProblemsController', ['$scope','ProblemsService', '$location', '$stateParams', '$filter','$alert','Auth',
-function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth){
-    $scope.user = Auth;
+TodoApp.controller('ProblemsController', [
+    '$scope','ProblemsService', '$location', '$stateParams', '$filter','$alert','Auth', 'lodash',
+function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth, lodash){
     
+    // variables
+    $scope.user = Auth;
     $scope.numPerPage = 10;
     $scope.currentPage = 1;
-    
-    // $alert({
-    //     content: 'You have been logged in&nbsp;&nbsp;&nbsp;',
-    //     type: 'success',
-    //     duration: 120,
-    //     placement: 'top-right'
-    // });
-    
     $scope.filteredProblems1 = [];
     $scope.filteredProblems2 = [];
-    
     $scope.criteria = {};
+    $scope.problemsSolved = {};
+    
+    // types
     var Problem = ProblemsService.Problem;
+    var UserProblem = ProblemsService.UserProblem;
     
-    function refreshPaging(){
-        
-        var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-        , end = begin + $scope.numPerPage;
-        $scope.pages = [];
-        var b = Math.max(1, $scope.currentPage - 5);
-        var e = Math.min($scope.numPages()+1, $scope.currentPage + 6);
-        b = Math.max(1, Math.min(b , e - 11));
-        e = Math.min($scope.numPages()+1, Math.max(e , b + 11));
-        for(var i = b; i < e; ++i)
-            $scope.pages.push(i);
-        $scope.filteredProblems2 = ($scope.filteredProblems1 || []).slice(begin, end);
-    }
-    function refreshFiltered() {
-        if($scope.problems == null){
-            $scope.filteredProblems1 = [];
-        }
-        $scope.filteredProblems1 = $filter('filter')(
-            $scope.problems, 
-            $scope.criteria
+    
+    // loading
+    $scope.categories = ProblemsService.Category.query();
+    $scope.judges = ProblemsService.Judge.query();
+    if(Auth.isAuthenticated()){
+        ProblemsService.UserProblem.queryByUser({ id: Auth.getUserId() },
+            function(ret){
+                $scope.problemsSolved = lodash.indexBy(ret, 'problem');
+            }
         );
-        if($scope.filteredProblems1 == null){
-            $scope.filteredProblems2 = [];
-            return;
-        }
-        if($scope.numPages() < $scope.currentPage)
-            $scope.currentPage = $scope.numPages();
-        refreshPaging();
     }
-    
     $scope.loadProblems = function(){
         Problem.query(function(data){
             $scope.problems = data;
@@ -55,42 +33,38 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
         });
     }
     
-    $scope.numPages = function () {
-        return Math.ceil(($scope.filteredProblems1 || []).length / $scope.numPerPage);
-    };
     
-    $scope.nextPage = function(){
-        $scope.currentPage += $scope.numPages() > $scope.currentPage ? 1 : 0;
+    
+    
+    // Criteria Filtering
+    function refreshFiltered() {
+        if($scope.problems == null){
+            $scope.filteredProblems1 = [];
+        }else{
+            $scope.filteredProblems1 = $filter('filter')(
+                $scope.problems, 
+                $scope.criteria
+            );
+        }
+    }
+    $scope.$watch( 
+        function(){ 
+            return angular.copy($scope.criteria); 
+        }, 
+        function(){ 
+            refreshFiltered(); 
+        }, true
+    );
+    
+    
+    
+    
+    $scope.problemIsSolved = function(prob){
+        return $scope.problemsSolved[prob._id];
     }
     
-    $scope.prevPage = function(){
-        $scope.currentPage += 1 < $scope.currentPage ? -1 : 0;
-    }
-    
-    $scope.goTo = function(i){
-        $scope.currentPage = i;
-    }
-    
-    $scope.setNumPerPage = function(i){
-        $scope.numPerPage = i;
-    }
-    
-    $scope.$watch(
-        function(){
-            return angular.copy($scope.criteria);
-        }, function(){
-            refreshFiltered();
-    }, true);
-    $scope.$watch('currentPage + numPerPage', refreshPaging);
-    
-    $scope.categories = ProblemsService.Category.query();
-    $scope.judges = ProblemsService.Judge.query();
-    
-    console.log($stateParams);
     if($stateParams.id){
-        $scope.problem = Problem.get({id:$stateParams.id}, function(){
-            var i = 1;
-        });
+        $scope.problem = Problem.get({id:$stateParams.id});
         $scope.isEdit = true;
     }else{
         $scope.problem = { categories:[] };
@@ -129,6 +103,34 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
     };
     $scope.reset = function(){
         $scope.criteria = {};
+    }
+    $scope.toggleSolved = function(prob){
+        var userProblem = $scope.problemsSolved[prob._id];
+        if(userProblem == null){
+            (new UserProblem({user: Auth.currentUser._id, problem: prob._id}))
+            .$save(function(up){
+                $scope.problemsSolved[up.problem] = up;
+                $alert({
+                   type: 'success',
+                   content: 'Problem marked as solved. &nbsp;',
+                   duration: 3,
+                   placement: 'top-right'
+                });
+            });
+        }
+        else if(userProblem.temporary){
+            var id = userProblem.problem;
+            userProblem.$remove(function(ret){
+                delete $scope.problemsSolved[id];
+            });
+        }else{
+            $alert({
+               type: 'success',
+               content: 'This problem cannot be unmarked because it was verified',
+               duration: 3,
+               placement: 'top-right'
+            });
+        }
     }
 
 }]);

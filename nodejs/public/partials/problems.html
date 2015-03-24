@@ -54,67 +54,37 @@
             <th class="col-md-4">Categories</th>
             <th class="col-md-2">Actions</th>
         </tr>
-        <tr bindonce ng-repeat="prob in filteredProblems2">
-            <td><a bo-href="prob.url" bo-text="prob.name" target="_blank"></a></td>
+        <tr ng-repeat="prob in filteredProblems2" ng-class="{success: problemIsSolved(prob)}">
+            <td><a ng-href="prob.url" target="_blank">{{prob.name}}</a></td>
             <td>
-                <div class="progress" style="margin-bottom:0px;" bo-if="prob.difficulty">
+                <div class="progress" style="margin-bottom:0px;" ng-if="prob.difficulty">
                   <div class="progress-bar" 
                        role="progressbar" aria-valuenow="60" 
                        aria-valuemin="0" 
                        aria-valuemax="100" 
-                       style="width: 60%;"
-                       bo-attr bo-attr-style = "'width: ' + (prob.difficulty * 10) + '%'"
-                       bo-text="prob.difficulty">
-                  </div>
+                       ng-style = "{width: (prob.difficulty * 10) + '%'}"
+                       >{{prob.difficulty}}</div>
                 </div>
             </td>
-            <td><span bo-text="prob.judge || ''"></span></td>
+            <td><span>{{prob.judge || ''}}</span></td>
             <td>
                 <span bindonce ng-repeat="cat in prob.categories">
-                    <span bo-bind="$index == 0 ? '' : ', '"></span>
-                    <a bo-text="cat" style="cursor:pointer;" 
-                       ng-click="setCategory(cat)"></a>
+                    <span ng-bind="$index == 0 ? '' : ', '"></span>
+                    <a style="cursor:pointer;" 
+                       ng-click="setCategory(cat)">{{cat}}</a>
                 </span>
             </td>
             <th>
                 <div class="btn-group">
                     <button ng-click="removeProblem(prob, $index)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Remove</button>
-                    <button ng-click="" class="btn btn-default btn-xs"><a bo-href="'/problems/edit/' + prob._id">Edit</a></button>
-                    <button ng-click="" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Solved</button>
+                    <button ng-click="" class="btn btn-default btn-xs"><a ng-href="'/problems/edit/' + prob._id">Edit</a></button>
+                    <button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Solved</button>
                     <button ng-click="" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Todo</button>
                 </div>
             </th>
         </tr>
     </table>
     
-
-    <nav class="text-center" style="position:relative;">
-        <ul class="pagination" role="group" >
-            <li>
-                <a href="#" aria-label="Previous" ng-click="prevPage()">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li ng-class="{active: currentPage == {{i}}}" ng-repeat="i in pages" ng-click="goTo(i)">
-                <a href="#" style="width:50px;" class="text-center">{{i}}</a></li>
-            <li>
-                <a href="#" aria-label="Next" ng-click="nextPage()">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-            <li>
-                <div class="dropup btn-group" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {{numPerPage}} Problems
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ng-repeat="i in [5,10,15,20,25,30,35,40]">
-                            <a href="#" ng-click="setNumPerPage(i)">{{i}} Problems</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>   
-    </nav>
+    <algo-pagination current-page="currentPage" num-per-page="numPerPage" src="filteredProblems1" dst="filteredProblems2"></algo-pagination>
+    
 </div>
