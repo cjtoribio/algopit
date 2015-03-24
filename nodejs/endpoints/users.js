@@ -57,7 +57,5 @@ exports.up = function(ws, model){
     
     
     
-    
-    
     console.log("Users Service Up");
 };
