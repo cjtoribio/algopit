@@ -1,1 +1,0 @@
-{"filter":false,"title":"Tests - Idle","tooltip":"Tests - Idle","undoManager":{"mark":0,"position":-1,"stack":[]},"output":{"id":"output283271","width":949,"height":344,"scrollTop":364.8002624511719,"config":{"command":"npm test","cwd":"/nodejs","debug":true,"name":"Tests","runner":"Shell command"}},"timestamp":1426706913006,"hash":"67452301efcdab8998badcfe10325476c3d2e1f0"}
