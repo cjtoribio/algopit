@@ -91,6 +91,20 @@ var TodoApp = angular.module('TodoApp',
 				}
 			}
 		})
+		.state('signup', {
+		  url: "/signup",
+			views: {
+				"body": {
+					templateUrl:"partials/signup.html",
+					controller:"SignUpController"
+				},
+				'header': {
+					resolve: { selected: function(){ return "signup"; } },
+					templateUrl:"partials/navbar.html",
+					controller:"NavbarController"
+				}
+			}
+		})
 		.state('lab', {
 		  url: "/lab",
 		  templateUrl: "views/lab.html"

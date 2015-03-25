@@ -52,6 +52,15 @@ function($http, $alert, $rootScope, $cookieStore, $location){
             });
         });
     };
+    service.getAvailability = function (username, callback) {
+        var service = this;
+        $http.get('/api/find', {
+            params: {username: username}
+        })
+        .success(function(data){
+            callback(data);
+        });
+    };
     
     
     return service;

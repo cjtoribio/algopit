@@ -47,6 +47,13 @@ exports.up = function(ws, model){
             res.send(200);
         });
     });
+
+    ws.get('/api/find', function(req, res){
+        model.User.find(req.query, function(err, list){
+            if(err)throw err;
+            res.send(list);
+        });
+    });
     
     
     ws.get('/api/logout', function(req, res, next){
@@ -55,6 +62,7 @@ exports.up = function(ws, model){
         res.send(200);
     });
     
+
     
     
     console.log("Users Service Up");
