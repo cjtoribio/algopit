@@ -1,12 +1,11 @@
-TodoApp.factory('Auth', ['$http','$alert', '$rootScope','$cookieStore', '$location',
-function($http, $alert, $rootScope, $cookieStore, $location){
+TodoApp.factory('Auth', ['$http','Alert', '$rootScope','$cookieStore', '$location',
+function($http, Alert, $rootScope, $cookieStore, $location){
     
-    var user = $cookieStore.get('user');
     // $cookieStore.remove('user');
     
     
     var service = {};
-    service.currentUser = user;
+    service.currentUser = $cookieStore.get('user');
     service.isAuthenticated = function(){
         return service.currentUser != null;
     };
@@ -14,42 +13,36 @@ function($http, $alert, $rootScope, $cookieStore, $location){
         return (service.currentUser || {_id:0})._id;
     };
     service.login = function (user) {
-        var service = this;
         $http.post('/api/login', user)
         .success(function(data){
             service.currentUser = data;
+            console.log(data);
             $location.path('/');
-            $alert({
-                title: 'Cheers!',
-                content: 'You have successfully logged in.',
-                placement: 'top-right',
-                type: 'success',
-                duration: 3
-            });
+            Alert.alert(Alert.messges.signInSuccess);
         })
         .error(function(){
-            $alert({
-                title: 'Error!',
-                content: 'Invalid username or password.',
-                placement: 'top-right',
-                type: 'danger',
-                duration: 3
-            });
+            Alert.alert(Alert.messges.signInErrorInvalidPassword);
         });
     };
     service.logout = function (user) {
-        var service = this;
         $http.get('/api/logout', user)
         .success(function(data){
             $location.path('/login');
             service.currentUser = null;
             $cookieStore.remove('user');
-            $alert({
-                content: 'You have been logged out.',
-                placement: 'top-right',
-                type: 'info',
-                duration: 3
-            });
+            Alert.alert(Alert.messges.signOutSuccess);
+        });
+    };
+    service.signUp = function (user) {
+        $http.post('/api/signup', user)
+        .success(function(data){
+            service.currentUser = data;
+            console.log(data);
+            $location.path('/');
+            Alert.alert(Alert.messges.signUpSuccess);
+        })
+        .error(function(){
+            Alert.alert(Alert.messges.signUpError);
         });
     };
     service.getAvailability = function (username, callback) {

@@ -34,9 +34,7 @@ exports.up = function(ws, model){
     }));
     
     ws.post('/api/login', passport.authenticate('local'), function(req, res) {
-        console.log(req.body);
-        res.cookie('user', JSON.stringify(req.body));
-        res.send(req.body);
+        res.send(req.user);
     });
     
     ws.post('/api/signup', function(req, res, next){
@@ -44,7 +42,7 @@ exports.up = function(ws, model){
         console.log(user);
         user.save(function(err){
             if(err) return next(err);
-            res.send(200);
+            res.send(user);
         });
     });
 
@@ -56,10 +54,10 @@ exports.up = function(ws, model){
     });
     
     
-    ws.get('/api/logout', function(req, res, next){
+    ws.get('/api/logout', function(req, res){
         console.log('Entered');
         req.logout();
-        res.send(200);
+        res.sendStatus(200);
     });
     
 

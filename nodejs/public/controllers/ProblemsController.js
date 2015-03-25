@@ -1,6 +1,6 @@
 TodoApp.controller('ProblemsController', [
-    '$scope','ProblemsService', '$location', '$stateParams', '$filter','$alert','Auth', 'lodash',
-function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth, lodash){
+    '$scope','ProblemsService', '$location', '$stateParams', '$filter','Alert','Auth', 'lodash',
+function($scope, ProblemsService, $location, $stateParams, $filter, Alert, Auth, lodash){
     
     // variables
     $scope.user = Auth;
@@ -110,12 +110,9 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
             (new UserProblem({user: Auth.currentUser._id, problem: prob._id}))
             .$save(function(up){
                 $scope.problemsSolved[up.problem] = up;
-                $alert({
-                   type: 'success',
-                   content: 'Problem marked as solved. &nbsp;',
-                   duration: 3,
-                   placement: 'top-right'
-                });
+                Alert.alert(
+                    Alert.messges.problemSolvedSuccess
+                );
             });
         }
         else if(userProblem.temporary){
@@ -124,12 +121,9 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
                 delete $scope.problemsSolved[id];
             });
         }else{
-            $alert({
-               type: 'success',
-               content: 'This problem cannot be unmarked because it was verified',
-               duration: 3,
-               placement: 'top-right'
-            });
+            Alert.alert(
+                Alert.messges.problemSolvedError
+            );
         }
     }
 

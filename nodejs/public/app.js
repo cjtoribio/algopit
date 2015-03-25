@@ -110,4 +110,7 @@ var TodoApp = angular.module('TodoApp',
 		  templateUrl: "views/lab.html"
 		})
 	;
+})
+.run(function(Auth){
+    console.log(Auth.currentUser);
 });
