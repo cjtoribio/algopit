@@ -104,7 +104,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
     $scope.reset = function(){
         $scope.criteria = {};
     }
-    $scope.toggleSolved = function(prob){ngAnimate
+    $scope.toggleSolved = function(prob){
         var userProblem = $scope.problemsSolved[prob._id];
         if(userProblem == null){
             (new UserProblem({user: Auth.currentUser._id, problem: prob._id}))

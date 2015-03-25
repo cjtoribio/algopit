@@ -1,0 +1,24 @@
+.fadeIn1s.ng-enter {
+    -webkit-animation: fadeIn 1s linear; /* Safari/Chrome */
+    animation: fadeIn 1s linear; /* IE10+ and Future Browsers */
+}
+.fadeIn500ms.ng-enter {
+    -webkit-animation: fadeIn 0.5s linear; /* Safari/Chrome */
+    animation: fadeIn 0.5s linear; /* IE10+ and Future Browsers */
+}
+.fadeOut1s.ng-leave {
+    -webkit-animation: fadeOut 1s linear; /* Safari/Chrome */
+    animation: fadeOut 1s linear; /* IE10+ and Future Browsers */
+}
+.fadeOut500ms.ng-leave {
+    -webkit-animation: fadeOut 0.5s linear; /* Safari/Chrome */
+    animation: fadeOut 0.5s linear; /* IE10+ and Future Browsers */
+}
+.slideInRight1s.ng-enter {
+    -webkit-animation: slideInRight 1s linear; /* Safari/Chrome */
+    animation: slideInRight 1s linear; /* IE10+ and Future Browsers */
+}
+.slideInRight500ms.ng-enter {
+    -webkit-animation: slideInRight 0.5s linear; /* Safari/Chrome */
+    animation: slideInRight 0.5s linear; /* IE10+ and Future Browsers */
+}
