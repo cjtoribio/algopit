@@ -1,6 +1,6 @@
 var TodoApp = angular.module('TodoApp', 
 	['ngResource', 'ui.router','pasvaz.bindonce','ui.bootstrap',
-	 'mgcrea.ngStrap','ngCookies','ngLodash']
+	 'mgcrea.ngStrap','ngCookies','ngLodash','ngAnimate']
 )
 // .config(function($locationProvider, $routeProvider) {
 //     $locationProvider.html5Mode(true);

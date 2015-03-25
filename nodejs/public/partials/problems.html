@@ -54,7 +54,7 @@
             <th class="col-md-4">Categories</th>
             <th class="col-md-2">Actions</th>
         </tr>
-        <tr ng-repeat="prob in filteredProblems2" ng-class="{success: problemIsSolved(prob)}">
+        <tr ng-repeat="prob in filteredProblems2" ng-class="{success: problemIsSolved(prob)}" class="slideInRight500ms">
             <td><a ng-href="prob.url" target="_blank">{{prob.name}}</a></td>
             <td>
                 <div class="progress" style="margin-bottom:0px;" ng-if="prob.difficulty">
