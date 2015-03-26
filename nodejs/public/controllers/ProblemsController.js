@@ -20,7 +20,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, Alert, Auth,
     $scope.categories = ProblemsService.Category.query();
     $scope.judges = ProblemsService.Judge.query();
     if(Auth.isAuthenticated()){
-        ProblemsService.UserProblem.queryByUser({ id: Auth.getUserId() },
+        ProblemsService.UserProblem.query(
             function(ret){
                 $scope.problemsSolved = lodash.indexBy(ret, 'problem');
             }

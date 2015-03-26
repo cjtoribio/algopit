@@ -11,4 +11,6 @@ var config = {
     
 }; 
 
+process.env.DEBUG = "endpoints:*,app:*";
+
 module.exports = config.dev;

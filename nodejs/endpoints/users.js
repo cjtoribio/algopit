@@ -2,14 +2,16 @@ var _ = require('lodash');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var logger = require('../utils/logger').getLogger('endpoints:users');
 
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
-    else res.send(401);
+    else res.sendStatus(401);
 }
 
 exports.up = function(ws, model){
+    logger.info("Starting");
     
     passport.serializeUser(function(user, done) {
         done(null, user.id);
@@ -63,5 +65,5 @@ exports.up = function(ws, model){
 
     
     
-    console.log("Users Service Up");
+    logger.info("Started");
 };
