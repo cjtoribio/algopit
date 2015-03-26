@@ -54,7 +54,7 @@
             <th class="col-md-4">Categories</th>
             <th class="col-md-2">Actions</th>
         </tr>
-        <tr ng-repeat="prob in filteredProblems2" ng-class="{success: problemIsSolved(prob)}" class="slideInRight500ms">
+        <tr ng-repeat="prob in filteredProblems2" class="{{problemStatus(prob)}}" class="slideInRight500ms">
             <td><a ng-href="prob.url" target="_blank">{{prob.name}}</a></td>
             <td>
                 <div class="progress" style="margin-bottom:0px;" ng-if="prob.difficulty">
@@ -79,7 +79,7 @@
                     <button ng-click="removeProblem(prob, $index)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Remove</button>
                     <button ng-click="" class="btn btn-default btn-xs"><a ng-href="'/problems/edit/' + prob._id">Edit</a></button>
                     <button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Solved</button>
-                    <button ng-click="" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Todo</button>
+                    <button ng-click="toggleTodo(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Todo</button>
                 </div>
             </th>
         </tr>

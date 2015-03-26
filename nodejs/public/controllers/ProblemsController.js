@@ -59,8 +59,13 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
     
     
     
-    $scope.problemIsSolved = function(prob){
-        return $scope.problemsSolved[prob._id];
+    $scope.problemStatus = function(prob){
+        var problemState = $scope.problemsSolved[prob._id].state;
+        if(problemState === "PENDING_SOLVED")
+            return "warning";
+        else if(problemState === "SOLVED")
+            return "success";
+        return "info";
     }
     
     if($stateParams.id){
@@ -107,7 +112,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
     $scope.toggleSolved = function(prob){
         var userProblem = $scope.problemsSolved[prob._id];
         if(userProblem == null){
-            (new UserProblem({user: Auth.currentUser._id, problem: prob._id}))
+            (new UserProblem({user: Auth.currentUser._id, problem: prob._id, state: 'PENDING_SOLVED'}))
             .$save(function(up){
                 $scope.problemsSolved[up.problem] = up;
                 $alert({
@@ -118,7 +123,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
                 });
             });
         }
-        else if(userProblem.temporary){
+        else if(userProblem.state === "PENDING_SOLVED"){
             var id = userProblem.problem;
             userProblem.$remove(function(ret){
                 delete $scope.problemsSolved[id];
@@ -127,6 +132,28 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
             $alert({
                type: 'success',
                content: 'This problem cannot be unmarked because it was verified',
+               duration: 3,
+               placement: 'top-right'
+            });
+        }
+    }
+    $scope.toggleTodo = function(prob){
+        var userProblem = $scope.problemsSolved[prob._id];
+        if(userProblem == null){
+            (new UserProblem({user: Auth.currentUser._id, problem: prob._id, state: 'TODO'}))
+            .$save(function(up){
+                $scope.problemsSolved[up.problem] = up;
+                $alert({
+                   type: 'success',
+                   content: 'Problem marked as TODO. &nbsp;',
+                   duration: 3,
+                   placement: 'top-right'
+                });
+            });
+        }else{
+            $alert({
+               type: 'success',
+               content: 'This problem was marked as solved already.',
                duration: 3,
                placement: 'top-right'
             });
