@@ -1,9 +1,13 @@
-TodoApp.controller('SignUpController', ['$scope','Auth',
-function($scope, Auth){
+TodoApp.controller('SignUpController', ['$scope','Auth','Alert',
+function($scope, Auth, Alert){
     
 
-    $scope.signUp = function(newUser){
-        Auth.signUp(newUser);
+    $scope.signUp = function(isValid){
+        if(isValid)
+            Auth.signUp($scope.newUser);
+        else{
+            Alert.alert(Alert.messages.signUpError);
+        }
     }
 
 }

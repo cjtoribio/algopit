@@ -2,7 +2,7 @@ TodoApp.factory('Alert', ['$alert',
 function($alert){
     var service = {};
     
-    service.messges = {
+    service.messages = {
         signInSuccess: {
             title: 'Cheers!',
             content: 'You have successfully logged in.',
@@ -30,7 +30,7 @@ function($alert){
             type: 'danger',
             duration: 3
         },
-        signInErrorInvalidPassword: {
+        signInErrorInvalidLogin: {
             title: 'Error!',
             content: 'Invalid username or password.',
             placement: 'top-right',

@@ -19,10 +19,10 @@ function($http, Alert, $rootScope, $cookieStore, $location){
             service.currentUser = data;
             console.log(data);
             $location.path('/');
-            Alert.alert(Alert.messges.signInSuccess);
+            Alert.alert(Alert.messages.signInSuccess);
         })
         .error(function(){
-            Alert.alert(Alert.messges.signInErrorInvalidPassword);
+            Alert.alert(Alert.messages.signInErrorInvalidLogin);
         });
     };
     service.logout = function (user) {
@@ -31,7 +31,7 @@ function($http, Alert, $rootScope, $cookieStore, $location){
             $location.path('/login');
             service.currentUser = null;
             $cookieStore.remove('user');
-            Alert.alert(Alert.messges.signOutSuccess);
+            Alert.alert(Alert.messages.signOutSuccess);
         });
     };
     service.signUp = function (user) {
@@ -40,10 +40,10 @@ function($http, Alert, $rootScope, $cookieStore, $location){
             service.currentUser = data;
             console.log(data);
             $location.path('/');
-            Alert.alert(Alert.messges.signUpSuccess);
+            Alert.alert(Alert.messages.signUpSuccess);
         })
         .error(function(){
-            Alert.alert(Alert.messges.signUpError);
+            Alert.alert(Alert.messages.signUpError);
         });
     };
     service.getAvailability = function (username, callback) {

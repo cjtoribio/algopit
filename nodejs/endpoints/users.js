@@ -44,14 +44,19 @@ exports.up = function(ws, model){
         console.log(user);
         user.save(function(err){
             if(err) return next(err);
-            res.send(user);
+            else {
+                req.login(user, function(err) {
+                    if (err) { next(err) }
+                    return res.send(user);
+                });
+            }
         });
     });
 
-    ws.get('/api/find', function(req, res){
-        model.User.find(req.query, function(err, list){
+    ws.get('/api/users/checkAvailable/:username', function(req, res){
+        model.User.find({username: req.params.username}, function(err, list){
             if(err)throw err;
-            res.send(list);
+            res.status(200).send(list.length == 0 ? true : false);
         });
     });
     

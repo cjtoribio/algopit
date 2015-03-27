@@ -111,7 +111,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, Alert, Auth,
             .$save(function(up){
                 $scope.problemsSolved[up.problem] = up;
                 Alert.alert(
-                    Alert.messges.problemSolvedSuccess
+                    Alert.messages.problemSolvedSuccess
                 );
             });
         }
@@ -122,7 +122,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, Alert, Auth,
             });
         }else{
             Alert.alert(
-                Alert.messges.problemSolvedError
+                Alert.messages.problemSolvedError
             );
         }
     }

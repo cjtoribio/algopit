@@ -1,39 +1,100 @@
     <div class="container" style="margin-top:10px">
 			<div class="col-md-12">
 			    <h1>Sign Up</h1>
+    			<h3>{{ message }}</h3> 
 			    <hr />
 			            <div class="container" style="margin: 30px;">
-			                <form class="form-horizontal col-md-6" ng-submit="signUp(newUser)">
+			                <form class="form-horizontal col-md-6" ng-submit="signUp(registrationForm.$valid)" name="registrationForm" novalidate >
 			                	
   								<div class="form-group">
 									<label for="i1" class="col-sm-2 control-label">Username</label>
-									<div class="col-sm-8">
+									<div class="col-sm-6">
 										<input type="text" class="form-control" 
+											   required=""
 											   id="i1" placeholder="Username"
-											   ng-model="newUser.username">
+											   ng-model="newUser.username"
+											   name="username"
+											   ng-minlength="4"
+											   ng-maxlength="30"
+											   max-length="30"
+											   username-validation
+											   required>
+									</div>
+									<div ng-if="registrationForm.username.$valid"
+									     style="color:green;padding-top:6px;padding-left: 0px;" 
+									     class="col-sm-4">
+										Ok
+									</div>
+									<div ng-if="registrationForm.username.$pending"
+									     style="color:gray;padding-top:6px;padding-left: 0px;" 
+									     class="col-sm-4">
+										Verifying...
+									</div>
+									<div ng-messages="registrationForm.username.$error" 
+									     style="color:maroon;padding-top:6px;padding-left: 0px;" 
+									     class="col-sm-4">
+										<div ng-message="required">Required</div>
+										<div ng-message="minlength">Password Too Short</div>
+										<div ng-message="maxlength">Password Too Long</div>
+										<div ng-message="username">Username exists</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="i2" class="col-sm-2 control-label">Password</label>
-									<div class="col-sm-8">
+									<div class="col-sm-6">
 										<input type="password" class="form-control" id="i2" 
+											   required=""
 											   placeholder="Password"
-											   ng-model="newUser.password">
+											   name="password"
+											   ng-model="newUser.password"
+											   ng-minlength="5"
+											   ng-maxlength="50"
+											   max-length="50"
+											   required>     
+									</div>
+									<div ng-if="registrationForm.password.$valid"
+									     style="color:green;padding-top:6px;padding-left: 0px;" 
+									     class="col-sm-4">
+										Ok
+									</div>
+									<div ng-messages="registrationForm.password.$error"
+									     style="color:maroon;padding-top:6px;padding-left: 0px;" 
+									     class="col-sm-4">
+										<div ng-message="required">Required</div>
+										<div ng-message="minlength">Password Too Short</div>
+										<div ng-message="maxlength">Password Too Long</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="i3" class="col-sm-2 control-label">Confirm</label>
-									<div class="col-sm-8">
-										<input type="password" class="form-control" id="i3" 
+									<div class="col-sm-6">
+            
+										<input type="password" class="form-control" 
 											   placeholder="Confirm Password"
-											   ng-model="newUser.confirmPassword">
+											   ng-model="newUser.confirmPassword"
+										       name='confirmPassword' 
+											   required=""
+											   compare-to="newUser.password"
+											   max-length="50"
+											   required>
+									</div>
+									<div ng-if="registrationForm.confirmPassword.$valid"
+									     style="color:green;padding-top:6px;padding-left: 0px;" 
+									     class="col-sm-4">
+										Ok
+									</div>
+									<div ng-messages="registrationForm.confirmPassword.$error"
+									     style="color:maroon;padding-top:6px;padding-left: 0px;" 
+									     class="col-sm-4">
+										<div ng-message="required">Required</div>
+										<div ng-message="compareTo">Password doesn't match</div>
 									</div>
 								</div>
 								<hr/>
 								<h2>Optional</h2>
 								<div class="form-group">
 									<label for="i4" class="col-sm-2 control-label">Email</label>
-									<div class="col-sm-8">
+									<div class="col-sm-6">
 										<input type="email" class="form-control" id="i4" 
 											   placeholder="Email"
 											   ng-model="newUser.email">
@@ -41,8 +102,8 @@
 								</div>
 								<div class="form-group">
 									<label for="i5" class="col-sm-2 control-label">Name</label>
-									<div class="col-sm-8">
-										<input type="email" class="form-control" id="i5" 
+									<div class="col-sm-6">
+										<input type="text" class="form-control" id="i5" 
 											   placeholder="Name"
 											   ng-model="newUser.name">
 									</div>
@@ -54,4 +115,6 @@
 
 			            </div>
 			</div>
+			
+			
 	</div>
