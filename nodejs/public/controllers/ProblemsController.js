@@ -2,6 +2,12 @@ TodoApp.controller('ProblemsController', [
     '$scope','ProblemsService', '$location', '$stateParams', '$filter','$alert','Auth', 'lodash',
 function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth, lodash){
     
+    var _ = lodash;
+
+    // types
+    var Problem = ProblemsService.Problem;
+    var UserProblem = ProblemsService.UserProblem;
+
     // variables
     $scope.user = Auth;
     $scope.numPerPage = 10;
@@ -10,13 +16,6 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
     $scope.filteredProblems2 = [];
     $scope.criteria = {};
     $scope.problemsSolved = {};
-    
-    // types
-    var Problem = ProblemsService.Problem;
-    var UserProblem = ProblemsService.UserProblem;
-    var _ = lodash;
-    
-    
     // loading
     $scope.categories = ProblemsService.Category.query();
     $scope.judges = ProblemsService.Judge.query();
@@ -28,12 +27,22 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
             }
         );
     }
-    $scope.loadProblems = function(){
-        Problem.query(function(data){
-            $scope.problems = data;
-            refreshFiltered();
-        });
+    $scope.$watch( 
+        function(){ 
+            return angular.copy($scope.criteria); 
+        }, 
+        function(){ 
+            refreshFiltered(); 
+        }, true
+    );
+    if($stateParams.id){
+        $scope.problem = Problem.get({id:$stateParams.id});
+        $scope.isEdit = true;
+    }else{
+        $scope.problem = { categories:[] };
+        $scope.isNew = true;
     }
+
     
     // Criteria Filtering
     function refreshFiltered() {
@@ -46,6 +55,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
             );
         }
     }
+
     function addUserProblem(id, type){
         new UserProblem({
             user    : Auth.currentUser._id,
@@ -62,20 +72,20 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
             });
         });
     }
-    $scope.$watch( 
-        function(){ 
-            return angular.copy($scope.criteria); 
-        }, 
-        function(){ 
-            refreshFiltered(); 
-        }, true
-    );
-    
+
     function getProblemState(id){
         if( !(_.has($scope.problemsSolved, id)) || 
             !(_.has($scope.problemsSolved[id], 'state')) )
             return '';
         return $scope.problemsSolved[id].state;
+    }
+
+
+    $scope.loadProblems = function(){
+        Problem.query(function(data){
+            $scope.problems = data;
+            refreshFiltered();
+        });
     }
 
     $scope.isSolved = function(prob){
@@ -93,14 +103,6 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
         return problemState === "TODO";
     }
     
-    if($stateParams.id){
-        $scope.problem = Problem.get({id:$stateParams.id});
-        $scope.isEdit = true;
-    }else{
-        $scope.problem = { categories:[] };
-        $scope.isNew = true;
-    }
-    
     $scope.removeProblem = function(problem, idx){
         if(confirm("Are you sure you want to remove this problem?")){
             problem.$remove(function(obj){
@@ -109,6 +111,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
             });
         }
     }
+
     $scope.sendProblem = function(problem){
         function callback(){
             $location.path('/problems').replace();
@@ -127,13 +130,16 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
         else {
             $scope.problem.categories.push(category);
         }
-    };
+    }
+
     $scope.setCategory = function(category){
         $scope.criteria.categories = category;
-    };
+    }
+
     $scope.reset = function(){
         $scope.criteria = {};
     }
+
     $scope.toggleSolved = function(prob){
         if(!_.has($scope.problemsSolved, prob._id)){
             addUserProblem(prob._id, 'PENDING_SOLVED');
@@ -155,6 +161,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
             }
         }
     }
+
     $scope.toggleTodo = function(prob){
         if(!_.has($scope.problemsSolved, prob._id)){
             addUserProblem(prob._id, 'TODO');
