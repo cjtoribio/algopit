@@ -28,9 +28,7 @@ TodoApp.factory('ProblemsService', ['$resource',function($resource){
     
     service.UserProblem = $resource(
         '/api/userProb/:id', { id:'@_id'},
-        {
-            'queryByUser': {method: 'GET', url:'/api/userProb/user/:id', isArray:true}
-        }
+        {'update': { method:'PUT' }}
     );
     
     return service;

@@ -12,7 +12,7 @@
         
         
         <ul class="nav navbar-nav navbar-right" ng-if="!user.isAuthenticated()">
-          <li><a href="/login">Sign Up</a></li>
+          <li ng-class="{active: selected == 'signup'}"><a href="/signup">Sign Up</a></li>
           <li ng-class="{active: selected == 'login'}"><a href="/login">Log In</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-if="user.isAuthenticated()">

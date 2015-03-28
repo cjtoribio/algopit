@@ -1,6 +1,8 @@
 var _ = require('lodash');
+var logger = require('../utils/logger').getLogger('endpoints:problems');
 
 exports.up = function(ws, model){
+    logger.info("Starting");
     ws.get('/api/problems', function(req, res){
         model.Problem.find({}).sort({name: 1}).exec(function(err, results){
             var ret = _.map(results, function(item){
@@ -47,5 +49,5 @@ exports.up = function(ws, model){
             else res.send({affected: obj});
         });
     });
-    console.log("Problems Service Started");
+    logger.info("Started");
 };

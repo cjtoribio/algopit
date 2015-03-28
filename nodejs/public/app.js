@@ -1,6 +1,6 @@
 var TodoApp = angular.module('TodoApp', 
 	['ngResource', 'ui.router','pasvaz.bindonce','ui.bootstrap',
-	 'mgcrea.ngStrap','ngCookies','ngLodash','ngAnimate']
+	 'mgcrea.ngStrap','ngCookies','ngLodash','ngAnimate','ngMessages']
 )
 // .config(function($locationProvider, $routeProvider) {
 //     $locationProvider.html5Mode(true);
@@ -91,9 +91,26 @@ var TodoApp = angular.module('TodoApp',
 				}
 			}
 		})
+		.state('signup', {
+		  url: "/signup",
+			views: {
+				"body": {
+					templateUrl:"partials/signup.html",
+					controller:"SignUpController"
+				},
+				'header': {
+					resolve: { selected: function(){ return "signup"; } },
+					templateUrl:"partials/navbar.html",
+					controller:"NavbarController"
+				}
+			}
+		})
 		.state('lab', {
 		  url: "/lab",
 		  templateUrl: "views/lab.html"
 		})
 	;
+})
+.run(function(Auth){
+    console.log(Auth.currentUser);
 });

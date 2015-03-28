@@ -1,4 +1,5 @@
 // reference the http module so we can create a webserver
+var config = require("./config");
 var http = require("http");
 var _ = require("lodash");
 var noop = require('node-noop').noop;
@@ -12,7 +13,9 @@ var fileSystem = require('fs');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var logger = require('./utils/logger').getLogger('app:server');
 
+logger.info("Starting express");
 
 var ws = express();
 ws.set('port', process.env.PORT || 3000);
@@ -34,6 +37,9 @@ ws.use(function(req, res, next) {
 require("./endpoints").up(ws, model);
 
 ws.listen(ws.get('port'), function(){
-  console.log('Express server listening on port ' + ws.get('port'));
+    logger.info('Express server listening on port ' + ws.get('port'));
 });
 
+
+
+logger.info("Express Started");

@@ -2,14 +2,16 @@ var _ = require('lodash');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var logger = require('../utils/logger').getLogger('endpoints:users');
 
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
-    else res.send(401);
+    else res.sendStatus(401);
 }
 
 exports.up = function(ws, model){
+    logger.info("Starting");
     
     passport.serializeUser(function(user, done) {
         done(null, user.id);
@@ -34,9 +36,7 @@ exports.up = function(ws, model){
     }));
     
     ws.post('/api/login', passport.authenticate('local'), function(req, res) {
-        console.log(req.body);
-        res.cookie('user', JSON.stringify(req.body));
-        res.send(req.body);
+        res.send(req.user);
     });
     
     ws.post('/api/signup', function(req, res, next){
@@ -44,18 +44,31 @@ exports.up = function(ws, model){
         console.log(user);
         user.save(function(err){
             if(err) return next(err);
-            res.send(200);
+            else {
+                req.login(user, function(err) {
+                    if (err) { next(err) }
+                    return res.send(user);
+                });
+            }
+        });
+    });
+
+    ws.get('/api/users/checkAvailable/:username', function(req, res){
+        model.User.find({username: req.params.username}, function(err, list){
+            if(err)throw err;
+            res.status(200).send(list.length == 0 ? true : false);
         });
     });
     
     
-    ws.get('/api/logout', function(req, res, next){
+    ws.get('/api/logout', function(req, res){
         console.log('Entered');
         req.logout();
-        res.send(200);
+        res.sendStatus(200);
     });
     
+
     
     
-    console.log("Users Service Up");
+    logger.info("Started");
 };

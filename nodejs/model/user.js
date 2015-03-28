@@ -7,7 +7,9 @@ var User = new Schema({
     password: String,
     spoj: {
         username: String
-    }
+    },
+    email: String,
+    name: String
 });
 
 User.pre('save', function(next){

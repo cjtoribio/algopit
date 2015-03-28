@@ -1,6 +1,6 @@
 TodoApp.controller('ProblemsController', [
-    '$scope','ProblemsService', '$location', '$stateParams', '$filter','$alert','Auth', 'lodash',
-function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth, lodash){
+    '$scope','ProblemsService', '$location', '$stateParams', '$filter','Alert','Auth', 'lodash',
+function($scope, ProblemsService, $location, $stateParams, $filter, Alert, Auth, lodash){
     
     var _ = lodash;
 
@@ -20,7 +20,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
     $scope.categories = ProblemsService.Category.query();
     $scope.judges = ProblemsService.Judge.query();
     if(Auth.isAuthenticated()){
-        ProblemsService.UserProblem.queryByUser({ id: Auth.getUserId() },
+        ProblemsService.UserProblem.query(
             function(ret){
                 $scope.problemsSolved = lodash.indexBy(ret, 'problem');
                 console.log($scope.problemsSolved);
@@ -56,20 +56,18 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
         }
     }
 
-    function addUserProblem(id, type){
+    function addUserProblem(prob, type){
         new UserProblem({
             user    : Auth.currentUser._id,
-            problem : id,
+            problem : prob._id,
             state   : type
         })
         .$save(function(up){
             $scope.problemsSolved[up.problem] = up;
-            $alert({
-               type      : 'success',
-               content   : 'Problem marked as ' + type + '. &nbsp;',
-               duration  : 3,
-               placement : 'top-right'
-            });
+            var message = null;
+            if(type === "PENDING_SOLVED") message = Alert.messages.solved.success;
+            if(type === "TODO") message = Alert.messages.todo.success;
+            Alert.alert(message);
         });
     }
 
@@ -142,7 +140,7 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
 
     $scope.toggleSolved = function(prob){
         if(!_.has($scope.problemsSolved, prob._id)){
-            addUserProblem(prob._id, 'PENDING_SOLVED');
+            addUserProblem(prob, 'PENDING_SOLVED');
         }else{
             var problemState = getProblemState(prob._id);
             if(problemState === "PENDING_SOLVED"){
@@ -152,26 +150,21 @@ function($scope, ProblemsService, $location, $stateParams, $filter, $alert, Auth
                     delete $scope.problemsSolved[problemId];
                 });
             }else{
-                $alert({
-                   type: 'success',
-                   content: 'This problem cannot be unmarked because it was verified',
-                   duration: 3,
-                   placement: 'top-right'
-                });
+                Alert.alert(
+                    Alert.messages.solved.verified
+                );
             }
         }
     }
 
     $scope.toggleTodo = function(prob){
         if(!_.has($scope.problemsSolved, prob._id)){
-            addUserProblem(prob._id, 'TODO');
-        }else{
-            $alert({
-               type: 'success',
-               content: 'This problem was marked as TODO already.',
-               duration: 3,
-               placement: 'top-right'
-            });
+            addUserProblem(prob, 'TODO');
+        }else {
+            var message = null;
+            if($scope.isTodo(prob)) message = Alert.messages.todo.duplicated;
+            else                    message = Alert.messages.todo.solved;
+            Alert.alert(message);
         }
     }
 
