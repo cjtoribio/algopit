@@ -28,6 +28,10 @@
 }
 
 .alert.ng-enter {
-    -webkit-animation: slideInRight 0.2s linear; /* Safari/Chrome */
-    animation: slideInRight 0.2s linear; /* IE10+ and Future Browsers */
+    -webkit-animation: slideInRight 0.1s linear; /* Safari/Chrome */
+    animation: slideInRight 0.1s linear; /* IE10+ and Future Browsers */
+}
+.alert.ng-leave {
+    -webkit-animation: fadeOut 0.3s linear; /* Safari/Chrome */
+    animation: fadeOut 0.3s linear; /* IE10+ and Future Browsers */
 }

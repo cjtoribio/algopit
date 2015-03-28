@@ -16,6 +16,7 @@
           <li ng-class="{active: selected == 'login'}"><a href="/login">Log In</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-if="user.isAuthenticated()">
+          <li><a>{{currentUser.name}}</a></li>
           <li ng-class="{active: selected == 'settings'}"><a href="/settings">Settings</a></li>
           <li><a ng-click="user.logout()" href="javascript:void()">Sign Out</a></li>
         </ul>

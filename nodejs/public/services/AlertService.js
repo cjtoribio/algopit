@@ -61,9 +61,11 @@ function($alert){
             return;
         }
         if(!message.duration)
-            message.duration = 20;
+            message.duration = 3;
         if(!message.placement)
             message.placement = 'top-right';
+        if(!message.container)
+            message.container = '.alertsContainer';
         $alert(message);
     }
     
