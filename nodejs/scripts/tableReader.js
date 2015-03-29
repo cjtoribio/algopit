@@ -1,8 +1,22 @@
-var mongoose = require("mongoose");
-var config = require("./config");
-var model = require("./model");
+var config = require("../config");
+var model = require("../model");
 var _ = require("lodash");
+var logger = require('../utils/logger').getLogger('app:script');
 
+
+model.Judge.find({name: 'COJ'}).exec(function(err, judge){
+    if(judge.length != 1){
+        logger.error(judge.length + " judges found");
+    }else{
+        judge = judge[0];
+        judge.url = "http://www.spoj.pl/";
+        logger.info(judge);
+        judge.save();
+        logger.info(judge);
+        
+    }
+});
+if(true)return;
 
 
 var fs = require("fs");

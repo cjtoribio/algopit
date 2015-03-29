@@ -63,6 +63,20 @@ var TodoApp = angular.module('TodoApp',
 				}
 			}
 		})
+		.state('addProblem', {
+			url: "/problems/add",
+			views: {
+				"body": {
+					templateUrl:"partials/editProblem.html",
+					controller:"ProblemsController"
+				},
+				'header': {
+					resolve: { selected: function(){ return "problems"; } },
+					templateUrl:"partials/navbar.html",
+					controller:"NavbarController"
+				}
+			}
+		})
 		.state('login', {
 		  url: "/login",
 			views: {

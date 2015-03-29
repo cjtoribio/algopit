@@ -55,14 +55,14 @@
             <th class="col-md-2">Actions</th>
         </tr>
         <tr ng-repeat="prob in filteredProblems2" ng-class="{success: isSolved(prob), info: isPending(prob), warning: isTodo(prob)}">
-            <td><a ng-href="prob.url" target="_blank">{{prob.name}}</a></td>
+            <td><a ng-href="{{prob.url}}" target="_blank">{{prob.name}}</a></td>
             <td>
                 <div class="progress" style="margin-bottom:0px;" ng-if="prob.difficulty">
                   <div class="progress-bar" 
                        role="progressbar" aria-valuenow="60" 
                        aria-valuemin="0" 
                        aria-valuemax="100" 
-                       ng-style = "{width: (prob.difficulty * 10) + '%'}"
+                       ng-style = "{width: (prob.difficulty * 20) + '%'}"
                        >{{prob.difficulty}}</div>
                 </div>
             </td>
@@ -77,7 +77,7 @@
             <th>
                 <div class="btn-group">
                     <button ng-click="removeProblem(prob, $index)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Remove</button>
-                    <button ng-click="" class="btn btn-default btn-xs"><a ng-href="'/problems/edit/' + prob._id">Edit</a></button>
+                    <button ng-click="editProblem(prob)" class="btn btn-default btn-xs">Edit</button>
                     <button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Solved</button>
                     <button ng-click="toggleTodo(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Todo</button>
                 </div>

@@ -15,13 +15,14 @@ exports.up = function(ws, model){
         userProb.user = req.user.id;
         userProb.temporary = true;
         userProb.save(function(){
-            console.log(userProb);
+            logger.info(userProb);
             res.send(userProb);
         });
     });
     
     ws.delete('/api/userProb/:id', ensureAuthenticated, function(req, res, next){
-        console.log(req.params.id);
+        logger.info(req.params);
+        logger.info(req.user.id);
         model.UserProblem.remove({
             _id: req.params.id,
             user: req.user.id

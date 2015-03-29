@@ -100,6 +100,9 @@ function($scope, ProblemsService, $location, $stateParams, $filter, Alert, Auth,
         var problemState = getProblemState(prob._id);
         return problemState === "TODO";
     }
+    $scope.editProblem = function(prob){
+        $location.path('/problems/edit/' + prob._id);
+    }
     
     $scope.removeProblem = function(problem, idx){
         if(confirm("Are you sure you want to remove this problem?")){
