@@ -1,7 +1,7 @@
 var config = {
     "dev" : {
         "db": {
-            "mongodb": 'mongodb://' + process.env.IP + '/my_database'
+            "mongodb": 'mongodb://algopit:algopit@ds057934.mongolab.com:57934/algopit'
         },
         "logger": {
             "api": "logs/api.log",

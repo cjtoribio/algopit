@@ -1,4 +1,4 @@
 .c9revisions/
 .c9/
-nodejs/data/
-nodejs/node_modules/
+data
+node_modules

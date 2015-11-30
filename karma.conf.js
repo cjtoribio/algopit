@@ -15,9 +15,14 @@ module.exports = function(config) {
         
         // list of files / patterns to load in the browser
         files: [
-            "node_modules/chai/chai.js",
-            "src/**/*.js",
-            "test/**/*.js"
+            "test/test-main.js",
+            {pattern: "node_modules/chai/chai.js", included: false},
+            {pattern: "public/vendor/bower_components/angular/*.min.js", included: false},
+            {pattern: "public/vendor/bower_components/**/*.min.js", included: false},
+            {pattern: "public/app.js", included: false},
+            {pattern: "public/**/services/*.js", included: false},
+            {pattern: "public/**/controllers/*.js", included: false},
+            {pattern: "public/**/directives/*.js", included: false}
         ],
         
         
@@ -57,7 +62,7 @@ module.exports = function(config) {
         
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'Firefox'],
+        browsers: ['Firefox'],
         
         
         // Continuous Integration mode

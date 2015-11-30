@@ -1,23 +1,17 @@
 var _ = require('lodash');
 var logger = require('../utils/logger').getLogger('endpoints:problems');
 
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) next();
+    else res.sendStatus(401);
+}
+
 exports.up = function(ws, model){
     logger.info("Starting");
     ws.get('/api/problems', function(req, res){
-        model.Problem.find({}).sort({name: 1}).exec(function(err, results){
-            var ret = _.map(results, function(item){
-                return {
-                    _id: item._id,
-                    categories: item.categories,
-                    name: item.name,
-                    difficulty: item.difficulty,
-                    url: item.url,
-                    judge: item.judge,
-                    sourceReferenceId: item.sourceReferenceId
-                };
-            });
+        model.Problem.find({}).sort({name: 1}).exec(function(err, problems){
             if(err)res.send(err);
-            else res.send(ret || []);
+            else res.send(problems || []);
         });
     });
     

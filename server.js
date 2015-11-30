@@ -14,6 +14,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var logger = require('./utils/logger').getLogger('app:server');
+var MongoStore = require('connect-mongo')(session);
 
 logger.info("Starting express");
 
@@ -22,7 +23,16 @@ ws.set('port', process.env.PORT || 3000);
 ws.use(bodyParser.json()); // for parsing application/json
 ws.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 ws.use(cookieParser()); // for parsing cookies
-ws.use(session({ secret: 'keyboard cat' }));
+var sessionMiddleware = session({
+    secret: "keyboard cat",
+    saveUninitialized: false, // don't create session until something stored
+    resave: false, //don't save session if unmodified
+    store: new MongoStore({
+        url: config.db.mongodb,
+        touchAfter: 24 * 3600 // time period in seconds
+    })
+});
+ws.use(sessionMiddleware);
 ws.use(passport.initialize());
 ws.use(passport.session());
 ws.use(multer()); // for parsing multipart/form-data
