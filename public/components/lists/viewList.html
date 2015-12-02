@@ -110,7 +110,7 @@
 						<td>{{::prob.difficulty}}</td>
 						<td>{{::prob.categories.join(',')}}</td>
 						<td style="vertical-align: middle;">
-							<div ng-repeat="userProb in prob.solvedBy" style="padding: 2px;" >
+							<div ng-repeat="userProb in prob.solvedBy" class="pull-left" style="padding: 2px;" >
 								<span class="label" 
 									style="cursor:default"
 									ng-class="{'label-success': userProb.status == 'SOLVED',	

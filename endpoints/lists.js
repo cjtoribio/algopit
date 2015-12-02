@@ -93,10 +93,10 @@ exports.up = function(ws, model){
 
     });
 
-    ws.post('/api/lists', function(req, res){
+    ws.post('/api/lists', ensureAuthenticated, function(req, res){
         var list = _.cloneDeep(req.body);
         list = new model.List(model.List.cleanPopulated(list));
-        console.log(list);
+        list.author = req.user._id;
         list.save(function(err){
             logger.info(list);
             if(err)return res.status(500).send(err);

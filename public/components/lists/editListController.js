@@ -64,13 +64,13 @@
 		$scope.remove = function(item,items){
 			_.pull(items,item);
 		}
-	    // $scope.moveProblem = function(prob, delta){
-	    // 	var idx = _.indexOf($scope.list.problems, prob);
-	    // 	if(idx + delta < 0 || idx + delta >= $scope.list.problems.length)return;
-	    // 	var tmp = $scope.list.problems[idx+delta];
-	    // 	$scope.list.problems[idx+delta] = prob;
-	    // 	$scope.lislist.problemsts[idx] = tmp;
-	    // }
+	    $scope.moveProblem = function(prob, delta){
+	    	var idx = _.indexOf($scope.list.problems, prob);
+	    	if(idx + delta < 0 || idx + delta >= $scope.list.problems.length)return;
+	    	var tmp = $scope.list.problems[idx+delta];
+	    	$scope.list.problems[idx+delta] = prob;
+	    	$scope.lislist.problemsts[idx] = tmp;
+	    }
 
 		$scope.submit = function(list){
 			if(list._id){
