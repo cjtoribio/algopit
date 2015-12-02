@@ -3,12 +3,15 @@
 	var app = angular.module('TodoApp');
 	app.controller('SettingsController', SettingsController);
 
-	function SettingsController($scope, $stateParams){
-	    $scope.open = function(){
-	        alert(1);
-	    };
-	    console.log($stateParams);
-	    $scope.a = "carlos";
-	}
+
+    function SettingsController($scope, Auth, Resource, Alert){
+        $scope.user = Auth.currentUser;
+        $scope.save = function(){
+            new Resource.User($scope.user).$update(function(){
+                Alert.alert(Alert.messages.settings.success);
+            });
+        }
+    
+    }
 
 })();

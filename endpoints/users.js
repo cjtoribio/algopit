@@ -66,6 +66,18 @@ exports.up = function(ws, model){
         res.sendStatus(200);
     });
 
+    ws.put('/api/users/:id', ensureAuthenticated, function(req, res, next){
+        
+        console.log(req.body);
+        model.User.update( { _id:req.params.id }, req.body, function(err){
+            if(err) 
+                next(err);
+            else {
+                res.send(req.body);
+            }
+        });
+    });
+
     ws.get('/api/users/search', function(req, res){
         var ors = [];
         if(req.query.name)      ors.push({name:     new RegExp(req.query.name,'i')});

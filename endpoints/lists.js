@@ -27,9 +27,9 @@ exports.up = function(ws, model){
         function findList(next){
             model.List
                 .findById(req.params.id)
-                .populate('author', 'username')
+                .populate('author', 'username name')
                 .populate('problems')
-                .populate('party', 'username')
+                .populate('party', 'username name')
                 .exec(next);
         }
         function respond(err, list){
@@ -47,9 +47,9 @@ exports.up = function(ws, model){
         function findList(next){
             model.List
                 .findById(req.params.id)
-                .populate('author', 'username')
+                .populate('author', 'username name')
                 .populate('problems')
-                .populate('party', 'username')
+                .populate('party', 'username name')
                 .exec(next);
         }
         function attachProblemStatus(list, next){

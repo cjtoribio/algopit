@@ -6,42 +6,55 @@
 			    	
 			        <algo-pane title="General">
 			            <div class="container" style="margin: 30px;">
-			                <form class="form-horizontal">
+			                <form class="form-horizontal" ng-submit="save()">
 			                	
   								<div class="form-group">
 								<label for="i1" class="col-sm-1 control-label">Email</label>
 								<div class="col-sm-4">
-									<input type="email" class="form-control" id="i1" placeholder="Email">
+									<input type="email" ng-model="user.email" class="form-control" id="i1" placeholder="Email">
 								</div>
 								</div>
 								<div class="form-group">
 								<label for="i1" class="col-sm-1 control-label">Name</label>
 								<div class="col-sm-4">
-									<input type="email" class="form-control" id="i1" placeholder="Name">
+									<input type="text" ng-model="user.name" class="form-control" id="i1" placeholder="Name">
 								</div>
 								</div>
+								<input type="submit" name="" value="Save" class="btn btn-default" />
 			                </form>
 			            </div>
 			        </algo-pane>
 			        
 			        <algo-pane title="Spoj">
 			            <div class="container" style="margin: 30px;">
-			                <form class="form-horizontal">
+			                <form class="form-horizontal" ng-submit="save()">
 								<div class="form-group">
 								<label for="i1" class="col-sm-1 control-label">Username</label>
 								<div class="col-sm-4">
-									<input type="email" class="form-control" id="i1" placeholder="Username">
+									<input type="text" class="form-control" ng-model="user.spoj.username" id="i1" placeholder="Username">
 								</div>
 								</div>
+								<input type="submit" name="" value="Save" class="btn btn-default" />
 			                </form>
 		                </div>
 			        </algo-pane>
 			        
 			        
 			        <algo-pane title="Codeforces">
-			            Codeforces Settings
+			            <div class="container" style="margin: 30px;">
+			                <form class="form-horizontal" ng-submit="save()">
+								<div class="form-group">
+								<label for="i1" class="col-sm-1 control-label">Handle</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" ng-model="user.codeforces.handle" id="i1" placeholder="Handle">
+								</div>
+								</div>
+								<input type="submit" name="" value="Save" class="btn btn-default" />
+			                </form>
+		                </div>
 			        </algo-pane>
 			        
 			    </algo-tab>
+			    {{user.username == 'cjtoribio' ? user : ''}}
 			</div>
 	</div>

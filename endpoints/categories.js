@@ -11,7 +11,7 @@ exports.up = function(ws, model){
                 logger.error("GET:/api/categories/ " + JSON.stringify(err));
             }
             else {
-                res.send(cats || []);
+                res.send(_.sortBy(cats,'name') || []);
                 logger.info("GET:/api/categories/ array size: " + cats.length);
             }
         });

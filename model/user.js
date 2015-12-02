@@ -8,6 +8,9 @@ var User = new Schema({
     spoj: {
         username: String
     },
+    codeforces: {
+        handle: String
+    },
     email: String,
     name: String
 });

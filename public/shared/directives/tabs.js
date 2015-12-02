@@ -5,7 +5,7 @@ TodoApp.directive('algoTab', function(){
         transclude: true,
         scope: {
         },
-        controller: function($scope,lodash){
+        controller: function($scope){
             var panes = $scope.panes = [];
             
             $scope.select = function(pane) {

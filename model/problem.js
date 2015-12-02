@@ -14,7 +14,8 @@ var Problem = new Schema({
     categories: [String],
     judge: String,
     url: String,
-    writer: String
+    writer: String,
+    source: String
 });
 
 exports.Problem = mongoose.model('problems', Problem);
