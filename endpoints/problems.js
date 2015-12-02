@@ -14,8 +14,27 @@ exports.up = function(ws, model){
             else res.send(problems || []);
         });
     });
+
+    ws.get('/api/problems/search', function(req, res){
+        var ors = [];
+        if(req.query.name)      ors.push({name:       new RegExp(req.query.name,'i')});
+        if(req.query.category)  ors.push({categories: new RegExp(req.query.category,'i')});
+        if(req.query.judge)     ors.push({judge:      new RegExp(req.query.judge,'i')});
+        if(ors.length == 0){
+        	return res.status(200).send([]);
+        }
+        model.Problem.find({
+                '$or': ors
+            })
+            .limit(10)
+            .exec(function(err, problems){
+                if(err)res.send(err);
+                else res.send(problems);
+            });
+    });
     
     ws.get('/api/problems/:id',function(req, res){
+        logger.info('WTF2');
         model.Problem.find({_id: req.params.id }, function(err, results){
             if(err)res.send(err);
             else res.send(results[0] || {});

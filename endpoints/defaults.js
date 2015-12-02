@@ -5,7 +5,7 @@ exports.up = function(ws, model){
     logger.info("Starting");
     
     ws.get('*', function(req, res) {
-        console.log(req.originalUrl);
+        // console.log(req.originalUrl);
         res.redirect('/#' + req.originalUrl);
     });
     

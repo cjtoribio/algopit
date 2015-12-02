@@ -1,6 +1,5 @@
 var TodoApp = angular.module('TodoApp', 
-	['ngResource', 'ui.router','pasvaz.bindonce','ui.bootstrap',
-	 'mgcrea.ngStrap','ngCookies','ngLodash','ngAnimate','ngMessages']
+	['ngResource', 'ui.router', 'mgcrea.ngStrap','ngCookies','ngAnimate','ngMessages','ngSanitize']
 )
 // .config(function($locationProvider, $routeProvider) {
 //     $locationProvider.html5Mode(true);
@@ -39,12 +38,12 @@ var TodoApp = angular.module('TodoApp',
 			url: "/problems",
 			views: {
 				"body": {
-					templateUrl:"partials/problems.html",
+					templateUrl:"components/problems/problems.html",
 					controller:"ProblemsController"
 				},
 				'header': {
 					resolve: { selected: function(){ return "problems"; } },
-					templateUrl:"partials/navbar.html",
+					templateUrl:"components/navbar/navbar.html",
 					controller:"NavbarController"
 				}
 			}
@@ -53,12 +52,12 @@ var TodoApp = angular.module('TodoApp',
 			url: "/problems/edit/:id",
 			views: {
 				"body": {
-					templateUrl:"partials/editProblem.html",
+					templateUrl:"components/problems/editProblem.html",
 					controller:"ProblemsController"
 				},
 				'header': {
 					resolve: { selected: function(){ return "problems"; } },
-					templateUrl:"partials/navbar.html",
+					templateUrl:"components/navbar/navbar.html",
 					controller:"NavbarController"
 				}
 			}
@@ -67,61 +66,105 @@ var TodoApp = angular.module('TodoApp',
 			url: "/problems/add",
 			views: {
 				"body": {
-					templateUrl:"partials/editProblem.html",
+					templateUrl:"components/problems/editProblem.html",
 					controller:"ProblemsController"
 				},
 				'header': {
 					resolve: { selected: function(){ return "problems"; } },
-					templateUrl:"partials/navbar.html",
+					templateUrl:"components/navbar/navbar.html",
 					controller:"NavbarController"
 				}
 			}
 		})
 		.state('login', {
-		  url: "/login",
+		  	url: "/login",
 			views: {
 				"body": {
-					templateUrl:"partials/login.html",
+					templateUrl:"components/login/login.html",
 					controller:"LoginController"
 				},
 				'header': {
 					resolve: { selected: function(){ return "login"; } },
-					templateUrl:"partials/navbar.html",
+					templateUrl:"components/navbar/navbar.html",
 					controller:"NavbarController"
 				}
 			}
 		})
 		.state('settings', {
-		  url: "/settings",
+		  	url: "/settings",
 			views: {
 				"body": {
-					templateUrl:"partials/settings.html",
+					templateUrl:"components/settings/settings.html",
 					controller:"SettingsController"
 				},
 				'header': {
 					resolve: { selected: function(){ return "settings"; } },
-					templateUrl:"partials/navbar.html",
+					templateUrl:"components/navbar/navbar.html",
 					controller:"NavbarController"
 				}
 			}
 		})
 		.state('signup', {
-		  url: "/signup",
+		  	url: "/signup",
 			views: {
 				"body": {
-					templateUrl:"partials/signup.html",
+					templateUrl:"components/signup/signup.html",
 					controller:"SignUpController"
 				},
 				'header': {
 					resolve: { selected: function(){ return "signup"; } },
-					templateUrl:"partials/navbar.html",
+					templateUrl:"components/navbar/navbar.html",
 					controller:"NavbarController"
+				}
+			}
+		})
+		.state('lists', {
+			abstract: true,
+			url: "/lists",
+			views: {
+				"body" : {
+					template: "<div ui-view='body'></div>",
+					controller: function(){
+
+					}
+				},
+				"header": {
+					resolve: { selected: function(){ return "lists"; } },
+					templateUrl:"components/navbar/navbar.html",
+					controller:"NavbarController"
+				}
+			}
+		})
+		.state('lists.all', {
+			url: "",
+			views: {
+				"body" : {
+					templateUrl: "components/lists/lists.html",
+					controller: "ListController"
+				}
+			}
+		})
+		.state('lists.view', {
+			url: "/:id",
+			views: {
+				"body" : {
+					templateUrl: "components/lists/viewList.html",
+					controller: "ViewListController"
+				}
+			}
+		})
+		.state('lists.edit', {
+			url: "/:id/edit",
+			views: {
+				"body" : {
+					templateUrl: "components/lists/editList.html",
+					controller: "EditList"
 				}
 			}
 		})
 		.state('lab', {
 		  url: "/lab",
-		  templateUrl: "views/lab.html"
+		  templateUrl: "components/lab/lab.html"
 		})
 	;
 })

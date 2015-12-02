@@ -1,0 +1,138 @@
+<ol class="breadcrumb">
+  <li><a ui-sref="lists.all">Lists</a></li>
+  <li class="active">View</li>
+  <li ng-if="isOwner(list)"><a ui-sref="lists.edit(params)">Edit</a></li>
+</ol>
+
+<div class="container view-viewList" >
+	<div>
+		<h1>List</h1>
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-4 info">
+			<div class="col-md-12">
+				<div class="col-md-5 text-right"  >
+					<span ><b>Name:</b></span> 
+				</div>
+				<div class="col-md-7">
+					<span>
+						{{list.name}}
+					</span>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="col-md-12">
+				<div class="col-md-5 text-right"  >
+					<span ><b>Author:</b></span> 
+				</div>
+				<div class="col-md-7">
+					<span>
+						{{list.author.username}}
+					</span>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="col-md-12">
+				<div class="col-md-5 text-right"  >
+					<span ><b>Create Date:</b></span> 
+				</div>
+				<div class="col-md-7">
+					<span>
+						{{list.createDate | date : 'short'}}
+					</span>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="col-md-12" >
+				<div class="col-md-5 text-right"  >
+					<span ><b>Start Date:</b></span> 
+				</div>
+				<div class="col-md-7">
+					<span >
+						{{list.startDate | date : 'short'}}
+					</span>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="col-md-12">
+				<div class="col-md-5 text-right"  >
+					<span ><b>End Date:</b></span> 
+				</div>
+				<div class="col-md-7">
+					<span >
+						{{list.endDate | date : 'short'}}
+					</span>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="col-md-12">
+				<div class="col-md-5 text-right"  >
+					<span ><b>Remaining:</b></span> 
+				</div>
+				<div class="col-md-7">
+					<span >
+						{{remaining}}
+					</span>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="col-md-12">
+				<div class="col-md-5 text-right"  >
+					<span ><u><b>Party:</b></u></span> 
+				</div>
+				<div class="col-md-7">
+					<div class="col-md-12" ng-repeat="user in list.party">
+						<span>{{user.username}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div class="col-md-12">
+				<span class="problems-title">Problems</span>
+			</div>
+			<div class="col-md-12">
+				<table class="table table-striped table-hover table-bordered table-condensed small">
+					<tr>
+						<th>Name</th>
+						<th>Difficulty</th>
+						<th>Categories</th>
+						<th>Solved By</th>
+					</tr>
+					<tr ng-repeat="prob in list.problems">
+						<td>{{::prob.name}}</td>
+						<td>{{::prob.difficulty}}</td>
+						<td>{{::prob.categories.join(',')}}</td>
+						<td style="vertical-align: middle;">
+							<div ng-repeat="userProb in prob.solvedBy" style="padding: 2px;" >
+								<span class="label" 
+									style="cursor:default"
+									ng-class="{'label-success': userProb.status == 'SOLVED',	
+											   'label-info'   : userProb.status == 'PENDING_SOLVED',	
+											   'label-warning': userProb.status == 'TODO',	
+											   'hidden'       : userProb.status == 'UNSOLVED',
+											  }"
+									
+									title="{{::userProb.status}}">
+									{{::userProb.username}}
+								</span>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<hr/>
+</div>
+<div style="font-size:8px;">
+	{{list}}
+</div>

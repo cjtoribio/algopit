@@ -60,11 +60,27 @@ exports.up = function(ws, model){
         });
     });
     
-    
     ws.get('/api/logout', function(req, res){
         console.log('Entered');
         req.logout();
         res.sendStatus(200);
+    });
+
+    ws.get('/api/users/search', function(req, res){
+        var ors = [];
+        if(req.query.name)      ors.push({name:     new RegExp(req.query.name,'i')});
+        if(req.query.username)  ors.push({username: new RegExp(req.query.username,'i')});
+        if(ors.length == 0){
+            return res.status(200).send([]);
+        }
+        model.User.find({
+                '$or': ors
+            })
+            .limit(10)
+            .exec(function(err, problems){
+                if(err)res.send(err);
+                else res.send(problems);
+            });
     });
     
 

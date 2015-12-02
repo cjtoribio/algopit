@@ -1,0 +1,35 @@
+{
+  "name": "algopit",
+  "description": "Algorithmic Online Judges Problems Classifier",
+  "main": "server.js",
+  "authors": [
+    "cjtoribio"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "algorithm",
+    "classifier"
+  ],
+  "homepage": "https://github.com/cjtoribio/algopit",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "public/vendor"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-animate": "~1.4.8",
+    "angular-cookies": "~1.4.8",
+    "angular-messages": "~1.4.8",
+    "angular-resource": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "lodash": "~3.10.1",
+    "jquery": "~2.1.4",
+    "angular-strap": "~2.3.6"
+  }
+}

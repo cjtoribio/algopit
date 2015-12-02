@@ -15,8 +15,9 @@ exports.up = function(ws, model){
         userProb.user = req.user.id;
         userProb.temporary = true;
         userProb.save(function(){
-            logger.info(userProb);
-            res.send(userProb);
+            // logger.info(userProb);
+            // res.send(userProb);
+            res.status(200).send(userProb);
         });
     });
     

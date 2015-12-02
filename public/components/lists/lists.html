@@ -1,0 +1,53 @@
+<ol class="breadcrumb">
+  <li class="active">Lists</li>
+</ol>
+<div style="margin: 20px;"  >
+    
+    <a ui-sref="lists/add">New List</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-inline" style="margin-botom:0;">
+                <div class="form-group">
+                    <label  for="s1">Name:</label>
+                    <input type="text" class="form-control" id="s1" 
+                           placeholder="Name"
+                           ng-model="criteria.name">
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    <table class="table table-striped table-hover table-bordered table-condensed small">
+        <tr>
+            <th class="col-md-3">Name</th>
+            <th class="col-md-3">ProblemsCount</th>
+            <th class="col-md-3">Party</th>
+            <th class="col-md-2">Actions</th>
+        </tr>
+        <tr ng-repeat="list in lists2" >
+            <td>{{list.name}}</td>
+            <td>{{list.problems.length}}</td>
+            <td>{{(list.party || []).length}}</td>
+            <td>
+                <div class="btn-group">
+                    <button ng-click="leaveList(list, $index)" class="btn btn-default btn-xs"
+                    		ng-if="canLeave(list)">Leave</button>
+                    <button ng-click="joinList(list, $index)" class="btn btn-default btn-xs"
+                    		ng-if="canJoin(list)">Join</button>
+                    <button ng-click="viewList(list)" class="btn btn-default btn-xs">View</button>
+                    <button ng-click="editList(list)" class="btn btn-default btn-xs" 
+                    		ng-if="isOwner(list)">Edit</button>
+                    <button ng-click="removeList(list)" class="btn btn-default btn-xs" 
+                    		ng-if="isOwner(list)">Delete</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+    
+    <algo-pagination src="lists1" dst="lists2"></algo-pagination>
+    
+</div>
+<div style="font-size:8px;">
+    {{lists}}
+</div>
