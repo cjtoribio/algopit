@@ -48,6 +48,12 @@
 	    $scope.editList = function(list){
 	    	$state.go('lists.edit', {id: list._id});
 	    }
+	    $scope.removeList = function(list){
+	    	list.$remove(function(err){
+	    		_.pull($scope.lists, list);	
+	    		applyFilter1($scope.criteria);
+	    	});	
+	    }
 
 
 		return;

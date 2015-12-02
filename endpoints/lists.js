@@ -146,7 +146,7 @@ exports.up = function(ws, model){
     });
 
     ws.delete('/api/lists/:id', function(req, res){
-        model.List.find({_id: req.params.id}, function(err, list){
+        model.List.findById(req.params.id, function(err, list){
             if(err)return res.status(500).send(err);
             list.remove(function(){
                 res.status(200).send(list);
