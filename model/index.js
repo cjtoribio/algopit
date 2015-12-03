@@ -8,6 +8,7 @@ var Judge = exports.Judge = require("./judge").Judge;
 var User = exports.User = require("./user").User;
 var UserProblem = exports.UserProblem = require("./userProblem").UserProblem;
 var List = exports.List = require("./list").List;
+var Submission = exports.Submission = require('./submission').Submission;
 
 // var u = User.findOne({username: 'cjtoribio'}).exec(function(err, u){
 //     u.comparePassword('codelioco2', function(err, isMatch){
