@@ -104,9 +104,10 @@
 						<th>Difficulty</th>
 						<th>Categories</th>
 						<th>Solved By</th>
+						<th>Actions</th>
 					</tr>
 					<tr ng-repeat="prob in list.problems">
-						<td>{{::prob.name}}</td>
+						<td><a href="{{::prob.url}}" target="_blank">{{::prob.name}}</a></td>
 						<td>{{::prob.difficulty}}</td>
 						<td>{{::prob.categories.join(',')}}</td>
 						<td style="vertical-align: middle;">
@@ -124,8 +125,36 @@
 								</span>
 							</div>
 						</td>
+						<td>
+                    		<button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" >Solved</button>
+						</td>
 					</tr>
 				</table>
+			</div>
+
+			<div class="col-md-12">
+				<span class="problems-title">Progress</span>
+			</div>
+			<div class="col-md-12">
+				<div class="col-md-12" ng-repeat="user in list.party">
+					{{user.username}}
+					<div class="progress">
+					  <div class="progress-bar progress-bar-info" role="progressbar" 
+					  		aria-valuenow="{{user.progress.pending_solved}}" 
+					  		aria-valuemin="0" 
+					  		aria-valuemax="100" 
+					  		style="width: {{user.progress.pending_solved}}%;" >
+					    	{{user.progress.pending_solved}}%
+					  </div>
+					  <div class="progress-bar progress-bar-success" role="progressbar" 
+					  		aria-valuenow="{{user.progress.solved}}" 
+					  		aria-valuemin="0" 
+					  		aria-valuemax="100" 
+					  		style="width: {{user.progress.solved}}%;" >
+					    	{{user.progress.solved}}%
+					  </div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

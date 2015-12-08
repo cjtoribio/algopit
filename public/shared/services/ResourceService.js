@@ -8,6 +8,7 @@ TodoApp.factory('Resource', ['$resource',function($resource){
         {
             'update': { method:'PUT' },
             'search': { method: 'GET' , params: {action:'search'}, isArray: true } ,
+            'toggleSolved': { method: 'POST' , params: {action:'toggleSolved'} } ,
         }
     );
     
@@ -28,15 +29,20 @@ TodoApp.factory('Resource', ['$resource',function($resource){
     );
     
     service.UserProblem = $resource(
-        '/api/userProb/:id', { id:'@_id'},
-        {'update': { method:'PUT' }}
+        '/api/userProb/:id/:action', { id:'@_id'},
+        {
+            'update': { method:'PUT' },
+            'toggleSolved': {method: 'POST' , params: {action:'toggleSolved'} }
+        }
     );
     
     service.User = $resource(
         '/api/users/:id/:action', { id:'@_id'},
         {
             'update': { method:'PUT' },
-            'search': { method: 'GET' , params: {action:'search'}, isArray: true } ,
+            'search': { method: 'GET'  , params: {action:'search'}, isArray: true } ,
+            'refresh':{ method: 'PUT'  , params: {action:'refresh'} },
+            'login' : { method: 'POST' , params: {action:'login'}, url: '/api/login' }
         }
     );
 

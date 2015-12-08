@@ -1,12 +1,12 @@
-TodoApp.factory('Auth', ['$http','Alert', '$rootScope','$cookieStore', '$location',
-function($http, Alert, $rootScope, $cookieStore, $location){
+TodoApp.factory('Auth', ['$http','Alert', '$rootScope','$cookieStore', '$location', 'Resource',
+function($http, Alert, $rootScope, $cookieStore, $location, Resource){
     
     var user = $cookieStore.get('user');
     $cookieStore.remove('user');
     
     
     var service = {};
-    service.currentUser = user;
+    service.currentUser = user ? new Resource.User(user) : null;
     service.isAuthenticated = function(){
         return service.currentUser != null;
     };
@@ -14,16 +14,28 @@ function($http, Alert, $rootScope, $cookieStore, $location){
         return (service.currentUser || {_id:0})._id;
     };
     service.login = function (user) {
-        $http.post('/api/login', user)
-        .success(function(data){
-            service.currentUser = data;
-            console.log(data);
-            $location.path('/');
-            Alert.alert(Alert.messages.signInSuccess);
-        })
-        .error(function(){
-            Alert.alert(Alert.messages.signInErrorInvalidLogin);
-        });
+        Resource.User.login(
+            user,
+            function(user){
+                service.currentUser = new Resource.User(user);
+                console.log(service.currentUser);
+                $location.path('/');
+                Alert.alert(Alert.messages.signInSuccess);
+            },
+            function(){
+                Alert.alert(Alert.messages.signInErrorInvalidLogin);
+            }
+        );
+        // $http.post('/api/login', user)
+        // .success(function(data){
+        //     service.currentUser = data;
+        //     console.log(data);
+        //     $location.path('/');
+        //     Alert.alert(Alert.messages.signInSuccess);
+        // })
+        // .error(function(){
+        //     Alert.alert(Alert.messages.signInErrorInvalidLogin);
+        // });
     };
     service.logout = function (user) {
         $http.get('/api/logout', user)
@@ -37,7 +49,7 @@ function($http, Alert, $rootScope, $cookieStore, $location){
     service.signUp = function (user) {
         $http.post('/api/signup', user)
         .success(function(data){
-            service.currentUser = data;
+            service.currentUser = new Resource.User(data);
             console.log(data);
             $location.path('/');
             Alert.alert(Alert.messages.signUpSuccess);

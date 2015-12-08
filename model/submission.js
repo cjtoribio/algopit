@@ -9,7 +9,7 @@ var languages = ['C/C++', 'JAVA', 'PYTHON', 'C#', 'OTHER'];
 
 var Submission = new Schema({
     user      : { type: Schema.ObjectId, ref: 'users' },
-    judge     : { type: Schema.ObjectId, ref: 'judges' },
+    judge     : String,
     extId     : String, // Id of the submission in the external judge
     verdict   : { type: String, enum: verdicts },
     time      : Number, // in milliseconds
