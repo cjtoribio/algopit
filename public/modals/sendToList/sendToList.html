@@ -1,5 +1,6 @@
 <div class="modal-backdrop in" style="bottom:0;" ></div>
-<div class="aside right slideRight speed-300" tabindex="-1" role="dialog" style="display: block;" ng-if="active">
+<div class="aside right slideRight speed-300" tabindex="-1" 
+     role="dialog" style="display: block; z-index: 3;" ng-if="active">
     <div class="aside-dialog">
         <div class="aside-content">
             <div class="aside-header" ng-show="title">
@@ -8,6 +9,12 @@
             </div>
             <div class="aside-body" >
             	<div class="list-group">
+                    <div style="color:gray; text-align: center;" ng-if="lists == null" >
+                        Loading... 
+                    </div>
+                    <div style="color:gray; text-align: center;" ng-if="lists && lists.length == 0">
+                        No lists without this problem found
+                    </div>
             		<a href="javascript:void(0)" ng-click="addToList(list)" 
             		   class="list-group-item"  ng-repeat="list in lists">
             			{{list.name}}

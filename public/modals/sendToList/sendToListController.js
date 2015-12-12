@@ -16,8 +16,12 @@
 		console.log($scope);
 		$scope.title = 'Send To List';
 		$scope.content = 'Hellos this is a message';
+		$scope.lists = null;
 		Resource.List.query(function(lists){
-			$scope.lists = lists;
+
+			$scope.lists = _.filter(lists,function(list){
+				return !_.contains(list.problems, problem._id);
+			});
 		});
 
 		$scope.addToList = function(list){
