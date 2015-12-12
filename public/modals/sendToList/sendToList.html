@@ -1,0 +1,22 @@
+<div class="modal-backdrop in" style="bottom:0;" ></div>
+<div class="aside right slideRight speed-300" tabindex="-1" role="dialog" style="display: block;" ng-if="active">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <div class="aside-header" ng-show="title">
+                <button type="button" class="close" ng-click="exit()">×</button>
+                <h4 class="aside-title" ng-bind-html="title">Title</h4>
+            </div>
+            <div class="aside-body" >
+            	<div class="list-group">
+            		<a href="javascript:void(0)" ng-click="addToList(list)" 
+            		   class="list-group-item"  ng-repeat="list in lists">
+            			{{list.name}}
+				    	<span class="badge">{{list.problems.length}}</span>
+            		</a>
+				</div>
+            <div class="aside-footer">
+                <button type="button" class="btn btn-default" ng-click="exit()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

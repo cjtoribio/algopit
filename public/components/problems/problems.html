@@ -91,7 +91,8 @@
                     <button ng-click="removeProblem(prob, $index)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Remove</button>
                     <button ng-click="editProblem(prob)" class="btn btn-default btn-xs">Edit</button>
                     <button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Solved</button>
-                    <button ng-click="toggleTodo(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Todo</button>
+                    <button ng-click="sendToList(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Enlist</button>
+                    <!-- <button ng-click="toggleTodo(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Todo</button> -->
                 </div>
             </td>
         </tr>

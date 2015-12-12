@@ -4,7 +4,7 @@
 	
 	app.controller('ProblemsController', ProblemsController);
 
-	function ProblemsController($scope, Resource, $location, $stateParams, $filter, Alert, Auth){
+	function ProblemsController($scope, Resource, $location, $stateParams, $filter, Alert, Auth, Aside){
 
 		// types
 	    var Problem = Resource.Problem;
@@ -158,6 +158,9 @@
 	            $scope.problem.$update(callback);
 	        else
 	            (new Problem($scope.problem)).$save(callback);
+	    }
+	    $scope.sendToList = function(prob){
+	    	Aside.showSendToList(prob);
 	    }
 	    
 	    $scope.toggleSelection = function (category) {

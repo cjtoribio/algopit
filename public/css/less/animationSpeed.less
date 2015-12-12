@@ -1,0 +1,10 @@
+.generate-columns(4000);
+.generate-columns(@n, @i: 50) when (@i =< @n) {
+    .speed-@{i}
+    {
+        animation-duration: %(~'%d%s',@i,'ms');
+        -webkit-animation-duration: %(~'%d%s',@i,'ms');
+        transition: %(~'%d%s',@i,'ms');
+    }
+    .generate-columns(@n, (@i + 50));
+}

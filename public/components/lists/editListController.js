@@ -8,7 +8,12 @@
 		$scope.params = $state.params;
 
 		if($state.params.id != 'new'){
-			$scope.list = Resource.List.get($state.params);
+			Resource.List.get($state.params).$promise.then(
+				function(list){
+					$scope.list = list;
+				}
+			);
+			
 		}else{
 			$scope.list = createList();
 		}

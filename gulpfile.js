@@ -15,6 +15,7 @@ var config = {
     all: [
         './public/assets/**/*.*',
         './public/components/**/*.js',
+        './public/modals/**/*.js',
         './public/shared/**/*.js',
         './public/css/**/*.css',
         './public/vendor/**/*.*',

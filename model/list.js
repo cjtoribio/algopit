@@ -29,12 +29,12 @@ List.pre('save', function(next){
 
 List.statics.cleanPopulated = function(obj, next){
     if(_.isObject(obj.author))obj.author = obj.author._id;
-    obj.problems = _.map(obj.problems, function(prob){
+    obj.problems = _.uniq(_.map(obj.problems, function(prob){
         return _.has(prob,'_id') ? prob._id : prob;
-    });
-    obj.party = _.map(obj.party, function(user){
+    }));
+    obj.party = _.uniq(_.map(obj.party, function(user){
         return _.has(user,'_id') ? user._id : user;
-    });
+    }));
     (next || _.noop)(obj);
     return obj;
 }

@@ -1,5 +1,6 @@
 var TodoApp = angular.module('TodoApp', 
-	['ngResource', 'ui.router', 'mgcrea.ngStrap','ngCookies','ngAnimate','ngMessages','ngSanitize']
+	['ngResource', 'ui.router', 'mgcrea.ngStrap','ngCookies',
+	 'ngAnimate','ngMessages','ngSanitize','angularModalService']
 )
 // .config(function($locationProvider, $routeProvider) {
 //     $locationProvider.html5Mode(true);

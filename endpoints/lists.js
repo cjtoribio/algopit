@@ -61,7 +61,7 @@ exports.up = function(ws, model){
                         list.problems, 
                         function(problem, callback){
                             model.UserProblem.findOne({
-                                user: user.id,
+                                user: user._id,
                                 problem: problem._id
                             }).exec(function(err, ret){
                                 callback(err, _.property('state')(ret) || 'UNSOLVED');
@@ -108,8 +108,13 @@ exports.up = function(ws, model){
     ws.put('/api/lists/:id', function(req, res){
         var list = req.body;
         model.List.findById(req.params.id, function(err, oList){
-            oList.problems  = _.map(list.problems, '_id');
-            oList.party     = _.map(list.party, '_id');
+
+            oList.problems  = _.uniq(_.map(list.problems, function(obj){
+                return _.isObject(obj) ? _.property('_id')(obj) : obj;
+            }));
+            oList.party     = _.uniq(_.map(list.party, function(obj){
+                return _.isObject(obj) ? _.property('_id')(obj) : obj;
+            }));
             oList.startDate = list.startDate;
             oList.endDate   = list.endDate;
             oList.save(function(err){
