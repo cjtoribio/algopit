@@ -45,6 +45,15 @@
             </div>
         </div>
         <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label">Tags(Comma Separated)</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" 
+                       ng-model="editingTags" 
+                       ng-change="setTags(editingTags);"
+                       ng-model-options="{debounce: 500}"/>
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label">Category</label>
             <div class="col-sm-10">
                 <label ng-repeat="cat in categories" class="col-sm-3">

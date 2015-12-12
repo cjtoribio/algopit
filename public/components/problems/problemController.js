@@ -37,11 +37,23 @@
 	            refreshFiltered(); 
 	        }, true
 	    );
+	    $scope.$watch('problem.tags',
+	    	function(nv){
+	    		$scope.editingTags = (nv||[]).join(',');
+	    	}
+	    );
 	    if($stateParams.id){
-	        $scope.problem = Problem.get({id:$stateParams.id});
+	    	// Problem.get({id:$stateParams.id}).$promise.then(
+	    	// 	function(prob){
+		    // 		$scope.problem = prob;
+		    // 		$scope.editingTags = (prob.tags||[]).join(',');
+	    	// 	}
+	    	// );
+	    	$scope.problem = Problem.get({id:$stateParams.id});
 	        $scope.isEdit = true;
 	    }else{
 	        $scope.problem = { categories:[] };
+	    	$scope.editingTags = '';
 	        $scope.isNew = true;
 	    }
 
@@ -82,10 +94,33 @@
 
 
 	    $scope.loadProblems = function(){
-	        Problem.query(function(data){
-	            $scope.problems = data;
-	            refreshFiltered();
-	        });
+
+	    	$scope.loading = true;
+	    	fetch('','', 50, $scope, done);
+	        function fetch(lastName, lastId, qty, $scope, done) {
+	            Problem.query({
+	                lastName: lastName,
+	                lastId: lastId,
+	                limit: qty
+	            }, function(data) {
+	                if (_.size(data) == 0) return done();
+	                if ($scope.$$destroyed) return;
+	                if ($scope.problems == null) $scope.problems = [];
+	                $scope.problems.push.apply($scope.problems, data);
+	                refreshFiltered();
+	                if (_.size(data) < qty) return done();
+	                fetch(data[data.length - 1].name,
+	                    data[data.length - 1]._id,
+	                    qty * 3,
+	                    $scope,
+	                    done
+	                );
+	            });
+	        }
+
+	    	function done(){
+	    		$scope.loading = false;
+	    	}
 	    }
 
 	    $scope.isSolved = function(prob){
@@ -135,6 +170,9 @@
 	        }
 	    }
 
+	    $scope.setTags = function(tags){
+	    	$scope.problem.tags = _.filter(_.map((tags||'').split(','),_.trim));
+	    }
 	    $scope.setCategory = function(category){
 	        $scope.criteria.categories = category;
 	    }

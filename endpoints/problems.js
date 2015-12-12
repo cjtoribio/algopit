@@ -10,7 +10,22 @@ function ensureAuthenticated(req, res, next) {
 exports.up = function(ws, model){
     logger.info("Starting");
     ws.get('/api/problems', function(req, res){
-        model.Problem.find({}).sort({name: 1}).exec(function(err, problems){
+        var ors = [];
+        if(req.query.lastName)ors.push({name: {'$gt' : req.query.lastName}});
+        if(req.query.lastId && req.query.lastName){
+            ors.push({
+                name: req.query.lastName,
+                _id: {'$gt' : req.query.lastId  }
+            });
+        };
+
+
+        var query = model.Problem.find(ors.length ? {'$or': ors} : {}).sort({name: 1, _id: 1});
+
+        if(req.query.limit)query.limit(req.query.limit);
+        if(req.query.skip)query.skip(req.query.skip);
+
+        query.exec(function(err, problems){
             if(err)res.send(err);
             else res.send(problems || []);
         });

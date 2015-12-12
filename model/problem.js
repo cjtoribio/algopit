@@ -13,9 +13,15 @@ var Problem = new Schema({
     lastUpdated: { type: Date, default: Date.now },
     categories: [String],
     judge: String,
-    url: String,
     writer: String,
-    source: String
+    tags: [String]
+});
+
+Problem.pre('save', function(next){
+    if(this.entryDate == null)
+        this.entryDate = new Date();
+    this.lastUpdated = new Date();
+    next();
 });
 
 exports.Problem = mongoose.model('problems', Problem);

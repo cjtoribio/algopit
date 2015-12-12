@@ -46,6 +46,9 @@ function processByDemand(job, done){
         );
     });
 }
+
+
+
 function processCFUser(user, next){
     async.waterfall([
         function(next){
@@ -122,3 +125,4 @@ function removeRefreshFlag(user, submissions, next){
         next(err, user, submissions);
     });
 }
+
