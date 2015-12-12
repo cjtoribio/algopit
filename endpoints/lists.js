@@ -94,13 +94,12 @@ exports.up = function(ws, model){
     });
 
     ws.post('/api/lists', ensureAuthenticated, function(req, res){
-        var list = _.cloneDeep(req.body);
+        var list = _.clone(req.body);
         list = new model.List(model.List.cleanPopulated(list));
         list.author = req.user._id;
         list.save(function(err){
-            logger.info(list);
             if(err)return res.status(500).send(err);
-            else res.send(list);
+            else res.status(200).send(list);
         });
     });
 
@@ -144,15 +143,15 @@ exports.up = function(ws, model){
             {'$pull': {party: req.user._id}}, 
             {'new': true},
             function(err, newList){
-            if(err)res.status(500).send(err);
-            else res.status(200).send(newList);
+                if(err)res.status(500).send(err);
+                else res.status(200).send(newList);
             }
         );
     });
 
     ws.delete('/api/lists/:id', function(req, res){
         model.List.findById(req.params.id, function(err, list){
-            if(err)return res.status(500).send(err);
+            if(err || !list)return res.status(500).send(err);
             list.remove(function(){
                 res.status(200).send(list);
             });

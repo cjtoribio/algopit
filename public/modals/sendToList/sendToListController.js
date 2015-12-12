@@ -26,8 +26,10 @@
 
 		$scope.addToList = function(list){
 			list.problems.push(problem._id);
-			list.$update();
-			exit();
+			list.$update(function(){
+				exit();	
+			});
+			
 		}
 	}
 
