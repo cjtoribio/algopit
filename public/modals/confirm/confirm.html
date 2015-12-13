@@ -1,6 +1,10 @@
-<div class="modal-backdrop in" style="bottom:0;" ></div>
+<div class="modal-backdrop in" style="bottom:0;" 
+     ng-click="exit(false);">
+    
+</div>
 <div class="modal center ani-fade-bounce speed-300" tabindex="-1" 
-     role="dialog" style="display: block; z-index: 3;" ng-if="active">
+     role="dialog" ng-if="active"
+     style="display: block; z-index: 3;pointer-events: none;" >
     <div class="modal-dialog modal-primary">
         <div class="modal-content">
             <div class="modal-header" ng-show="title">

@@ -17,7 +17,7 @@
                             class="form-control "
                             ng-model="criteria.judge">
                         <option value="">Any</option>
-                        <option ng-repeat="i in judges">{{i.name}}</option>
+                        <option ng-repeat="i in judges">{{::i.name}}</option>
                     </select>
                 </div>
                 &nbsp;
@@ -27,6 +27,7 @@
                            placeholder="Source Id" 
                            ng-model="criteria.sourceReferenceId">
                 </div>
+                <span ng-bind="::criteria.sourceReferenceId"></span>
                 &nbsp;
                 <div class="form-group form-group-sm">
                     <label  for="s4" class="">Tag:</label>
@@ -41,7 +42,7 @@
                             class="form-control  "
                             ng-model="criteria.categories">
                         <option value="">Any</option>
-                        <option ng-repeat="i in categories">{{i.name}}</option>
+                        <option ng-repeat="i in categories">{{::i.name}}</option>
                     </select>
                 </div>
                 &nbsp;
@@ -66,26 +67,26 @@
             <th class="col-md-2">Actions</th>
         </tr>
         <tr ng-repeat="prob in filteredProblems2" ng-class="{success: isSolved(prob), info: isPending(prob), warning: isTodo(prob)}">
-            <td><a ng-href="{{prob.url}}" target="_blank">{{prob.name}}</a></td>
+            <td><a ng-href="{{::prob.url}}" target="_blank">{{::prob.name}}</a></td>
             <td>
-                <div class="progress" style="margin-bottom:0px;" ng-if="prob.difficulty">
+                <div class="progress" style="margin-bottom:0px;" ng-if="::prob.difficulty">
                   <div class="progress-bar" 
                        role="progressbar" aria-valuenow="60" 
                        aria-valuemin="0" 
                        aria-valuemax="100" 
                        ng-style = "{width: (prob.difficulty * 20) + '%'}"
-                       >{{prob.difficulty}}</div>
+                       >{{::prob.difficulty}}</div>
                 </div>
             </td>
-            <td><span>{{prob.judge || ''}}</span></td>
+            <td><span>{{::prob.judge || ''}}</span></td>
             <td>
-                <span ng-repeat="cat in prob.categories">
+                <span ng-repeat="cat in ::prob.categories">
                     <span ng-bind="$index == 0 ? '' : ', '"></span>
                     <a style="cursor:pointer;" 
-                       ng-click="setCategory(cat)">{{cat}}</a>
+                       ng-click="setCategory(cat)">{{::cat}}</a>
                 </span>
             </td>
-            <td><span>{{prob.tags.join(',') || ''}}</span></td>
+            <td><span>{{::prob.tags.join(',') || ''}}</span></td>
             <td>
                 <div class="btn-group">
                     <button ng-click="removeProblem(prob, $index)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Remove</button>

@@ -2,9 +2,9 @@
 (function(){'use strict';
 
 	var app = angular.module('TodoApp');
-	app.controller('EditList', EditList);
+	app.controller('EditListController', EditListController);
 
-	function EditList($scope, $state, Resource, Auth){
+	function EditListController($scope, $state, Resource, Auth){
 		$scope.params = $state.params;
 
 		if($state.params.id != 'new'){

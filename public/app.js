@@ -159,7 +159,7 @@ var TodoApp = angular.module('TodoApp',
 			views: {
 				"body" : {
 					templateUrl: "components/lists/editList.html",
-					controller: "EditList"
+					controller: "EditListController"
 				}
 			}
 		})
