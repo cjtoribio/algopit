@@ -59,7 +59,7 @@ function transformProblems(problems, next){
     // url -> http://codeforces.com/contest/{#contestId}/problem/{#index}'
     function transformCategories(tags){
         var dic = {
-            'implementation': 'Brute Force',
+            'implementation': 'Implementation',
             'dp'            : 'Dynamic Programming',
             'brute force'   : 'Brute Force',
             'greedy'        : 'Greedy',
@@ -76,13 +76,13 @@ function transformProblems(problems, next){
             'dsu'           : 'Disjoint Set',
             'geometry'      : 'Geometry',
             'binary search' : 'Binary Search',
-            'constructive algorithms': null,
+            'constructive algorithms': 'Implementation',
             'two pointers'  : 'Two Pointers',
             'ternary search': 'Ternary Search',
             'matrices'      : 'Matrix Exponentiation',
-            'trees'         : null,
-            'shortest paths': 'Graph Theory',
-            'expression parsing': null,
+            'trees'         : 'Trees',
+            'shortest paths': 'Shortest Path',
+            'expression parsing': 'Parsing',
             'schedules'     : null,
         }
         var transformed = 

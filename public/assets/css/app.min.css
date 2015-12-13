@@ -512,6 +512,21 @@ table.table-danger th {
   background-color: #f2dede;
   border-color: #ebccd1;
 }
+i.fa-2 {
+  font-size: 2em;
+}
+i.fa-3 {
+  font-size: 4em;
+}
+i.fa-4 {
+  font-size: 7em;
+}
+i.fa-5 {
+  font-size: 12em;
+}
+i.fa-6 {
+  font-size: 20em;
+}
 
 .view-editList .dropdown-menu .btn.btn-default {
   border: none;
