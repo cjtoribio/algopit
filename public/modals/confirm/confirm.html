@@ -1,0 +1,18 @@
+<div class="modal-backdrop in" style="bottom:0;" ></div>
+<div class="modal center ani-fade-bounce speed-300" tabindex="-1" 
+     role="dialog" style="display: block; z-index: 3;" ng-if="active">
+    <div class="modal-dialog modal-primary">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="title">
+                <button type="button" class="close" ng-click="exit()">×</button>
+                <h4 class="modal-title" ng-bind-html="title">Title</h4>
+            </div>
+            <div class="modal-body" ng-show="message" ng-bind-html="message" >
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="exit(true)">Yes</button>
+                <button type="button" class="btn btn-default" focus-me="true" ng-click="exit(false)">No</button>
+            </div>
+        </div>
+    </div>
+</div>

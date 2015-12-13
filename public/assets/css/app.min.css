@@ -399,32 +399,60 @@
   transition: 4000ms;
 }
 
-.fadeIn2.ng-enter,
-.fadeIn2.ng-hide-remove {
+.ani-fade.ng-enter,
+.ani-fade.ng-hide-remove {
   -webkit-animation-name: fadeIn;
   /* Safari/Chrome */
   animation-name: fadeIn;
   /* Safari/Chrome */
 }
-.fadeIn2.ng-leave,
-.fadeIn2.ng-hide-add {
+.ani-fade.ng-leave,
+.ani-fade.ng-hide-add {
   -webkit-animation-name: fadeOut;
   /* Safari/Chrome */
   animation-name: fadeOut;
   /* Safari/Chrome */
 }
-.slideRight.ng-enter,
-.slideRight.ng-hide-remove {
+.ani-slideRight.ng-enter,
+.ani-slideRight.ng-hide-remove {
   -webkit-animation-name: slideInRight;
   /* Safari/Chrome */
   animation-name: slideInRight;
   /* Safari/Chrome */
 }
-.slideRight.ng-leave,
-.slideRight.ng-hide-add {
+.ani-slideRight.ng-leave,
+.ani-slideRight.ng-hide-add {
   -webkit-animation-name: slideOutRight;
   /* Safari/Chrome */
   animation-name: slideOutRight;
+  /* Safari/Chrome */
+}
+.ani-fade-zoom.ng-enter,
+.ani-fade-zoom.ng-hide-remove {
+  -webkit-animation-name: fadeIn, zoomIn;
+  /* Safari/Chrome */
+  animation-name: fadeIn, zoomIn;
+  /* Safari/Chrome */
+}
+.ani-fade-zoom.ng-leave,
+.ani-fade-zoom.ng-hide-add {
+  -webkit-animation-name: fadeOut, zoomOut;
+  /* Safari/Chrome */
+  animation-name: fadeOut, zoomOut;
+  /* Safari/Chrome */
+}
+.ani-fade-bounce.ng-enter,
+.ani-fade-bounce.ng-hide-remove {
+  -webkit-animation-name: fadeIn, bounceIn;
+  /* Safari/Chrome */
+  animation-name: fadeIn, bounceIn;
+  /* Safari/Chrome */
+}
+.ani-fade-bounce.ng-leave,
+.ani-fade-bounce.ng-hide-add {
+  -webkit-animation-name: fadeOut, bounceOut;
+  /* Safari/Chrome */
+  animation-name: fadeOut, bounceOut;
   /* Safari/Chrome */
 }
 
@@ -444,9 +472,45 @@
 .alertsContainer .alert.top-right.close {
   padding-left: 10px;
 }
-.am-fade.aside-backdrop,
-.am-fade.modal-backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
+table.table-primary {
+  border-color: #337ab7;
+}
+table.table-primary th {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+table.table-success {
+  border-color: #d6e9c6;
+}
+table.table-success th {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+table.table-info {
+  border-color: #bce8f1;
+}
+table.table-info th {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+table.table-warning {
+  border-color: #faebcc;
+}
+table.table-warning th {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+table.table-danger {
+  border-color: #ebccd1;
+}
+table.table-danger th {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
 }
 
 .view-editList .dropdown-menu .btn.btn-default {
@@ -459,6 +523,47 @@
 }
 .view-editList .dropdown-menu .btn.btn-default.btn-block {
   padding: 8px;
+}
+
+.modal-primary {
+  border-color: #337ab7;
+}
+.modal-primary .modal-header {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+.modal-success {
+  border-color: #d6e9c6;
+}
+.modal-success .modal-header {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+.modal-info {
+  border-color: #bce8f1;
+}
+.modal-info .modal-header {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+.modal-warning {
+  border-color: #faebcc;
+}
+.modal-warning .modal-header {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+.modal-danger {
+  border-color: #ebccd1;
+}
+.modal-danger .modal-header {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
 }
 
 .navbar.navbar-default {

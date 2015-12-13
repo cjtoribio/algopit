@@ -56,12 +56,12 @@
         Showing {{filteredProblems2.length}} of the {{filteredProblems1.length}} mathing from the {{problems.length}} problems
         <span ng-if="loading">loading...</span>
     </span>
-    <table class="table table-striped table-hover table-bordered table-condensed small">
+    <table class="table table-striped table-hover table-bordered table-condensed small table-primary">
         <tr>
-            <th class="col-md-3">Name</th>
-            <th class="col-md-1">Difficulty</th>
-            <th class="col-md-1">Source</th>
-            <th class="col-md-3">Categories</th>
+            <th class="col-md-2" style="cursor:pointer" ng-click="sortBy('name')">Name</th>
+            <th class="col-md-1" style="cursor:pointer" ng-click="sortBy('difficulty')">Difficulty</th>
+            <th class="col-md-1" style="cursor:pointer" ng-click="sortBy('judge')">Judge</th>
+            <th class="col-md-4" style="cursor:pointer" ng-click="sortBy('categories')">Categories</th>
             <th class="col-md-1">Tags</th>
             <th class="col-md-2">Actions</th>
         </tr>
@@ -92,7 +92,6 @@
                     <button ng-click="editProblem(prob)" class="btn btn-default btn-xs">Edit</button>
                     <button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Solved</button>
                     <button ng-click="sendToList(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Enlist</button>
-                    <!-- <button ng-click="toggleTodo(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Todo</button> -->
                 </div>
             </td>
         </tr>

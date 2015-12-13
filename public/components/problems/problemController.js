@@ -80,7 +80,6 @@
 	            $scope.problemsSolved[up.problem] = up;
 	            var message = null;
 	            if(type === "PENDING_SOLVED") message = Alert.messages.solved.success;
-	            if(type === "TODO") message = Alert.messages.todo.success;
 	            Alert.alert(message);
 	        });
 	    }
@@ -142,12 +141,16 @@
 	    }
 	    
 	    $scope.removeProblem = function(problem, idx){
-	        if(confirm("Are you sure you want to remove this problem?")){
-	            problem.$remove(function(obj){
-	                $scope.problems.splice(idx,1);
-	                setTimeout(function(){refreshFilters();},100);
-	            });
-	        }
+	    	Aside.confirm('Confirm Delete', 'Are you sure you want to remove this problem?')
+			.then(function(ok){
+				if(ok){
+					problem.$remove(function(obj){
+						$scope.problems.splice(idx,1);
+						setTimeout(function(){refreshFiltered();},100);
+					});
+				}
+			});
+	    	return;
 	    }
 
 	    $scope.sendProblem = function(problem){
@@ -160,7 +163,11 @@
 	            (new Problem($scope.problem)).$save(callback);
 	    }
 	    $scope.sendToList = function(prob){
-	    	Aside.showSendToList(prob);
+	    	Aside.showSendToList(prob).then(
+	    		function(result){
+	    			console.log(result);
+	    		}
+	    	)
 	    }
 	    
 	    $scope.toggleSelection = function (category) {
@@ -203,15 +210,18 @@
 	        }
 	    }
 
-	    $scope.toggleTodo = function(prob){
-	        if(!_.has($scope.problemsSolved, prob._id)){
-	            addUserProblem(prob, 'TODO');
-	        }else {
-	            var message = null;
-	            if($scope.isTodo(prob)) message = Alert.messages.todo.duplicated;
-	            else                    message = Alert.messages.todo.solved;
-	            Alert.alert(message);
-	        }
+	    $scope.sortBy = function(field){
+	    	var WoN= _.filter($scope.problems, field);
+	    	var Nul= _.reject($scope.problems, field);
+
+	    	var np = _.sortBy(WoN, field).concat(Nul);
+	    	if(_.every($scope.problems, function(p, idx){
+	    		return p._id == np[idx]._id;
+	    	})){
+	    		np = _.sortByOrder(WoN, [field], ['desc']).concat(Nul);
+	    	}
+	    	$scope.problems = np;
+	    	refreshFiltered();
 	    }
 
 	}

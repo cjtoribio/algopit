@@ -4,12 +4,11 @@
 	app.controller('SendToListController', SendToListController);
 
 	function SendToListController($scope, Resource, close, $timeout, problem){
-		console.log(problem);
 		$scope.active = false;
-		$timeout(function() { $scope.active = true; }, 200);
-		var exit = $scope.exit = function(){
-			close(null, 200);
+		$timeout(function() { $scope.active = true; }, 10);
+		var exit = $scope.exit = function(result){
 			$scope.active = false;
+			close(result || false, 300);
 		}
 
 
@@ -19,17 +18,30 @@
 		$scope.lists = null;
 		Resource.List.query(function(lists){
 
-			$scope.lists = _.filter(lists,function(list){
+			$scope.lists = lists;
+			$scope.listsToAdd = _.filter(lists,function(list){
 				return !_.contains(list.problems, problem._id);
 			});
+			$scope.listsToRemove = _.filter(lists,function(list){
+				return _.contains(list.problems, problem._id);
+			});
 		});
+
+		$scope.canAddTo = function(list){
+			return !_.contains(list.problems, problem._id);
+		}
 
 		$scope.addToList = function(list){
 			list.problems.push(problem._id);
 			list.$update(function(){
-				exit();	
+				exit(true);	
 			});
-			
+		}
+		$scope.removeFromList = function(list){
+			_.pull(list.problems, problem._id);
+			list.$update(function(){
+				exit(true);	
+			});
 		}
 	}
 
