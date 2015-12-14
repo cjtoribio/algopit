@@ -8,7 +8,8 @@ TodoApp.factory('Resource', ['$resource',function($resource){
         {
             'update': { method:'PUT' },
             'search': { method: 'GET' , params: {action:'search'}, isArray: true } ,
-            'toggleSolved': { method: 'POST' , params: {action:'toggleSolved'} } ,
+            'toggleSolved' : { method: 'POST' , params: {action:'toggleSolved' } } ,
+            'setDifficulty': { method: 'POST' , params: {action:'setDifficulty'} } ,
         }
     );
     

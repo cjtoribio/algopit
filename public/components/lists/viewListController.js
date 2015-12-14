@@ -37,10 +37,12 @@
 	    	var verdict = GetSetVerdict(prob);
 	    	var nverdict= verdict == 'PENDING_SOLVED' ? 'UNSOLVED' : 'PENDING_SOLVED';
 	    	Resource.Problem.toggleSolved(prob).$promise.then(
-	    		function(nstate){
+	    		function(up){
 					var message = null;
-					if(nverdict === "PENDING_SOLVED") message = Alert.messages.solved.success;
-					if(nverdict === "TODO") message = Alert.messages.todo.success;
+					if(up.state === "PENDING_SOLVED") 
+						message = Alert.messages.problems.solved.success;
+					if(up.state === "UNSOLVED") 
+						message = Alert.messages.problems.unsolved.success;
 					Alert.alert(message);
 					GetSetVerdict(prob, nverdict);
 					computeAllSolvedBy();

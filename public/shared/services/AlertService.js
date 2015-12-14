@@ -28,30 +28,25 @@ function($alert){
             placement: 'top-right',
             type: 'danger',
         },
-        solved: {
-            success: { 
-               type: 'success',
-               content: 'Problem marked as solved. &nbsp;'
+        problems: {
+            unsolved : {
+                success: {
+                   type: 'success',
+                   content: 'Problem marked as unsolved.'
+                }
+            },       
+            solved: {
+                success: { 
+                   type: 'success',
+                   content: 'Problem marked as solved. &nbsp;'
+                },
+                verified: {
+                    type: 'danger',
+                    content: 'This problem cannot be unmarked because it was verified'
+                }
             },
-            verified: {
-                type: 'success',
-                content: 'This problem cannot be unmarked because it was verified'
-            }
         },
-        todo: {
-            success: { 
-               type: 'success',
-               content: 'Problem marked as TODO. &nbsp;'
-            },
-            duplicated: { 
-               type: 'success',
-               content: 'This problem was marked as TODO already. &nbsp;'
-            },
-            solved: { 
-               type: 'success',
-               content: 'This problem was marked as solved already. &nbsp;'
-            }
-        },
+ 
         lists: {
             joinSuccess: {
                 type: 'success',

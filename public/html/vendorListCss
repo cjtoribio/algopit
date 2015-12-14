@@ -1,3 +1,4 @@
 vendor/bootstrap-additions/dist/bootstrap-additions.min.css
 https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css
 vendor/font-awesome/css/font-awesome.min.css
+vendor/angular-loading-bar/build/loading-bar.min.css

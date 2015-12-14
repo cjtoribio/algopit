@@ -27,6 +27,16 @@
 				}
 			}));
 		}
+		service.showSetDifficulty = function(prob, userProblem){
+			return wrapWithPromise(ModalService.showModal({
+				controller: 'SetDifficultyController',
+				templateUrl: 'modals/setDifficulty/setDifficulty.html',
+				inputs: {
+					problem: prob,
+					userProblem: userProblem
+				}
+			}));
+		}
 
 		return service;
 

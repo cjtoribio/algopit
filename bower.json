@@ -34,6 +34,7 @@
     "angular-motion": "~0.4.3",
     "bootstrap-additions": "~0.3.1",
     "angular-modal-service": "~0.6.9",
-    "font-awesome": "~4.5.0"
+    "font-awesome": "~4.5.0",
+    "angular-loading-bar": "~0.8.0"
   }
 }

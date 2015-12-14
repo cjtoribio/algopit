@@ -1,11 +1,10 @@
-<div class="modal-backdrop in" style="bottom:0;" 
-     ng-click="exit(false);">
-    
+<div class="modal-backdrop in" style="bottom:0; z-index: 3;" >
 </div>
 <div class="modal center ani-fade-bounce speed-300" tabindex="-1" 
-     role="dialog" ng-if="active"
-     style="display: block; z-index: 3;pointer-events: none;" >
-    <div class="modal-dialog modal-primary">
+     role="dialog" ng-if="active" ng-click="exit(false);"
+     style="display: block; " >
+    <div class="modal-dialog modal-primary " 
+         style="z-index: 4;" ng-click="$event.stopPropagation();">
         <div class="modal-content">
             <div class="modal-header" ng-show="title">
                 <button type="button" class="close" ng-click="exit()">×</button>
