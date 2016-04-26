@@ -1,0 +1,40 @@
+.ani-fade {
+    &.ng-enter, &.ng-hide-remove {
+        -webkit-animation-name: fadeIn; /* Safari/Chrome */
+        animation-name: fadeIn; /* Safari/Chrome */
+    }
+    &.ng-leave, &.ng-hide-add {
+        -webkit-animation-name: fadeOut; /* Safari/Chrome */
+        animation-name: fadeOut; /* Safari/Chrome */
+    }
+}
+.ani-slideRight {
+	&.ng-enter, &.ng-hide-remove {
+        -webkit-animation-name: slideInRight; /* Safari/Chrome */
+        animation-name: slideInRight; /* Safari/Chrome */	
+    }
+    &.ng-leave, &.ng-hide-add {
+        -webkit-animation-name: slideOutRight; /* Safari/Chrome */
+        animation-name: slideOutRight; /* Safari/Chrome */	
+    }
+}
+.ani-fade-zoom {
+    &.ng-enter, &.ng-hide-remove {
+        -webkit-animation-name: fadeIn, zoomIn; /* Safari/Chrome */
+        animation-name: fadeIn, zoomIn; /* Safari/Chrome */   
+    }
+    &.ng-leave, &.ng-hide-add {
+        -webkit-animation-name: fadeOut, zoomOut; /* Safari/Chrome */
+        animation-name: fadeOut, zoomOut; /* Safari/Chrome */  
+    }
+}
+.ani-fade-bounce {
+    &.ng-enter, &.ng-hide-remove {
+        -webkit-animation-name: fadeIn, bounceIn; /* Safari/Chrome */
+        animation-name: fadeIn, bounceIn; /* Safari/Chrome */   
+    }
+    &.ng-leave, &.ng-hide-add {
+        -webkit-animation-name: fadeOut, bounceOut; /* Safari/Chrome */
+        animation-name: fadeOut, bounceOut; /* Safari/Chrome */  
+    }
+}

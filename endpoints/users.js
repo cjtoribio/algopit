@@ -3,6 +3,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var logger = require('../utils/logger').getLogger('endpoints:users');
+var moment = require('moment');
 
 
 function ensureAuthenticated(req, res, next) {
@@ -66,18 +67,6 @@ exports.up = function(ws, model){
         res.sendStatus(200);
     });
 
-    ws.put('/api/users/:id', ensureAuthenticated, function(req, res, next){
-        
-        console.log(req.body);
-        model.User.update( { _id:req.params.id }, req.body, function(err){
-            if(err) 
-                next(err);
-            else {
-                res.send(req.body);
-            }
-        });
-    });
-
     ws.get('/api/users/search', function(req, res){
         var ors = [];
         if(req.query.name)      ors.push({name:     new RegExp(req.query.name,'i')});
@@ -89,12 +78,37 @@ exports.up = function(ws, model){
                 '$or': ors
             })
             .limit(10)
-            .exec(function(err, problems){
+            .exec(function(err, users){
                 if(err)res.send(err);
-                else res.send(problems);
+                else res.send(users);
             });
     });
     
+    ws.put('/api/users/:id/refresh', ensureAuthenticated, function(req, res){
+        model.User.findById(req.user._id, function(err, user){
+
+            if(!_.property('codeforces.refresh')(user)){
+                var date  = moment().add(10, 'seconds');
+                _.set(user, 'codeforces.refresh', date);
+            }
+            user.save(function(err){
+                if(err)res.status(500).send(err);
+                else res.status(200).send(user);
+            });
+
+        });
+    });
+
+    ws.put('/api/users/:id', ensureAuthenticated, function(req, res, next){
+        
+        model.User.update( { _id:req.params.id }, req.body, function(err){
+            if(err) 
+                next(err);
+            else {
+                res.send(req.body);
+            }
+        });
+    });
 
     
     

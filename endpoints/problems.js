@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var logger = require('../utils/logger').getLogger('endpoints:problems');
+var async  = require('async');
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
@@ -9,7 +10,22 @@ function ensureAuthenticated(req, res, next) {
 exports.up = function(ws, model){
     logger.info("Starting");
     ws.get('/api/problems', function(req, res){
-        model.Problem.find({}).sort({name: 1}).exec(function(err, problems){
+        var ors = [];
+        if(req.query.lastName)ors.push({name: {'$gt' : req.query.lastName}});
+        if(req.query.lastId && req.query.lastName){
+            ors.push({
+                name: req.query.lastName,
+                _id: {'$gt' : req.query.lastId  }
+            });
+        };
+
+
+        var query = model.Problem.find(ors.length ? {'$or': ors} : {}).sort({name: 1, _id: 1});
+
+        if(req.query.limit)query.limit(req.query.limit);
+        if(req.query.skip)query.skip(req.query.skip);
+
+        query.exec(function(err, problems){
             if(err)res.send(err);
             else res.send(problems || []);
         });
@@ -32,9 +48,9 @@ exports.up = function(ws, model){
                 else res.send(problems);
             });
     });
+
     
     ws.get('/api/problems/:id',function(req, res){
-        logger.info('WTF2');
         model.Problem.find({_id: req.params.id }, function(err, results){
             if(err)res.send(err);
             else res.send(results[0] || {});
@@ -62,5 +78,55 @@ exports.up = function(ws, model){
             else res.send({affected: obj});
         });
     });
+
+
+    // UserProblem
+    ws.post('/api/problems/:id/toggleSolved', ensureAuthenticated, function(req, res){
+        model.Problem.findById(req.params.id, function(err, prob){
+            model.UserProblem
+                .findOne({problem: prob._id, user: req.user._id})
+                .exec(function(err, up){
+                    if(err){
+                        logger.error(err);
+                        return res.sendStatus(500);
+                    }
+                    up = up || new model.UserProblem({
+                        problem: prob._id, 
+                        user: req.user._id
+                    });
+                    if(up.state == 'SOLVED'){
+                        logger.error('Cannot edit after SOLVED');
+                        return res.sendStatus(401);
+                    }
+                    var nstate = req.query.state || (up.state == 'PENDING_SOLVED' ? 'UNSOLVED' : 'PENDING_SOLVED');
+                    up.state = nstate;
+                    up.save(function(){
+                        res.status(200).send(up);
+                    });
+                });
+        });
+    });
+
+    ws.post('/api/problems/:id/setDifficulty', ensureAuthenticated, function(req, res){
+        model.Problem.findById(req.params.id, function(err, prob){
+            model.UserProblem
+                .findOne({problem: prob._id, user: req.user._id})
+                .exec(function(err, up){
+                    if(err){
+                        logger.error(err);
+                        return res.sendStatus(500);
+                    }
+                    up = up || new model.UserProblem({
+                        problem: prob._id, 
+                        user: req.user._id,
+                    });
+                    up.difficulty = req.body.difficulty;
+                    up.save(function(){
+                        res.status(200).send(up);
+                    });
+                });
+        });
+    });
+
     logger.info("Started");
 };

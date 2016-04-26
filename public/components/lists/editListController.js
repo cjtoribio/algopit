@@ -2,13 +2,18 @@
 (function(){'use strict';
 
 	var app = angular.module('TodoApp');
-	app.controller('EditList', EditList);
+	app.controller('EditListController', EditListController);
 
-	function EditList($scope, $state, Resource, Auth){
+	function EditListController($scope, $state, Resource, Auth){
 		$scope.params = $state.params;
 
 		if($state.params.id != 'new'){
-			$scope.list = Resource.List.get($state.params);
+			Resource.List.get($state.params).$promise.then(
+				function(list){
+					$scope.list = list;
+				}
+			);
+			
 		}else{
 			$scope.list = createList();
 		}

@@ -1,5 +1,7 @@
 var TodoApp = angular.module('TodoApp', 
-	['ngResource', 'ui.router', 'mgcrea.ngStrap','ngCookies','ngAnimate','ngMessages','ngSanitize']
+	['ngResource', 'ui.router', 'mgcrea.ngStrap','ngCookies',
+	 'ngAnimate','ngMessages','ngSanitize','angularModalService',
+	 'angular-loading-bar']
 )
 // .config(function($locationProvider, $routeProvider) {
 //     $locationProvider.html5Mode(true);
@@ -26,6 +28,9 @@ var TodoApp = angular.module('TodoApp',
 //         redirectTo: '/problems'
 //       });
 // })
+.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeBar = false;
+}])
 .config(function($stateProvider, $urlRouterProvider,$locationProvider) {
   //
   // For any unmatched url, redirect to /state1
@@ -53,7 +58,7 @@ var TodoApp = angular.module('TodoApp',
 			views: {
 				"body": {
 					templateUrl:"components/problems/editProblem.html",
-					controller:"ProblemsController"
+					controller:"EditProblemController"
 				},
 				'header': {
 					resolve: { selected: function(){ return "problems"; } },
@@ -67,7 +72,7 @@ var TodoApp = angular.module('TodoApp',
 			views: {
 				"body": {
 					templateUrl:"components/problems/editProblem.html",
-					controller:"ProblemsController"
+					controller:"EditProblemController"
 				},
 				'header': {
 					resolve: { selected: function(){ return "problems"; } },
@@ -158,7 +163,7 @@ var TodoApp = angular.module('TodoApp',
 			views: {
 				"body" : {
 					templateUrl: "components/lists/editList.html",
-					controller: "EditList"
+					controller: "EditListController"
 				}
 			}
 		})

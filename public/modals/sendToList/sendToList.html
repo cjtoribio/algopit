@@ -1,0 +1,38 @@
+<div class="modal-backdrop in" style="bottom:0; z-index: 3;" ng-click="exit();"></div>
+<div class="aside right ani-slideRight speed-300" tabindex="-1" 
+     role="dialog" style="display: block; z-index: 4;" ng-if="active">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <div class="aside-header" ng-show="title">
+                <button type="button" class="close" ng-click="exit()">×</button>
+                <h4 class="aside-title" ng-bind-html="title">Title</h4>
+            </div>
+            <div class="aside-body" >
+                <div style="color:gray; text-align: center;" ng-if="lists == null" >
+                    Loading... 
+                </div>
+                <div style="color:gray; text-align: center;" ng-if="lists && lists.length == 0">
+                    <i class="fa fa-list"></i>&nbsp;No lists found
+                </div>
+                <h4 ng-if="listsToAdd.length">Add to:</h4>
+                <div class="list-group">
+                    <a href="javascript:void(0)" ng-click="addToList(list)"
+                       ng-repeat="list in listsToAdd" class="list-group-item">
+                        {{list.name}}
+                        <span class="badge">{{list.problems.length}}</span>
+                    </a>
+                </div>
+                <h4 ng-if="listsToRemove.length">Remove from:</h4>
+                <div class="list-group">
+                    <a href="javascript:void(0)" ng-click="removeFromList(list)" 
+                       ng-repeat="list in listsToRemove" class="list-group-item">
+                        {{list.name}}
+                        <span class="badge">{{list.problems.length}}</span>
+                    </a>
+				</div>
+            <div class="aside-footer">
+                <button type="button" class="btn btn-default" ng-click="exit()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,7 @@
             </a>
         </li>
         <li ng-class="{active: currentPage == {{i}}}" ng-repeat="i in pages" ng-click="goTo(i)">
-            <a href="#" style="width:50px;" class="text-center">{{i}}</a></li>
+            <a href="#" style="width:50px;" class="text-center">{{::i}}</a></li>
         <li>
             <a href="#" aria-label="Next" ng-click="nextPage()">
                 <span aria-hidden="true">&raquo;</span>
@@ -20,7 +20,7 @@
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     <li ng-repeat="i in [5,10,15,20,25,30,35,40]">
-                        <a href="#" ng-click="setNumPerPage(i)">{{i}} Problems</a>
+                        <a href="#" ng-click="setNumPerPage(i)">{{::i}} Problems</a>
                     </li>
                 </ul>
             </div>

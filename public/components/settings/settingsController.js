@@ -11,6 +11,10 @@
                 Alert.alert(Alert.messages.settings.success);
             });
         }
+
+        $scope.refresh = function(judge){
+            $scope.user.$refresh({judge: judge});
+        }
     
     }
 
