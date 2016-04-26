@@ -15,11 +15,13 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var logger = require('./utils/logger').getLogger('app:server');
 var MongoStore = require('connect-mongo')(session);
+var compression = require("compression");
 
 logger.info("Starting express");
 
 var ws = express();
 ws.set('port', process.env.PORT || 3000);
+ws.use(compression());
 ws.use(bodyParser.json()); // for parsing application/json
 ws.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 ws.use(cookieParser()); // for parsing cookies
