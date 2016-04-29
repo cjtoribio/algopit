@@ -33,11 +33,12 @@ exports.up = function(ws, model){
         });
     });
     
-    
     ws.get('/api/userProb/', ensureAuthenticated, function(req, res, next){
         model.UserProblem.find({
             user: req.user.id,
-        }).exec(function(err, ret){
+        })
+        .select('problem state difficulty')
+        .exec(function(err, ret){
             if(err)throw err;
             res.send(ret);
         });
