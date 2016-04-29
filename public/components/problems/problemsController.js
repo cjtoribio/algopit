@@ -22,11 +22,11 @@
 	    $scope.categories = Category.query();
 	    $scope.judges = Judge.query();
 	    if(Auth.isAuthenticated()){
-	        UserProblem.query(
-	            function(ret){
-	                $scope.problemsSolved = _.indexBy(ret, 'problem');
-	            }
-	        );
+	        // UserProblem.query(
+	        //     function(ret){
+	        //         $scope.problemsSolved = _.indexBy(ret, 'problem');
+	        //     }
+	        // );
 	    }
 
 	    // Watches filter
