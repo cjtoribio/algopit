@@ -6,27 +6,44 @@ var cheerio = require('cheerio');
 var logger  = require('../../utils/logger').getLogger();
 
 
-function removeExisting(problems, next){
+function addInfoToExisting(problems, next){
     var ids = _.chain(problems)
                 .map('sourceReferenceId')
                 .uniq()
                 .sort()
                 .value();
     model.Problem.find({
-        // sourceReferenceId: { '$in' : ids },
+        sourceReferenceId: { '$in' : ids },
         judge: _.property('0.judge')(problems)
     }).exec(function(err, probs){
         var probMap = _.indexBy(probs, 'sourceReferenceId');
-        var fProblems = _.filter(problems, function(prob){
-            return !probMap[prob.sourceReferenceId];
+        var updatedProbs = 0, newProbs = 0;
+        problems = _.map(problems, function(prob, idx){
+            var oldProb = probMap[prob.sourceReferenceId];
+            if(oldProb){
+                // count updated problems
+                updatedProbs++;
+                var allCats = _.uniq(oldProb.categories.concat(prob.categories || []));
+                var allTags = _.uniq(oldProb.tags.concat(prob.tags || []));
+                oldProb.categories = allCats;
+                oldProb.tags       = allTags;
+                return oldProb;
+            }else{
+                newProbs++;
+                return prob;
+            }
         });
-        logger.info('Filtered ' + fProblems.length);
-        next(null, fProblems);
+        logger.info('Updating(' + updatedProbs + ') Inserting(' + newProbs + ')');
+        next(null, problems);
     });
 }
 function wrapInProblemsObject(problems, next){
     next(null, _.map(problems, function(prob){
-        return new model.Problem(prob);
+        if(prob._id){
+            return prob;
+        }else{
+            return new model.Problem(prob);
+        }
     }));
 }
 function saveAll(problems, next){
@@ -66,7 +83,7 @@ exports.save = function(options){
         async.waterfall([
             _.partial(noop, problems),
             options.countReceived ? _.partial(countProblems,'Received ') : noop,
-            removeExisting,
+            addInfoToExisting,
             wrapInProblemsObject,
             options.save ? saveAll : noop,
             options.printAfterSave ? printDetail : noop,
@@ -77,4 +94,3 @@ exports.save = function(options){
         ]);
     }
 }
-

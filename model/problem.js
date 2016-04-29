@@ -15,6 +15,8 @@ var Problem = new Schema({
     judge: String,
     writer: String,
     tags: [String]
+}, {
+    timestamps: { createdAt: 'createdAt' }
 });
 
 Problem.pre('save', function(next){

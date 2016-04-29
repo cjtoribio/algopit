@@ -5,13 +5,14 @@ var model   = require('../../model');
 var cheerio = require('cheerio');
 var general = require('./general');
 var logger  = require('../../utils/logger').getLogger();
+var moment  = require('moment');
 
 module.exports = {
-    getNewProblems : getNewProblemsFromCodeforces
+    updateProblems  : updateProblems
 };
 
-function getNewProblemsFromCodeforces(job, done){
-    logger.profile('codeforces.getNewProblemsFromCodeforces');
+function updateProblems(job, done){
+    var st = moment();
     async.waterfall([
         getAllProblems,          // (next) -> next(null, problems)
         transformProblems,       // (problems,next) -> next(null, problems)
@@ -19,7 +20,7 @@ function getNewProblemsFromCodeforces(job, done){
     ],  function (err, result){
             (done||_.noop)();
             if(err)return logger.error(err);
-            logger.profile('codeforces.getNewProblemsFromCodeforces');
+            logger.info('codeforces.updateProblems - ' + moment.duration(moment() - st).asSeconds() + 's');
         }
     );
 }

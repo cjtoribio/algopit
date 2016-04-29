@@ -86,9 +86,9 @@ exports.up = function(ws, model){
     
     ws.put('/api/users/:id/refresh', ensureAuthenticated, function(req, res){
         model.User.findById(req.user._id, function(err, user){
-
-            if(!_.property('codeforces.refresh')(user)){
-                var date  = moment().add(10, 'seconds');
+            
+            if(req.query.judge == 'Codeforces'){
+                var date  = moment().add(5, 'seconds');
                 _.set(user, 'codeforces.refresh', date);
             }
             user.save(function(err){

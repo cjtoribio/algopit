@@ -5,43 +5,32 @@ var model   = require('../../model');
 var cheerio = require('cheerio');
 var general = require('./general');
 var logger  = require('../../utils/logger').getLogger();
+var moment  = require('moment');
+var brush   = require('../../utils/brush');
 
 module.exports = {
-    processAllUsers : processAllUsers,
-    processByDemand : processByDemand
+    processAllUsers : processAllUsers
 }
 
 // For Codeforces
 function processAllUsers(job, done){
+    var st = moment();
+    logger.info('Started ' + brush.cyan(job.toJSON().name));
     getCFUsers({
+        'codeforces.refresh': {'$lte': new Date()},
         'codeforces.handle' : {'$ne' : null}
     },function(err, users){
         if(err)return;
-        logger.profile('codeforces.processAllUsers');
         async.map(
             users,
             processCFUser,
             function (err, result){
                 done();
                 if(err)return logger.error(err);
-                logger.profile('codeforces.processAllUsers');
-            }
-        );
-    });
-}
-function processByDemand(job, done){
-    getCFUsers({
-        'codeforces.refresh' : {'$lte' : new Date()}
-    },function(err, users){
-        if(err)return done();
-        logger.profile('codeforces.processByDemand');
-        async.map(
-            users,
-            processCFUser,
-            function (err, result){
-                done();
-                if(err)return logger.error(err);
-                logger.profile('codeforces.processByDemand');
+                var dur = moment.duration(moment() - st).asSeconds();
+                logger.info('Finished '  + 
+                    brush.cyan(job.toJSON().name) + ' after ' + 
+                    brush.magenta(dur + 's'));
             }
         );
     });
@@ -50,6 +39,7 @@ function processByDemand(job, done){
 
 
 function processCFUser(user, next){
+        console.log(user.codeforces);
     async.waterfall([
         function(next){
             next(null, user);
@@ -120,7 +110,8 @@ function transformCFSubmissions(user, submissions, next){
     }
 }
 function removeRefreshFlag(user, submissions, next){
-    _.set(user, 'codeforces.refresh', null);
+    _.set(user, 'codeforces.refresh', moment().add(1,'day'));
+    _.set(user, 'refresh', moment());
     user.save(function(err){
         next(err, user, submissions);
     });

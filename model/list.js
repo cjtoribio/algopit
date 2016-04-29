@@ -19,6 +19,8 @@ var List = new Schema({
         type: Schema.ObjectId,
         ref: 'problems'
     }]
+}, {
+    timestamps: {}
 });
 
 List.pre('save', function(next){

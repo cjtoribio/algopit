@@ -12,8 +12,11 @@ var User = new Schema({
         handle: String,
         refresh: Date
     },
+    refresh: Date,
     email: String,
     name: String
+}, {
+    timestamps: {}
 });
 
 User.pre('save', function(next){

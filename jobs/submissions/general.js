@@ -52,7 +52,6 @@ function wrapInSubmissionObject(user, submissions, next){
     }));
 }
 function saveAll(user, submissions, next){
-    var funcs = _.map(submissions, 'save');
     async.map(
         submissions,
         function(sub, next){

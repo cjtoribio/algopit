@@ -15,6 +15,13 @@
         $scope.refresh = function(judge){
             $scope.user.$refresh({judge: judge});
         }
+
+        $scope.isRefreshing = function(judge){
+            var dt = $scope.user[judge].refresh;
+            if(dt && dt < new Date())
+                return true;
+            return false;
+        }
     
     }
 

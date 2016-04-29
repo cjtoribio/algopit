@@ -52,8 +52,8 @@
 								<div class="form-group">
 									<label for="i1" class="col-sm-1 control-label">Problems</label>
 									<div class="col-sm-4">
-										<button ng-if="!user.codeforces.refresh" type="button" ng-click="refresh('Codeforces')" class="btn btn-default">Refresh</button>
-										<label class="control-label" ng-if="user.codeforces.refresh">Refreshing...</span>
+										<button ng-if="!isRefreshing('codeforces')" type="button" ng-click="refresh('Codeforces')" class="btn btn-default">Refresh</button>
+										<label class="control-label" ng-if="isRefreshing('codeforces')">Refreshing...</span>
 									</div>
 								</div>
 								<input type="submit" name="" value="Save" class="btn btn-default" />

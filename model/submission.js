@@ -19,6 +19,8 @@ var Submission = new Schema({
     laguage	  : String,
     createDate: Date,
     message	  : Date
+}, {
+    timestamps: {}
 });
 
 exports.Submission = mongoose.model('submissons', Submission);
