@@ -28,6 +28,9 @@ agenda.on('ready', function() {
 	agenda.every('24 hours', 'codeforces.updateProblems');
 	agenda.every('5 seconds', 'users.updateUserProblem');
 
+	// agenda.every('5 seconds', 'spoj.processAllUsers');
+	// agenda.every('5 seconds', 'spoj.processByDemand');
+
 	agenda.start();
 	logger.info('Agenda Started.');
 

@@ -12,6 +12,10 @@ TodoApp.factory('Resource', ['$resource',function($resource){
             'setDifficulty': { method: 'POST' , params: {action:'setDifficulty'} } ,
         }
     );
+    Object.defineProperty(service.Problem.prototype, "finalDifficulty", {
+        get: function() { return this.computedDifficulty || this.difficulty; }
+    });
+    
     
     service.Category =  $resource(
         '/api/categories/:id', 

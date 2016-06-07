@@ -81,10 +81,11 @@ function updateUserProblemByUser(user, userProblems, next){
             if(_.filter(subs,{verdict: 'ACCEPTED'}).length > 0)
                 up.state = 'SOLVED';
         });
-        _.each(notRegisterd, function(sourceReferenceId){
-            var subs = subByProb[sourceReferenceId];
+        _.each(notRegisterd, function(problemId){
+            if(upByProb[problemId])return;
+            var subs = subByProb[problemId];
             userProblems.push(new model.UserProblem({
-                problem: sourceReferenceId,
+                problem: problemId,
                 user: user._id,
                 attempts: _.property('length')(subs),
                 state : ((_.filter(subs,{verdict: 'ACCEPTED'}).length > 0) ? 'SOLVED' : 'UNSOLVED')

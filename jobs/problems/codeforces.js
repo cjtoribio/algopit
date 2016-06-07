@@ -33,13 +33,18 @@ function getAllProblems(next){
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             // logger.info(body.results.problems);
-            next(null, body.result.problems);
+            next(null, body.result.problems, body.result.problemStatistics);
         }else{
-            next(err || ('Status Code: ' + response.statusCode));
+            next(error || ('Status Code: ' + response.statusCode));
         }
     });
 }
-function transformProblems(problems, next){
+function transformProblems(problems, statistics, next){
+    var orderedStats = _.orderBy(statistics, ['solvedCount'], ['asc']);
+    orderedStats.forEach(function(obj, rank){
+        obj.rank = rank;
+    });
+    var mapById = _.keyBy(orderedStats, getId), total = orderedStats.length;
     problems = _.map(problems, function(prob){
         return {
             name: prob.name,
@@ -47,7 +52,8 @@ function transformProblems(problems, next){
                  .replace('{#contestId}', prob.contestId)
                  .replace('{#index}', prob.index),
             contest: prob.contestId,
-            sourceReferenceId: prob.contestId + prob.index,
+            computedDifficulty: 5 - (mapById[getId(prob)].rank / total) * 4,
+            sourceReferenceId: getId(prob),
             categories: transformCategories(prob.tags),
             judge: 'Codeforces',
             writer: null,
@@ -57,6 +63,9 @@ function transformProblems(problems, next){
     });
     next(null, problems);
     return;
+    function getId(prob){
+        return prob.contestId + prob.index;
+    }
     // url -> http://codeforces.com/contest/{#contestId}/problem/{#index}'
     function transformCategories(tags){
         var dic = {

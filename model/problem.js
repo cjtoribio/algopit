@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var Problem = new Schema({
     name: String,
     difficulty: Number,
+    computedDifficulty: Number,
     url: String,
     contest: String,
     entryDate: { type: Date, default: Date.now },

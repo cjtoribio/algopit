@@ -6,8 +6,28 @@ var cheerio = require('cheerio');
 
 
 // processCF();
-processSP();
+// processSP();
 
+model.UserProblem.find({})
+.exec(function(err, userProb){
+    var ups = _.filter(userProb, function(up){
+        return up.attempts !== undefined;
+    });
+    console.log(ups.length);
+    // return;
+    var idx = 0;
+    async.map(ups, function(up, cb){
+        up.remove(function(){
+            idx++;
+            if(idx % 1000 == 0){
+                console.log(idx);
+            }
+            cb();
+        });
+    }, function(){
+        console.log('DONE');
+    });
+});
 // For Spoj
 function processSP(){
     async.waterfall([
@@ -172,7 +192,6 @@ function processCF(){
         function(users){
             async.map(
                 users,
-                ,
                 function (err, result){
                     if(err)console.log(err);
                     else{
@@ -278,7 +297,7 @@ function attachProblem(user, submissions, next){
         judge: _.property('0.judge')(submissions)
     }).exec(function(err, probs){
         console.log(ids);
-        var probMap = _.indexBy(probs, 'sourceReferenceId');
+        var probMap = _.keyBy(probs, 'sourceReferenceId');
         _.each(submissions, function(sub){
             sub.problem = _.property('_id')(probMap[sub.problem]);
         });

@@ -15,7 +15,7 @@ function attachProblem(user, submissions, next){
         sourceReferenceId: { '$in' : ids },
         judge: _.property('0.judge')(submissions)
     }).exec(function(err, probs){
-        var probMap = _.indexBy(probs, 'sourceReferenceId');
+        var probMap = _.keyBy(probs, 'sourceReferenceId');
         _.each(submissions, function(sub){
             sub.problem = _.property('_id')(probMap[sub.problem]);
         });

@@ -16,7 +16,7 @@ function addInfoToExisting(problems, next){
         sourceReferenceId: { '$in' : ids },
         judge: _.property('0.judge')(problems)
     }).exec(function(err, probs){
-        var probMap = _.indexBy(probs, 'sourceReferenceId');
+        var probMap = _.keyBy(probs, 'sourceReferenceId');
         var updatedProbs = 0, newProbs = 0;
         problems = _.map(problems, function(prob, idx){
             var oldProb = probMap[prob.sourceReferenceId];
@@ -27,6 +27,7 @@ function addInfoToExisting(problems, next){
                 var allTags = _.uniq(oldProb.tags.concat(prob.tags || []));
                 oldProb.categories = allCats;
                 oldProb.tags       = allTags;
+                _.assign(oldProb, _.pick(prob,['computedDifficulty', 'name']));
                 return oldProb;
             }else{
                 newProbs++;

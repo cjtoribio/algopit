@@ -68,7 +68,7 @@ function getCFSubmissions(user, next){
         if (!error && response.statusCode == 200) {
             next(null, user, body.result);
         }else{
-            next(err || ('Status Code: ' + response.statusCode));
+            next(error || ('Status Code: ' + response.statusCode));
         }
     });
 }

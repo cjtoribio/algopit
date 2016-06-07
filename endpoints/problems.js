@@ -22,7 +22,7 @@ exports.up = function(ws, model){
 
         var query = model.Problem
         .find(ors.length ? {'$or': ors} : {})
-        .select('name url judge difficulty categories tags')
+        .select('name url judge difficulty categories tags computedDifficulty')
         .sort({name: 1, _id: 1});
 
         if(req.query.limit)query.limit(req.query.limit);

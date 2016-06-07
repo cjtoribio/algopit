@@ -20,7 +20,7 @@ var compression = require("compression");
 logger.info("Starting express");
 
 var ws = express();
-ws.set('port', process.env.PORT || 3000);
+ws.set('port', process.env.PORT || 3001);
 ws.use(compression());
 ws.use(bodyParser.json()); // for parsing application/json
 ws.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -51,6 +51,7 @@ require("./endpoints").up(ws, model);
 ws.listen(ws.get('port'), function(){
     logger.info('Express server listening on port ' + ws.get('port'));
 });
+
 
 
 

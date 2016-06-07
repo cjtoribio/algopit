@@ -29,7 +29,7 @@ var logger = new winston.Logger({
 
 				var caller = getCaller();
 				var message = options.message;
-				var level = winston.config.colorize(options.level,_.padRight(options.level.toUpperCase(), 5, ' '));
+				var level = winston.config.colorize(options.level,_.padEnd(options.level.toUpperCase(), 5, ' '));
 				var timestamp = colorize(options.timestamp(), 'grey');
 				var obj = 
 					(options.meta && Object.keys(options.meta).length ? '\n'+ JSON.stringify(options.meta, null, '   ') : '' );
@@ -44,18 +44,18 @@ var logger = new winston.Logger({
 
 				function getCaller(){
 					var stk = getStack()[10];
-					if(!stk)return _.padRight(' ',20,' ');
+					if(!stk)return _.padEnd(' ',20,' ');
 					var filename = stk.getFileName().match(/(\/?[^\/]*){2}$/)[0];
 					var line 	 = stk.getLineNumber();
 					var func     = stk.getFunctionName();
-					var rFname   = _.trunc(
+					var rFname   = _.truncate(
 						filename.split('').reverse().join('')
 						,{
 							length: 20,
 							omission: ''
 						}
 					).split('').reverse().join('');
-					return _.padRight(rFname,20,' ');
+					return _.padEnd(rFname,20,' ');
 
 				}
 			}

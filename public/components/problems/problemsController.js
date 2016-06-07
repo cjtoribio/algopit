@@ -24,7 +24,7 @@
 	    if(Auth.isAuthenticated()){
 	        UserProblem.query(
 	            function(ret){
-	                $scope.problemsSolved = _.indexBy(ret, 'problem');
+	                $scope.problemsSolved = _.keyBy(ret, 'problem');
 	            }
 	        );
 	    }
@@ -166,7 +166,7 @@
 
 	    function loadProblems(){
 	    	$scope.loading = true;
-	    	fetch('','', 50, $scope, done);
+	    	fetch('','', 100, $scope, done);
 	        function fetch(lastName, lastId, qty, $scope, done) {
 	            Problem.query({
 	                lastName: lastName,
