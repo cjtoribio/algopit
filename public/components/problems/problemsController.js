@@ -62,7 +62,7 @@
 	    	if(_.every($scope.problems, function(p, idx){
 	    		return p._id == np[idx]._id;
 	    	})){
-	    		np = _.sortByOrder(withoutNulls, [field], ['desc']).concat(nullValued);
+	    		np = _.orderBy(withoutNulls, [field], ['desc']).concat(nullValued);
 	    	}
 	    	$scope.problems = np;
 	    	refreshFiltered();
