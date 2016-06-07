@@ -1,4 +1,4 @@
-vendor/lodash/lodash.min.js
+vendor/lodash/dist/lodash.min.js
 vendor/angular/angular.min.js
 vendor/angular-ui-router/release/angular-ui-router.min.js
 vendor/angular-resource/angular-resource.min.js
