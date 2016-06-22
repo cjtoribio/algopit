@@ -32,7 +32,7 @@
 						var cats = _.map(prob.categories, function(cat){
 							return makeBold(cat, text);
 						});
-						pn += '(' + _.trunc(cats.join(', '),40) + ')';
+						pn += '(' + _.truncate(cats.join(', '),40) + ')';
 					}
 					prob.prettyName = pn;
 				});

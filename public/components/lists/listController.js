@@ -24,7 +24,7 @@
 
 	    // public functions
 	    $scope.canLeave = function(list){
-	    	return _.contains(list.party, Auth.currentUser._id);
+	    	return _.includes(list.party, Auth.currentUser._id);
 	    }
 	    $scope.canJoin = function(list){
 	    	return !$scope.canLeave(list);

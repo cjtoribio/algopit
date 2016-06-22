@@ -20,15 +20,15 @@
 
 			$scope.lists = lists;
 			$scope.listsToAdd = _.filter(lists,function(list){
-				return !_.contains(list.problems, problem._id);
+				return !_.includes(list.problems, problem._id);
 			});
 			$scope.listsToRemove = _.filter(lists,function(list){
-				return _.contains(list.problems, problem._id);
+				return _.includes(list.problems, problem._id);
 			});
 		});
 
 		$scope.canAddTo = function(list){
-			return !_.contains(list.problems, problem._id);
+			return !_.includes(list.problems, problem._id);
 		}
 
 		$scope.addToList = function(list){

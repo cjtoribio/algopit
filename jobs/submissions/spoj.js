@@ -91,13 +91,13 @@ function getNewSPSubmissions(user, next){
     }
     function extractMemory(cell, $){
         var m = $(cell).text();
-        if(_.contains(m,'G')){
+        if(_.includes(m,'G')){
             return Number(m.replace('M','')) * (1<<30);
         }
-        if(_.contains(m,'M')){
+        if(_.includes(m,'M')){
             return Number(m.replace('M','')) * (1<<20);
         }
-        if(_.contains(m,'K')){
+        if(_.includes(m,'K')){
             return Number(m.replace('M','')) * (1<<10);
         }
         return 0;

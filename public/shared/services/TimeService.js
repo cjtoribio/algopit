@@ -71,16 +71,16 @@
 			});
 			return str;
 
-			if( !_.contains(str,'{W}') )accum += weeks * mPw;
-			if( !_.contains(str,'{D}') )accum += days  * mPd; 
+			if( !_.includes(str,'{W}') )accum += weeks * mPw;
+			if( !_.includes(str,'{D}') )accum += days  * mPd; 
 			else { days  += accum / mPd; accum = 0; }
-			if( !_.contains(str,'{H}') )accum += hours * mPh;
+			if( !_.includes(str,'{H}') )accum += hours * mPh;
 			else { hours += accum / mPh; accum = 0; }
-			if( !_.contains(str,'{M}') )accum += mins  * mPm;
+			if( !_.includes(str,'{M}') )accum += mins  * mPm;
 			else { mins  += accum / mPm; accum = 0; }
-			if( !_.contains(str,'{S}') )accum += secs  * mPs;
+			if( !_.includes(str,'{S}') )accum += secs  * mPs;
 			else { secs  += accum / mPs; accum = 0; }
-			if( !_.contains(str,'{m}') )accum += mill  * 1;
+			if( !_.includes(str,'{m}') )accum += mill  * 1;
 			else { mill  += accum / 1; accum = 0; }
 			return str.replace(/{W}/g,weeks)
 					  .replace(/{D}/g,days)
