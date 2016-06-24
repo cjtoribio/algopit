@@ -52,7 +52,8 @@
 	    }
 	    $scope.getProgress = function(user){
 	    	var status = $scope.list.status[user.username];
-	    	var cnt = _.where(status, 'PENDING_SOLVED').length + _.where(status, 'SOLVED').length;
+	    	var cnt = _.filter(status, _.partial(_.isEqual, 'PENDING_SOLVED')).length + 
+	    			  _.filter(status, _.partial(_.isEqual, 'SOLVED')).length;
 	    	var tot = status.length;
 	    	return tot ? (cnt / tot * 100) : 0;
 	    }
@@ -65,8 +66,8 @@
 		}
 		function computeProgress(user){
 	    	var status = $scope.list.status[user.username];
-	    	var cntS= _.where(status, 'SOLVED').length;
-	    	var cntP= _.where(status, 'PENDING_SOLVED').length;
+	    	var cntS= _.filter(status, _.partial(_.isEqual, 'SOLVED')).length;
+	    	var cntP= _.filter(status, _.partial(_.isEqual, 'PENDING_SOLVED')).length;
 	    	var tot = status.length;
 	    	user.progress = {
 	    		solved: tot ? cntS / tot * 100 : 0,
