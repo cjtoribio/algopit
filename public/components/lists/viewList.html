@@ -108,7 +108,17 @@
 					</tr>
 					<tr ng-repeat="prob in list.problems">
 						<td><a href="{{::prob.url}}" target="_blank">{{::prob.name}}</a></td>
-						<td>{{::prob.difficulty}}</td>
+						<td>
+						    <div class="progress" style="margin-bottom:0px;" 
+			                    ng-if="::prob.finalDifficulty">
+			                  <div class="progress-bar" 
+			                       role="progressbar" aria-valuenow="60" 
+			                       aria-valuemin="0" 
+			                       aria-valuemax="100" 
+			                       ng-style = "{width: ((prob.finalDifficulty) * 20) + '%'}"
+			                       >{{::prob.finalDifficulty | number:1}}</div>
+			                </div>
+						</td>
 						<td>{{::prob.categories.join(',')}}</td>
 						<td style="vertical-align: middle;">
 							<div ng-repeat="userProb in prob.solvedBy" class="pull-left" style="padding: 2px;" >
