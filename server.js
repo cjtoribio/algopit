@@ -53,6 +53,9 @@ ws.listen(ws.get('port'), function(){
 });
 
 
+if(process.env.AGENDA === 'on'){
+    var jobs = require('./jobs/jobs');
+}
 
 
 logger.info("Express Started");

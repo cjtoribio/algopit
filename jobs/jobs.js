@@ -64,6 +64,12 @@ agenda.on('ready', function() {
 
 });
 
+process.on('exit', (code) => {
+  agenda.stop(() => {
+  	console.log('agenda stoped');
+  });
+});
+
 function graceful() {
   agenda.stop(function() {
     process.exit(0);
