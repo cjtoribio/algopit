@@ -5,9 +5,9 @@ exports.up = function(ws, model){
     logger.info("Starting");
     
     ws.get('/api/judges', function(req, res){
-        model.Judge.find({}).exec(function(err, cats){
+        model.Judge.find({}).exec(function(err, judges){
             if(err)res.send(err);
-            else res.send(cats || []);
+            else res.send(_.orderBy(judges,['name']));
         });
     });
     
