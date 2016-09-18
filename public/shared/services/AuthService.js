@@ -10,6 +10,9 @@ function($http, Alert, $rootScope, $cookieStore, $location, Resource){
     service.isAuthenticated = function(){
         return service.currentUser != null;
     };
+    service.isAdmin = function(){
+        return (service.currentUser || {}).role == 'ADMIN';
+    };
     service.getUserId = function(){
         return (service.currentUser || {_id:0})._id;
     };

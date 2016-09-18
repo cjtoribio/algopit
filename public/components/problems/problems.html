@@ -97,7 +97,7 @@
             <td><span>{{::prob.tags.join(',') || ''}}</span></td>
             <td>
                 <div class="btn-group">
-                    <button ng-click="removeProblem(prob, $index)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Remove</button>
+                    <button ng-click="removeProblem(prob, $index)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated() && user.isAdmin()">Remove</button>
                     <a ui-sref="editProblem({id: prob._id})" class="btn btn-default btn-xs">Edit</a>
                     <button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" 
                         ng-if="user.isAuthenticated()">Solved

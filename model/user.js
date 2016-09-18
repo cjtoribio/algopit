@@ -14,7 +14,8 @@ var User = new Schema({
     },
     refresh: Date,
     email: String,
-    name: String
+    name: String,
+    role: { type: String, enum: ['ADMIN', 'USER'] , default: 'USER' }
 }, {
     timestamps: {}
 });
