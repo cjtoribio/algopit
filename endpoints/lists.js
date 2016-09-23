@@ -116,6 +116,7 @@ exports.up = function(ws, model){
             }));
             oList.startDate = list.startDate;
             oList.endDate   = list.endDate;
+            oList.name      = list.name;
             oList.save(function(err){
                 if(err)res.status(500).send(err);
                 else res.status(200).send(list);
