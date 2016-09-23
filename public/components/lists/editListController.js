@@ -66,6 +66,11 @@
 			$scope.list.party.push(nv);
 			$scope.newUser = null;
 		});
+		$scope.$watch('newAdmin', function(nv){
+			if(!_.isObject(nv))return;
+			$scope.list.admins.push(nv);
+			$scope.newAdmin = null;
+		});
 
 		$scope.remove = function(item,items){
 			_.pull(items,item);
@@ -103,6 +108,7 @@
 				endDate	  : null,
 				author    : Auth.currentUser,
 				party     : [],
+				admins    : [],
 				problems  : [],
 				name      : 'Untitled',
 			});

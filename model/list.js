@@ -11,6 +11,10 @@ var List = new Schema({
         type: Schema.ObjectId,
         ref: 'users'
     },
+    admins: [{
+        type: Schema.ObjectId,
+        ref: 'users'  
+    }],
     party: [{
         type: Schema.ObjectId,
         ref: 'users'

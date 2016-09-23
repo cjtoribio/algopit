@@ -1,7 +1,7 @@
 <ol class="breadcrumb">
   <li><a ui-sref="lists.all">Lists</a></li>
   <li class="active">View</li>
-  <li ng-if="isOwner(list)"><a ui-sref="lists.edit(params)">Edit</a></li>
+  <li ng-if="isListAdmin(list) || isOwner(list)"><a ui-sref="lists.edit(params)">Edit</a></li>
 </ol>
 
 <div class="container view-viewList" >
@@ -92,6 +92,18 @@
 					</div>
 				</div>
 			</div>
+			<br/>
+			<br/>
+			<div class="col-md-12">
+				<div class="col-md-5 text-right"  >
+					<span ><u><b>Admins:</b></u></span> 
+				</div>
+				<div class="col-md-7">
+					<div class="col-md-12" ng-repeat="user in list.admins">
+						<span>{{user.username}}</span>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="col-md-8">
 			<div class="col-md-12">
@@ -100,12 +112,15 @@
 			<div class="col-md-12">
 				<table class="table table-striped table-hover table-bordered table-condensed small table-primary">
 					<tr>
+						<th>Number</th>
 						<th>Name</th>
 						<th>Difficulty</th>
+						<th>Judge</th>
 						<th>Solved By</th>
 						<th>Actions</th>
 					</tr>
 					<tr ng-repeat="prob in list.problems">
+						<td>{{::$index + 1}}</td>
 						<td><a href="{{::prob.url}}" target="_blank">{{::prob.name}}</a></td>
 						<td>
 						    <div class="progress" style="margin-bottom:0px;" 
@@ -118,6 +133,7 @@
 			                       >{{::prob.finalDifficulty | number:1}}</div>
 			                </div>
 						</td>
+						<td>{{::prob.judge}}</td>
 						<td style="vertical-align: middle;">
 							<div ng-repeat="userProb in prob.solvedBy" class="pull-left" style="padding: 2px;" >
 								<span class="label" 

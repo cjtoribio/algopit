@@ -1,3 +1,4 @@
+/* globals _ */
 TodoApp.factory('Resource', ['$resource',function($resource){
     var service = {};
     service.Problem =  $resource(
@@ -54,12 +55,18 @@ TodoApp.factory('Resource', ['$resource',function($resource){
     service.List = $resource(
         '/api/lists/:id/:action', {id: '@_id'},
         {
-            'update': { method:'PUT' } ,
+            'update': { method: 'PUT' } ,
             'leave' : { method: 'POST', params: {action:'leave'} } ,
             'join'  : { method: 'POST', params: {action:'join' } } ,
             'stats' : { method: 'GET' , params: {action:'stats'} } ,
         }
     );
+    service.List.prototype.isAdmin = function (user) {
+        var adminsIds = _.map(this.admins, function (admin) {
+            return admin._id || admin
+        });
+        return _.includes(adminsIds, user && (user._id || user));
+    };
     
     return service;
 }])

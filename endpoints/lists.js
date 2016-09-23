@@ -30,6 +30,7 @@ exports.up = function(ws, model){
                 .populate('author', 'username name')
                 .populate('problems')
                 .populate('party', 'username name')
+                .populate('admins', 'username name')
                 .exec(next);
         }
         function respond(err, list){
@@ -50,6 +51,7 @@ exports.up = function(ws, model){
                 .populate('author', 'username name')
                 .populate('problems')
                 .populate('party', 'username name')
+                .populate('admins', 'username name')
                 .exec(next);
         }
         function attachProblemStatus(list, next){
@@ -97,6 +99,9 @@ exports.up = function(ws, model){
         var list = _.clone(req.body);
         list = new model.List(model.List.cleanPopulated(list));
         list.author = req.user._id;
+        if(!_.includes(list.admins, req.user._id)){
+            list.admins.unshift(req.user.id);
+        }
         list.save(function(err){
             if(err)return res.status(500).send(err);
             else res.status(200).send(list);
@@ -112,6 +117,9 @@ exports.up = function(ws, model){
                 return _.isObject(obj) ? _.property('_id')(obj) : obj;
             }));
             oList.party     = _.uniq(_.map(list.party, function(obj){
+                return _.isObject(obj) ? _.property('_id')(obj) : obj;
+            }));
+            oList.admins    = _.uniq(_.map(list.admins, function(obj){
                 return _.isObject(obj) ? _.property('_id')(obj) : obj;
             }));
             oList.startDate = list.startDate;

@@ -29,9 +29,6 @@
 		}, 1000);
 
 
-		$scope.isOwner = function(list){
-			return _.property('author._id')(list) == _.property('currentUser._id')(Auth);
-		}
 
 	    $scope.toggleSolved = function(prob){
 	    	var verdict = GetSetVerdict(prob);
@@ -57,6 +54,12 @@
 	    	var tot = status.length;
 	    	return tot ? (cnt / tot * 100) : 0;
 	    }
+	    $scope.isListAdmin = function(list) {
+	    	return list.isAdmin(Auth.currentUser);
+	    }
+		$scope.isOwner = function(list){
+			return _.property('author._id')(list) == _.property('currentUser._id')(Auth);
+		}
 
 
 		return;

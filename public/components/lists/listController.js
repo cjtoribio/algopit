@@ -32,6 +32,9 @@
 	    $scope.isOwner = function(list){
 	    	return list.author == Auth.currentUser._id;
 	    }
+	    $scope.isListAdmin = function(list){
+	    	return list.isAdmin(Auth.currentUser);
+	    }
 	    $scope.joinList = function(list){
 	    	list.$join(function(){
 	    		Alert.alert(Alert.messages.lists.joinSuccess);

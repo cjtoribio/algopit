@@ -37,9 +37,9 @@
                     		ng-if="canJoin(list)">Join</button>
                     <button ng-click="viewList(list)" class="btn btn-default btn-xs">View</button>
                     <button ng-click="editList(list)" class="btn btn-default btn-xs" 
-                    		ng-if="isOwner(list)">Edit</button>
+                    		ng-if="isOwner(list) || isListAdmin(list)">Edit</button>
                     <button ng-click="removeList(list)" class="btn btn-default btn-xs" 
-                    		ng-if="isOwner(list)">Delete</button>
+                    		ng-if="isOwner(list) || isListAdmin(list)">Delete</button>
                 </div>
             </td>
         </tr>
