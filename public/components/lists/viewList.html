@@ -102,7 +102,6 @@
 					<tr>
 						<th>Name</th>
 						<th>Difficulty</th>
-						<th>Categories</th>
 						<th>Solved By</th>
 						<th>Actions</th>
 					</tr>
@@ -119,7 +118,6 @@
 			                       >{{::prob.finalDifficulty | number:1}}</div>
 			                </div>
 						</td>
-						<td>{{::prob.categories.join(',')}}</td>
 						<td style="vertical-align: middle;">
 							<div ng-repeat="userProb in prob.solvedBy" class="pull-left" style="padding: 2px;" >
 								<span class="label" 
