@@ -97,12 +97,27 @@
             <td><span>{{::prob.tags.join(',') || ''}}</span></td>
             <td>
                 <div class="btn-group">
-                    <button ng-click="removeProblem(prob, $index)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated() && user.isAdmin()">Remove</button>
-                    <a ui-sref="editProblem({id: prob._id})" class="btn btn-default btn-xs">Edit</a>
-                    <button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" 
-                        ng-if="user.isAuthenticated()">Solved
+                    <button ng-click="removeProblem(prob, $index)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated() && user.isAdmin()">
+                        &nbsp;
+                        <span class="glyphicon glyphicon-trash"></span>
+                        &nbsp;
                     </button>
-                    <button ng-click="sendToList(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Enlist</button>
+                    <a ui-sref="editProblem({id: prob._id})" class="btn btn-default btn-xs">
+                        &nbsp;
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        &nbsp;
+                    </a>
+                    <button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" 
+                        ng-if="user.isAuthenticated()">
+                        &nbsp;
+                        <span class="glyphicon glyphicon-ok"></span>
+                        &nbsp;
+                    </button>
+                    <button ng-click="sendToList(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">
+                        &nbsp;
+                        <span class="glyphicon glyphicon-list"></span>
+                        &nbsp;
+                    </button>
                     <button ng-click="setDifficulty(prob)" class="btn btn-default btn-xs" ng-if="user.isAuthenticated()">Difficulty: {{localDifficulty(prob) || '?'}}</button>
                 </div>
             </td>

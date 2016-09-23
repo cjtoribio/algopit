@@ -128,7 +128,7 @@
 											   'hidden'       : userProb.status == 'UNSOLVED',
 											  }"
 									
-									title="{{::userProb.status}}">
+									title="{{::userProb.status | solved_status}}">
 									{{::userProb.username}}
 								</span>
 							</div>

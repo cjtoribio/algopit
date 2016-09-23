@@ -3,6 +3,7 @@
 
 	var app = angular.module('TodoApp');
 	app.controller('EditListController', EditListController);
+	app.filter('solved_status', SolvedStatusFilter);
 
 	function EditListController($scope, $state, Resource, Auth){
 		$scope.params = $state.params;
@@ -108,4 +109,20 @@
 		}
 	}
 
+	function SolvedStatusFilter() {
+		return function(str){
+			switch(str){
+				case 'PENDING_SOLVED':
+					return 'Unconfirmed Solved';
+				case 'SOLVED':
+					return 'Confirmed Solved';
+				case 'UNSOLVED':
+					return 'Not Solved';
+				case 'TODO':
+					return 'Todo';
+				default:
+					return str;
+			}
+		}
+	}
 })();
