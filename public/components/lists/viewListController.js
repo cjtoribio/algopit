@@ -57,7 +57,7 @@
 	    $scope.isListAdmin = function(list) {
 	    	return list && list.isAdmin(Auth.currentUser);
 	    }
-	    $scope.isListAdmin = function(list) {
+	    $scope.isListParty = function(list) {
 	    	return list && list.isParty(Auth.currentUser);
 	    }
 		$scope.isOwner = function(list){
