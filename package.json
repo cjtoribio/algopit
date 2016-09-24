@@ -2,7 +2,7 @@
   "name": "algopit",
   "version": "1.0.0",
   "description": "Algorithmic Online Judges Problems Classifier",
-  "main": "server.js",
+  "main": "index.js",
   "directories": {
     "test": "test"
   },
