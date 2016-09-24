@@ -61,6 +61,10 @@
     "mocha": "^2.2.1",
     "requirejs": "^2.1.16"
   },
+  "engines": {
+    "node": "6.6.x",
+    "npm": "3.10.x"
+  },
   "scripts": {
     "test": "mocha",
     "start": "node index.js"
