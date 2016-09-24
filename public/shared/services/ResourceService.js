@@ -51,6 +51,9 @@ TodoApp.factory('Resource', ['$resource',function($resource){
             'login' : { method: 'POST' , params: {action:'login'}, url: '/api/login' }
         }
     );
+    service.User.prototype.isAdmin = function() {
+        return this.role == 'ADMIN';
+    }
 
     service.List = $resource(
         '/api/lists/:id/:action', {id: '@_id'},
@@ -66,6 +69,12 @@ TodoApp.factory('Resource', ['$resource',function($resource){
             return admin._id || admin
         });
         return _.includes(adminsIds, user && (user._id || user));
+    };
+    service.List.prototype.isParty = function (user) {
+        var contestantIds = _.map(this.party, function (contestant) {
+            return contestant._id || contestant
+        });
+        return _.includes(contestantIds, user && (user._id || user));
     };
     
     return service;

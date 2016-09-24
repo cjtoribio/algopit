@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var logger = require('../utils/logger').getLogger('endpoints:lists');
 var async = require('async');
+var listsManager = require('../lib/lists');
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) next();
     else res.sendStatus(401);
@@ -19,27 +20,23 @@ exports.up = function(ws, model){
     });
     
  
-    ws.get('/api/lists/:id',function(req, res){
-        async.waterfall([
-            findList
-        ], respond);
-        /////////////////////
-        function findList(next){
-            model.List
-                .findById(req.params.id)
-                .populate('author', 'username name')
-                .populate('problems')
-                .populate('party', 'username name')
-                .populate('admins', 'username name')
-                .exec(next);
-        }
-        function respond(err, list){
-            if(err)return res.status(500).send(err);
-            return res.status(200).send(list);
-        }  
+    ws.get('/api/lists/:id',function(req, res, next){
+        listsManager.findList({ user: req.user, listId: req.params.id })
+        .then((list) => {
+            res.status(200).send(list);
+        })
+        .catch(next)
     });
 
-    ws.get('/api/lists/:id/stats', ensureAuthenticated,function(req, res){
+    ws.get('/api/lists/:id/stats', ensureAuthenticated,function(req, res, next){
+
+        listsManager.findListWithStatus({ user: req.user, listId: req.params.id })
+        .then((list) => {
+            res.status(200).send(list);
+        })
+        .catch(next);
+
+        return;
         async.waterfall([
             findList,
             attachProblemStatus
@@ -167,6 +164,10 @@ exports.up = function(ws, model){
         });
     });
     
+    ws.all('/api/lists/*', (err, req, res, nex) => {
+        console.log(err);
+        res.status(500).send(err);
+    });
 
     logger.info("Started");
 };

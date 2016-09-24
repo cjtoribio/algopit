@@ -37,6 +37,15 @@
 				}
 			}));
 		}
+		service.showInputText = function(options){ // {text, title, label, message}
+			return wrapWithPromise(ModalService.showModal({
+				controller: 'InputTextDialogController',
+				templateUrl: 'modals/generic/inputText.html',
+				inputs: {
+					options : _.defaults(options, {title:'Input Text'})
+				}
+			}));
+		}
 
 		return service;
 
@@ -48,7 +57,15 @@
 				function(modal){
 					modal.close.then(
 						function(result){
-							promise.resolve(result);
+							if(result && result.code){
+								if( _.includes(['$closeButton','$document'], result.code) ){
+									promise.reject(result.err);	
+								}else{
+									promise.resolve(result.body);
+								}
+							}else{
+								promise.resolve(result);
+							}
 						}
 					);
 				},

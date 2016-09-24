@@ -6,106 +6,35 @@
 
 <div class="container view-viewList" >
 	<div>
-		<h1>List</h1>
+		<h1>{{::list.name}} <span class="pull-right">{{remaining}}</span></h1>
 	</div>
 	<div class="col-md-12">
-		<div class="col-md-4 info">
-			<div class="col-md-12">
-				<div class="col-md-5 text-right"  >
-					<span ><b>Name:</b></span> 
-				</div>
-				<div class="col-md-7">
-					<span>
-						{{list.name}}
-					</span>
-				</div>
-			</div>
-			<br/>
-			<br/>
-			<div class="col-md-12">
+		<div class="col-md-12 info">
+			<div class="col-md-4">
 				<div class="col-md-5 text-right"  >
 					<span ><b>Author:</b></span> 
 				</div>
 				<div class="col-md-7">
-					<span>
+					<span class="label label-default">
 						{{list.author.username}}
 					</span>
 				</div>
 			</div>
-			<br/>
-			<br/>
-			<div class="col-md-12">
-				<div class="col-md-5 text-right"  >
-					<span ><b>Create Date:</b></span> 
+			<div class="col-md-8">
+				<div class="col-md-3 text-right"  >
+					<span ><b>Admins:</b></span> 
 				</div>
-				<div class="col-md-7">
-					<span>
-						{{list.createDate | date : 'short'}}
-					</span>
-				</div>
-			</div>
-			<br/>
-			<br/>
-			<div class="col-md-12" >
-				<div class="col-md-5 text-right"  >
-					<span ><b>Start Date:</b></span> 
-				</div>
-				<div class="col-md-7">
-					<span >
-						{{list.startDate | date : 'short'}}
-					</span>
-				</div>
-			</div>
-			<br/>
-			<br/>
-			<div class="col-md-12">
-				<div class="col-md-5 text-right"  >
-					<span ><b>End Date:</b></span> 
-				</div>
-				<div class="col-md-7">
-					<span >
-						{{list.endDate | date : 'short'}}
-					</span>
-				</div>
-			</div>
-			<br/>
-			<br/>
-			<div class="col-md-12">
-				<div class="col-md-5 text-right"  >
-					<span ><b>Remaining:</b></span> 
-				</div>
-				<div class="col-md-7">
-					<span >
-						{{remaining}}
-					</span>
-				</div>
-			</div>
-			<br/>
-			<br/>
-			<div class="col-md-12">
-				<div class="col-md-5 text-right"  >
-					<span ><u><b>Party:</b></u></span> 
-				</div>
-				<div class="col-md-7">
-					<div class="col-md-12" ng-repeat="user in list.party">
-						<span>{{user.username}}</span>
-					</div>
-				</div>
-			</div>
-			<br/>
-			<br/>
-			<div class="col-md-12">
-				<div class="col-md-5 text-right"  >
-					<span ><u><b>Admins:</b></u></span> 
-				</div>
-				<div class="col-md-7">
-					<div class="col-md-12" ng-repeat="user in list.admins">
-						<span>{{user.username}}</span>
+				<div class="col-md-9">
+					<div ng-repeat="user in list.admins" class="pull-left" style="padding: 2px;" >
+						<span class="label label-default" 
+							style="cursor:default">
+							{{::user.username}}
+						</span>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-12">
 			<div class="col-md-12">
 				<span class="problems-title">Problems</span>
 			</div>
@@ -117,7 +46,7 @@
 						<th>Difficulty</th>
 						<th>Judge</th>
 						<th>Solved By</th>
-						<th>Actions</th>
+						<th ng-if="isListParty(list)" >Actions</th>
 					</tr>
 					<tr ng-repeat="prob in list.problems">
 						<td>{{::$index + 1}}</td>
@@ -141,7 +70,7 @@
 									ng-class="{'label-success': userProb.status == 'SOLVED',	
 											   'label-info'   : userProb.status == 'PENDING_SOLVED',	
 											   'label-warning': userProb.status == 'TODO',	
-											   'hidden'       : userProb.status == 'UNSOLVED',
+											   'label-light'  : userProb.status == 'UNSOLVED',
 											  }"
 									
 									title="{{::userProb.status | solved_status}}">
@@ -149,7 +78,7 @@
 								</span>
 							</div>
 						</td>
-						<td>
+						<td ng-if="isListParty(list)" >
                     		<button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" >Solved</button>
 						</td>
 					</tr>

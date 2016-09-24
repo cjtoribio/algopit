@@ -55,7 +55,10 @@
 	    	return tot ? (cnt / tot * 100) : 0;
 	    }
 	    $scope.isListAdmin = function(list) {
-	    	return list.isAdmin(Auth.currentUser);
+	    	return list && list.isAdmin(Auth.currentUser);
+	    }
+	    $scope.isListAdmin = function(list) {
+	    	return list && list.isParty(Auth.currentUser);
 	    }
 		$scope.isOwner = function(list){
 			return _.property('author._id')(list) == _.property('currentUser._id')(Auth);

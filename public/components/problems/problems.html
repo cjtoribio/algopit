@@ -37,12 +37,14 @@
                 &nbsp;
                 <div class="form-group form-group-sm">
                     <label  for="s5" class="">Category:</label>
-                    <select id="s5" 
-                            class="form-control  "
-                            ng-model="criteria.categories">
-                        <option value="">Any</option>
-                        <option ng-repeat="i in categories">{{::i.name}}</option>
-                    </select>
+                    <input id="s5" class="form-control" 
+                           ng-model="criteria.categories" 
+                           placeholder="Category" 
+                           bs-typeahead
+                           data-auto-select="true"
+                           data-min-length="0"
+                           limit="12"
+                           bs-options="category.name as category.name for category in categories|filter:{name:$viewValue}" />
                 </div>
                 &nbsp;
                 <div class="form-group">                    
@@ -53,7 +55,7 @@
     </div>
     
     <span style="color:gray;">
-        Showing {{filteredProblems2.length}} of the {{filteredProblems1.length}} mathing from the {{problems.length}} problems
+        Showing {{(currentPage-1)*pageSize+1}}-{{(currentPage-1)*pageSize+filteredProblems2.length}} of {{filteredProblems1.length}}
         <span ng-if="loading">loading...</span>
     </span>
     <table class="table table-striped table-hover table-bordered table-condensed small table-primary">
@@ -124,6 +126,6 @@
         </tr>
     </table>
     
-    <algo-pagination src="filteredProblems1" dst="filteredProblems2"></algo-pagination>
+    <algo-pagination src="filteredProblems1" current-page="currentPage" num-per-page="pageSize" dst="filteredProblems2"></algo-pagination>
     
 </div>

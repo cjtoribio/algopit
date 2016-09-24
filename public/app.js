@@ -167,6 +167,32 @@ var TodoApp = angular.module('TodoApp',
 				}
 			}
 		})
+		.state('categories', {
+			abstract: true,
+			url: "/categories",
+			views: {
+				"body" : {
+					template: "<div ui-view='body'></div>",
+					controller: function(){
+
+					}
+				},
+				"header": {
+					resolve: { selected: function(){ return "categories"; } },
+					templateUrl:"components/navbar/navbar.html",
+					controller:"NavbarController"
+				}
+			}
+		})
+		.state('categories.all', {
+			url: "",
+			views: {
+				"body" : {
+					templateUrl: "components/categories/categories.html",
+					controller: "CategoriesController"
+				}
+			}
+		})
 		.state('lab', {
 		  url: "/lab",
 		  templateUrl: "components/lab/lab.html"

@@ -17,5 +17,39 @@ exports.up = function(ws, model){
         });
         
     });
+
+
+    ws.put('/api/categories/:id', function(req, res){
+        var category = req.body;
+        model.Category.findById(req.params.id, function(err, oCategory){
+
+            oCategory.name      = category.name;
+            oCategory.save(function(err){
+                if(err)res.status(500).send(err);
+                else res.status(200).send(oCategory);
+            });
+        });
+    });
+
+    ws.post('/api/categories', function(req, res){
+        var category = new model.Category(req.body);
+        category.save(function(err) {
+            if(err)res.status(500).send(err);
+            else res.status(200).send(category);
+        });
+    });
+
+    ws.delete('/api/categories/:id', function(req, res){
+        
+        model.Category.findById(req.params.id, function(err, category){
+            if(err)res.status(500).send(err);
+            category.remove(function(err) {
+                if(err)res.status(500).send(err);
+                else   res.status(200).send(category);
+            });
+        });
+    });
+
+
     logger.info("Up");
 };

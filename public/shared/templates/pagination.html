@@ -5,7 +5,7 @@
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <li ng-class="{active: currentPage == {{i}}}" ng-repeat="i in pages" ng-click="goTo(i)">
+        <li ng-class="{active: getCurrentPage() == {{i}}}" ng-repeat="i in pages" ng-click="goTo(i)">
             <a href="#" style="width:50px;" class="text-center">{{::i}}</a></li>
         <li>
             <a href="#" aria-label="Next" ng-click="nextPage()">
@@ -15,7 +15,7 @@
         <li>
             <div class="dropup btn-group" role="group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    {{numPerPage}} Problems
+                    {{getNumPerPage()}} Problems
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">

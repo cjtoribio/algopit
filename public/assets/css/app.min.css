@@ -591,5 +591,8 @@ i.fa-6 {
 .view-viewList .problems-title {
   font-size: 20px;
 }
+.view-viewList .label.label-light {
+  background-color: #ddd;
+}
 
 /*# sourceMappingURL=maps/app.min.css.map */
