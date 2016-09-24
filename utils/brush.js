@@ -14,7 +14,7 @@ var colors = {
     yellow: [33, 39]
 };
 function colorize(txt, color){
-	return '\033[' + colors[color][0] + 'm' + txt + '\033[' + colors[color][1] + 'm';
+	return '\x1b[' + colors[color][0] + 'm' + txt + '\x1b[' + colors[color][1] + 'm';
 
 }
 
