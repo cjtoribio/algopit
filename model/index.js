@@ -1,7 +1,9 @@
 var mongoose = require("mongoose");
 var config = require("../config.js")
 var logger = require('../utils/logger').getLogger();
+var Q      = require('q');
 mongoose.connect(config.db.mongodb);
+mongoose.Promise = Q.Promise;
 
 module.exports = {
 	Problem 	: require("./problem"		).Problem		,

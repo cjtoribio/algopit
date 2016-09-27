@@ -4,8 +4,8 @@
   <li ng-if="isListAdmin(list) || isOwner(list)"><a ui-sref="lists.edit(params)">Edit</a></li>
 </ol>
 
-<div class="container view-viewList" >
-	<div>
+<div class="container-fluid view-viewList" >
+	<div class="col-md-12">
 		<h1>{{::list.name}} <span class="pull-right">{{remaining}}</span></h1>
 	</div>
 	<div class="col-md-12">
@@ -45,26 +45,28 @@
 						<th>Name</th>
 						<th>Difficulty</th>
 						<th>Judge</th>
+						<th>Remaining</th>
 						<th>Solved By</th>
 						<th ng-if="isListParty(list)" >Actions</th>
 					</tr>
-					<tr ng-repeat="prob in list.problems">
+					<tr ng-repeat="task in list.tasks">
 						<td>{{::$index + 1}}</td>
-						<td><a href="{{::prob.url}}" target="_blank">{{::prob.name}}</a></td>
+						<td><a href="{{::task.problem.url}}" ng-show="task.$visible" target="_blank">{{::task.problem.name}}</a></td>
 						<td>
 						    <div class="progress" style="margin-bottom:0px;" 
-			                    ng-if="::prob.finalDifficulty">
+			                    ng-if="::task.problem.finalDifficulty">
 			                  <div class="progress-bar" 
 			                       role="progressbar" aria-valuenow="60" 
 			                       aria-valuemin="0" 
 			                       aria-valuemax="100" 
-			                       ng-style = "{width: ((prob.finalDifficulty) * 20) + '%'}"
-			                       >{{::prob.finalDifficulty | number:1}}</div>
+			                       ng-style = "{width: ((task.problem.finalDifficulty) * 20) + '%'}"
+			                       >{{::task.problem.finalDifficulty | number:1}}</div>
 			                </div>
 						</td>
-						<td>{{::prob.judge}}</td>
+						<td>{{::task.problem.judge}}</td>
+						<td>{{task.$remaining}}</td>
 						<td style="vertical-align: middle;">
-							<div ng-repeat="userProb in prob.solvedBy" class="pull-left" style="padding: 2px;" >
+							<div ng-repeat="userProb in task.problem.solvedBy" class="pull-left" style="padding: 2px;" >
 								<span class="label" 
 									style="cursor:default"
 									ng-class="{'label-success': userProb.status == 'SOLVED',	
@@ -79,7 +81,7 @@
 							</div>
 						</td>
 						<td ng-if="isListParty(list)" >
-                    		<button ng-click="toggleSolved(prob)" class="btn btn-default btn-xs" >Solved</button>
+                    		<button ng-show="task.$visible" ng-click="toggleSolved(task)" class="btn btn-default btn-xs" >Solved</button>
 						</td>
 					</tr>
 				</table>

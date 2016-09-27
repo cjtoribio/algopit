@@ -8,12 +8,17 @@
 		$scope.params = $state.params;
 		$scope.list   = null;
 		$scope.remaining = null;
+		$scope.taskTimers = [];
 
 		Resource.List.stats($state.params).$promise.then(
 			function(list){
 				$scope.list = list;
 				list.problems = _.map(list.problems, function(problem){
 					return new Resource.Problem(problem);
+				});
+				list.tasks = _.map(list.tasks, function(task){
+					task.problem = new Resource.Problem(task.problem);
+					return task;
 				});
 				computeAllSolvedBy();
 				computeAllProgress();
@@ -26,14 +31,33 @@
 			$scope.remaining = Time
 				.remaining(_.property('list.endDate')($scope))
 				.format('{D}d {H}h {M}m {S}s');
+			$scope.taskTimers = _.map($scope.list.tasks, function (task) {
+				var obj = {};
+				if(!task.timed){
+					task.$visible = true;
+				} else {
+					if(Time.ellapsed(task.startDate).millis < 0){
+						task.$visible = false;
+						task.$remaining = 'Comming: ' + Time.remaining(task.startDate).format('{H}h {M}m {S}s');
+					}else{
+						if(Time.ellapsed(task.endDate).millis > 0){
+							task.$visible = false;
+							task.$remaining = 'Expired';
+						}else{
+							task.$visible = true;
+							task.$remaining = 'Ending ' + Time.remaining(task.endDate).format('{H}h {M}m {S}s');
+						}
+					}
+				}
+			});
 		}, 1000);
 
 
 
-	    $scope.toggleSolved = function(prob){
-	    	var verdict = GetSetVerdict(prob);
+	    $scope.toggleSolved = function(task){
+	    	var verdict = GetSetVerdict(task);
 	    	var nverdict= verdict == 'PENDING_SOLVED' ? 'UNSOLVED' : 'PENDING_SOLVED';
-	    	Resource.Problem.toggleSolved(prob).$promise.then(
+	    	Resource.Problem.toggleSolved(task.problem).$promise.then(
 	    		function(up){
 					var message = null;
 					if(up.state === "PENDING_SOLVED") 
@@ -41,7 +65,7 @@
 					if(up.state === "UNSOLVED") 
 						message = Alert.messages.problems.unsolved.success;
 					Alert.alert(message);
-					GetSetVerdict(prob, nverdict);
+					GetSetVerdict(task, nverdict);
 					computeAllSolvedBy();
 					computeAllProgress();
 	    		}
@@ -81,20 +105,20 @@
 	    	};
 		}
 		function computeAllSolvedBy(){
-			_.each($scope.list.problems, computeSolvedBy);
+			_.each($scope.list.tasks, computeSolvedBy);
 		}
-		function computeSolvedBy(prob){
-	    	var idx = _.indexOf($scope.list.problems, prob);
+		function computeSolvedBy(task){
+	    	var idx = _.indexOf($scope.list.tasks, task);
 	    	var solvedBy = _.map($scope.list.party, function(user){
 				return {
 					status: $scope.list.status[user.username][idx],
 					username: user.username
 				};
 			});
-			prob.solvedBy = solvedBy;
+			task.problem.solvedBy = solvedBy;
 		}
-		function GetSetVerdict(prob, verdict){
-			var idx = _.indexOf($scope.list.problems, prob);
+		function GetSetVerdict(task, verdict){
+			var idx = _.indexOf($scope.list.tasks, task);
 			if(verdict){
 				return $scope.list.status[Auth.currentUser.username][idx] = verdict;
 			}else{

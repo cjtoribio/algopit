@@ -27,7 +27,7 @@
     "lodash": "^4.13.1",
     "moment": "^2.10.6",
     "mongo": "^0.1.0",
-    "mongoose": "3.8.37",
+    "mongoose": "4.6.1",
     "multer": "^0.1.8",
     "node-noop": "0.0.1",
     "passport": "^0.2.2",

@@ -11,6 +11,9 @@
 		if($state.params.id != 'new'){
 			Resource.List.get($state.params).$promise.then(
 				function(list){
+					_.forEach(list.tasks, function(task){
+						task.problem = new Resource.Problem(task.problem);
+					});
 					$scope.list = list;
 				}
 			);
@@ -55,10 +58,13 @@
 				return users;
 			});
 		}
+		$scope.now = function () {
+			return new Date();
+		}
 
 		$scope.$watch('newProblem', function(nv){
 			if(!_.isObject(nv))return;
-			$scope.list.problems.push(nv);
+			$scope.list.problems.push(new Resource.Problem(nv));
 			$scope.newProblem = null;
 		});
 		$scope.$watch('newUser', function(nv){
@@ -75,12 +81,12 @@
 		$scope.remove = function(item,items){
 			_.pull(items,item);
 		}
-	    $scope.moveProblem = function(prob, delta){
-	    	var idx = _.indexOf($scope.list.problems, prob);
-	    	if(idx + delta < 0 || idx + delta >= $scope.list.problems.length)return;
-	    	var tmp = $scope.list.problems[idx+delta];
-	    	$scope.list.problems[idx+delta] = prob;
-	    	$scope.lislist.problemsts[idx] = tmp;
+	    $scope.moveProblem = function(task, delta){
+	    	var idx = _.indexOf($scope.list.tasks, task);
+	    	if(idx + delta < 0 || idx + delta >= $scope.list.tasks.length)return;
+	    	var tmp = $scope.list.tasks[idx+delta];
+	    	$scope.list.tasks[idx+delta] = task;
+	    	$scope.list.tasks[idx] = tmp;
 	    }
 
 		$scope.submit = function(list){
@@ -110,6 +116,7 @@
 				party     : [],
 				admins    : [],
 				problems  : [],
+				tasks     : [],
 				name      : 'Untitled',
 			});
 		}

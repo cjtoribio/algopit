@@ -475,7 +475,7 @@
 table.table-primary {
   border-color: #337ab7;
 }
-table.table-primary th {
+table.table-primary tbody > tr > th {
   color: #fff;
   background-color: #337ab7;
   border-color: #337ab7;
@@ -483,7 +483,7 @@ table.table-primary th {
 table.table-success {
   border-color: #d6e9c6;
 }
-table.table-success th {
+table.table-success tbody > tr > th {
   color: #3c763d;
   background-color: #dff0d8;
   border-color: #d6e9c6;
@@ -491,7 +491,7 @@ table.table-success th {
 table.table-info {
   border-color: #bce8f1;
 }
-table.table-info th {
+table.table-info tbody > tr > th {
   color: #31708f;
   background-color: #d9edf7;
   border-color: #bce8f1;
@@ -499,7 +499,7 @@ table.table-info th {
 table.table-warning {
   border-color: #faebcc;
 }
-table.table-warning th {
+table.table-warning tbody > tr > th {
   color: #8a6d3b;
   background-color: #fcf8e3;
   border-color: #faebcc;
@@ -507,7 +507,7 @@ table.table-warning th {
 table.table-danger {
   border-color: #ebccd1;
 }
-table.table-danger th {
+table.table-danger tbody > tr > th {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;

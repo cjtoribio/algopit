@@ -109,16 +109,10 @@ exports.up = function(ws, model){
     ws.put('/api/lists/:id', function(req, res){
         var list = req.body;
         model.List.findById(req.params.id, function(err, oList){
-
-            oList.problems  = _.uniq(_.map(list.problems, function(obj){
-                return _.isObject(obj) ? _.property('_id')(obj) : obj;
-            }));
-            oList.party     = _.uniq(_.map(list.party, function(obj){
-                return _.isObject(obj) ? _.property('_id')(obj) : obj;
-            }));
-            oList.admins    = _.uniq(_.map(list.admins, function(obj){
-                return _.isObject(obj) ? _.property('_id')(obj) : obj;
-            }));
+            oList.problems  = list.problems;
+            oList.party     = list.party;
+            oList.admins    = list.admins;
+            oList.tasks     = list.tasks;
             oList.startDate = list.startDate;
             oList.endDate   = list.endDate;
             oList.name      = list.name;

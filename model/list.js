@@ -22,6 +22,15 @@ var List = new Schema({
     problems: [{
         type: Schema.ObjectId,
         ref: 'problems'
+    }],
+    tasks: [{
+        problem   : { type: Schema.ObjectId, ref: 'problems' },
+        startDate : Date,
+        endDate   : Date,
+        timed     : Boolean,
+    }],
+    runs: [{
+        submission: { type: Schema.ObjectId , red: 'submissions' }
     }]
 }, {
     timestamps: {}
