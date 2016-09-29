@@ -25,8 +25,8 @@ exports.up = function(ws, model){
         .select('name url judge difficulty categories tags computedDifficulty sourceReferenceId')
         .sort({name: 1, _id: 1});
 
-        if(req.query.limit)query.limit(req.query.limit);
-        if(req.query.skip)query.skip(req.query.skip);
+        if(req.query.limit)query.limit( parseInt( req.query.limit ) );
+        if(req.query.skip)query .skip ( parseInt( req.query.skip  ) );
 
         query.exec(function(err, problems){
             if(err)res.send(err);
