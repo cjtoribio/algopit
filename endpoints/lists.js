@@ -26,6 +26,7 @@ exports.up = function(ws, model){
             res.status(200).send(list);
         })
         .catch(next)
+        .done();
     });
 
     ws.get('/api/lists/:id/stats', ensureAuthenticated,function(req, res, next){
@@ -34,7 +35,8 @@ exports.up = function(ws, model){
         .then((list) => {
             res.status(200).send(list);
         })
-        .catch(next);
+        .catch(next)
+        .done();
 
         return;
         async.waterfall([

@@ -88,6 +88,9 @@
 			return _.property('author._id')(list) == _.property('currentUser._id')(Auth);
 		}
 
+		$scope.$on('$destroy', function() {
+			$interval.cancel(inter);
+		})
 
 		return;
 		///////////////////
