@@ -44,7 +44,8 @@ function processUser(user, next){
         },
         getUserProblems,
         updateUserProblemByUser,
-        saveAll
+        saveAll,
+        removeRefreshFlag
     ], function(err, user, userProblems){
         next(err, user, userProblems);
     });
@@ -107,10 +108,11 @@ function saveAll(user, userProblems, next){
     );
 }
 
-function removeRefreshFlag(user, submissions, next){
+function removeRefreshFlag(user, userProblems, next){
     _.set(user, 'refresh', moment().add(1, 'day'));
     user.save(function(err){
-        next(err, user, submissions);
+        next(err, user, userProblems);
     });
 }
+
 
