@@ -64,7 +64,7 @@
 
 		$scope.$watch('newProblem', function(nv){
 			if(!_.isObject(nv))return;
-			$scope.list.problems.push(new Resource.Problem(nv));
+			$scope.list.tasks.push({ problem: new Resource.Problem(nv) });
 			$scope.newProblem = null;
 		});
 		$scope.$watch('newUser', function(nv){
