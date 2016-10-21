@@ -52,8 +52,44 @@
 	            $scope.problem.$update(callback);
 	        else
 	            (new Problem($scope.problem)).$save(callback);
+	    };
+
+	    $scope.predict = function(problem) {
+	    	if(!problem.url)return;
+	    	predict(problem);
+	    };
+
+	    ///// helpers /////
+	    function predict(problem) {
+	    	var strategies = {
+	    		codeforces: {
+	    			belongs: function () {
+	    				var regex = /codeforces\.com/;
+	    				return regex.exec(problem.url);
+	    			},
+	    			predict: function () {
+	    				var url = problem.url;
+	    				var regex = /.*codeforces\.com\/(contest|problemset\/problem)\/(\d+).*\/([A-Z])/;
+	    				var match = url.match(regex);
+	    				if(!match)return false;
+	    				var contestId = match[2];
+	    				var letter    = match[3];
+	    				problem.sourceReferenceId = contestId + letter;
+	    				problem.judge = 'Codeforces';
+	    				return true;
+	    			}
+	    		}
+	    	};
+	    	for(var judge in strategies){
+	    		var strategy = strategies[judge];
+	    		if(strategy.belongs() && strategy.predict()){
+	    			break;
+	    		}
+	    	}
 	    }
 
 	}
+
+
 
 })();
