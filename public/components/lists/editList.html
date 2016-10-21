@@ -109,58 +109,63 @@
                        data-auto-select="true"
                        data-html="true">
                 <br/>
-                <table class="table table-striped table-hover table-bordered table-condensed small table-primary">
+                <table class="table table-hover table-bordered table-condensed small table-primary">
                     <tr>
                         <th class="col-md-2">Name</th>
                         <th class="col-md-1">Difficulty</th>
                         <th class="col-md-2">Categories</th>
                         <th class="col-md-3">Start/End</th>
-                        <th class="col-md-1">Actions</th>
+                        <th style="width:1%;">X</th>
                     </tr>
-                    <tr ng-repeat="task in list.tasks">
-                        <td>{{::task.problem.name}}</td>
-                        <td>{{::task.problem.finalDifficulty | number:1}}</td>
-                        <td>{{::task.problem.categories.join(',')}}</td>
-                        <td>
-                            <input type="checkbox" name="" ng-model="task.timed">
-                            <div ng-show="task.timed" style="display:inline;">
-                                <div class="btn-group">
-                                    Start:
-                                    <button type="button" class="btn btn-default btn-xs" bs-datepicker ng-model="task.startDate">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-default btn-xs" bs-timepicker ng-model="task.startDate">
-                                        <span class="glyphicon glyphicon-time"></span>
-                                    </button>
-                                    {{task.startDate | date:'MM-dd hh:mm'}}
+                    <tbody ui-sortable ng-model="list.tasks">
+                        <tr ng-repeat="task in list.tasks" >
+                            <td>
+                                <span class="glyphicon glyphicon-option-vertical"></span>
+                                {{::task.problem.name}}
+                            </td>
+                            <td>{{::task.problem.finalDifficulty | number:1}}</td>
+                            <td>{{::task.problem.categories.join(',')}}</td>
+                            <td>
+                                <input type="checkbox" name="" ng-model="task.timed">
+                                <div ng-show="task.timed" style="display:inline;">
+                                    <div class="btn-group">
+                                        Start:
+                                        <button type="button" class="btn btn-default btn-xs" bs-datepicker ng-model="task.startDate">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-xs" bs-timepicker ng-model="task.startDate">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                        </button>
+                                        {{task.startDate | date:'MM-dd hh:mm'}}
+                                    </div>
+                                    <div class="btn-group">
+                                        End:
+                                        <button type="button" class="btn btn-default btn-xs" bs-datepicker ng-model="task.endDate">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-xs" bs-timepicker ng-model="task.endDate">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                        </button>
+                                        {{task.endDate | date:'MM-dd hh:mm'}}
+                                    </div>
                                 </div>
+                            </td>
+                            <td>
                                 <div class="btn-group">
-                                    End:
-                                    <button type="button" class="btn btn-default btn-xs" bs-datepicker ng-model="task.endDate">
-                                        <span class="glyphicon glyphicon-calendar"></span>
+<!--                                     <button type="button" ng-click="moveProblem(task,-1)" class="btn btn-default btn-xs" >
+                                      <span class="glyphicon glyphicon-arrow-up"></span>
                                     </button>
-                                    <button type="button" class="btn btn-default btn-xs" bs-timepicker ng-model="task.endDate">
-                                        <span class="glyphicon glyphicon-time"></span>
-                                    </button>
-                                    {{task.endDate | date:'MM-dd hh:mm'}}
+                                    <button type="button" ng-click="moveProblem(task,+1)" class="btn btn-default btn-xs" >
+                                      <span class="glyphicon glyphicon-arrow-down" ></span>
+                                    </button> -->
+                                    <!-- <button type="button" ng-click="remove(task,list.tasks)" class="btn btn-default btn-xs" > -->
+                                      <span class="glyphicon glyphicon-remove" ng-click="remove(task,list.tasks)" style="cursor:pointer;"></span>
+                                    <!-- </button> -->
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" ng-click="moveProblem(task,-1)" class="btn btn-default btn-xs" >
-                                  <span class="glyphicon glyphicon-arrow-up"></span>
-                                </button>
-                                <button type="button" ng-click="moveProblem(task,+1)" class="btn btn-default btn-xs" >
-                                  <span class="glyphicon glyphicon-arrow-down" ></span>
-                                </button>
-                                <button type="button" ng-click="remove(task,list.tasks)" class="btn btn-default btn-xs" >
-                                  <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </div>
-                        </td>
-                        
-                    </tr>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

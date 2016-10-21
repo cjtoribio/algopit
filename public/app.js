@@ -1,7 +1,7 @@
 var TodoApp = angular.module('TodoApp', 
 	['ngResource', 'ui.router', 'mgcrea.ngStrap','ngCookies',
 	 'ngAnimate','ngMessages','ngSanitize','angularModalService',
-	 'angular-loading-bar']
+	 'angular-loading-bar', 'ui.sortable']
 )
 // .config(function($locationProvider, $routeProvider) {
 //     $locationProvider.html5Mode(true);

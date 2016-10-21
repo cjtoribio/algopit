@@ -527,6 +527,9 @@ i.fa-5 {
 i.fa-6 {
   font-size: 20em;
 }
+.ui-sortable-helper {
+  box-shadow: 2px 2px 5px 0px silver;
+}
 
 .view-editList .dropdown-menu .btn.btn-default {
   border: none;
