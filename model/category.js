@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
 var Category = new Schema({
-    name: String,
+    name: {type: String, default: ''},
     source: String,
     entryDate: { type: Date, default: Date.now }
 }, {
