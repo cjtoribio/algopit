@@ -10,6 +10,7 @@
           <li ng-class="{active: selected === 'problems'}"><a href="/problems">Problems</a></li>
           <li ng-class="{active: selected === 'lists'}"><a ui-sref="lists.all">Lists</a></li>
           <li ng-class="{active: selected === 'categories'}" ng-if="currentUser.isAdmin()"><a ui-sref="categories.all">Categories</a></li>
+          <li ng-class="{active: selected === 'judges'}" ng-if="currentUser.isAdmin()"><a ui-sref="judges.all">Judges</a></li>
         </ul>
         
         

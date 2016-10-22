@@ -31,7 +31,9 @@ TodoApp.directive('focusMe', function($timeout, $parse) {
             // on blur event:
             element.bind('blur', function() {
                 console.log('blur');
-                scope.$apply(model.assign(scope, false));
+                if(model.assign){
+                    scope.$apply(model.assign(scope, false));
+                }
             });
         }
     };

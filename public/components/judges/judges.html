@@ -1,0 +1,46 @@
+<ol class="breadcrumb">
+  <li class="active">Judges</li>
+</ol>
+<div style="margin: 20px;"  >
+    
+    <a ng-click="newJudge()">New Judge</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-inline" style="margin-botom:0;">
+                <div class="form-group">
+                    <label  for="s1">Name:</label>
+                    <input type="text" class="form-control" id="s1" 
+                           placeholder="Name"
+                           ng-model="judge.name">
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    <table class="table table-striped table-hover table-bordered table-condensed small table-primary">
+        <tr>
+            <th class="col-md-3">Name</th>
+            <th class="col-md-3">Actions</th>
+        </tr>
+        <tr ng-repeat="judge in judges1" >
+            <td>{{judge.name}}</td>
+            <td>
+                <div class="btn-group">
+                    <button ng-click="edit(judge)" class="btn btn-default btn-xs" >
+                        &nbsp;<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                    </button>
+                    <button ng-click="remove(judge)" class="btn btn-default btn-xs">
+                    &nbsp;<span class="glyphicon glyphicon-trash"></span>&nbsp;
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table>
+    
+    <algo-pagination2 src="_ in judges | filter:criteria" dst="judges1"></algo-pagination>
+    
+</div>
+<!-- <div style="font-size:8px;">
+    {{lists}}
+</div> -->
