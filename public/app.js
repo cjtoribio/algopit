@@ -40,7 +40,18 @@ var TodoApp = angular.module('TodoApp',
   // Now set up the states
   $stateProvider
 		.state('problems', {
-			url: "/problems",
+			url: "/problems?name&judge&sourceReferenceId&categories&tags&sortBy&sortOrder",
+			params: {
+				name : { value: '', squash: true },
+				judge: { value: '', squash: true },
+				sourceReferenceId: { value: '', squash: true },
+				tags: { value: '', squash: true },
+				categories: { value: '', squash: true },
+
+				sortBy: { value: '', squash: true },
+				sortOrder: { value: '', squash: true },
+			},
+			reloadOnSearch: false,
 			views: {
 				"body": {
 					templateUrl:"components/problems/problems.html",

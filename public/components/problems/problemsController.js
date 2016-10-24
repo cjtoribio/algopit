@@ -4,7 +4,7 @@
 	
 	app.controller('ProblemsController', ProblemsController);
 
-	function ProblemsController($scope, Resource, $location, $stateParams, $filter, Alert, Auth, Aside){
+	function ProblemsController($scope, Resource, $location, $stateParams, $state, $filter, Alert, Auth, Aside){
 
 		// types
 	    var Problem = Resource.Problem;
@@ -16,7 +16,8 @@
 	    $scope.user = Auth;
 	    $scope.filteredProblems1 = [];
 	    $scope.filteredProblems2 = [];
-	    $scope.criteria = {};
+	    $scope.criteria = _.pick($state.params, ['name','judge','sourceReferenceId','tags','categories']);
+		$scope.ordering = _.pick($state.params, ['sortBy','sortOrder']);
 	    $scope.problemsSolved = {};
 	    // loading
 	    $scope.categories = Category.query();
@@ -32,9 +33,21 @@
 	    // Watches filter
 	    $scope.$watch(
 	    	function(){ return angular.copy($scope.criteria); }, 
-	        function(){ refreshFiltered(); }, 
+	        function(criteria){
+				refreshFiltered();
+				$state.go(
+					'.', 
+					_.assign({}, _.pick(criteria, ['name','judge','sourceReferenceId','tags','categories']) )
+					, {notify: false}
+				); 
+			}, 
 	        true
 	    );
+		$scope.$on('$locationChangeSuccess', function() {
+        	_.assign($scope.criteria, _.pick($state.params, ['name','judge','sourceReferenceId','tags','categories']));
+			_.assign($scope.ordering, _.pick($state.params, ['sortBy','sortOrder']));
+			applyOrder();
+      	});
 
 
 	    // Table Logic
@@ -55,17 +68,12 @@
 			return ($scope.problemsSolved[prob._id] || {}).difficulty;
 		}
 	    $scope.sortBy = function(field){
-	    	var withoutNulls = _.filter($scope.problems, field);
-	    	var nullValued   = _.reject($scope.problems, field);
-
-	    	var np = _.sortBy(withoutNulls, field).concat(nullValued);
-	    	if(_.every($scope.problems, function(p, idx){
-	    		return p._id == np[idx]._id;
-	    	})){
-	    		np = _.orderBy(withoutNulls, [field], ['desc']).concat(nullValued);
-	    	}
-	    	$scope.problems = np;
+			var newOrder = ($scope.ordering.sortBy != field || $scope.ordering.sortOrder != 'asc') ? 'asc' : 'desc';
+			$scope.ordering.sortBy = field;
+			$scope.ordering.sortOrder = newOrder;
+			applyOrder();
 	    	refreshFiltered();
+			$state.go('.', $scope.ordering, {notify: false} );
 	    }
 	    // /Table Logic
 	    
@@ -74,7 +82,9 @@
 	        $scope.criteria.categories = category;
 	    }
 	    $scope.reset = function(){
-	        $scope.criteria = {};
+	        for(var i in $scope.criteria){
+				$scope.criteria[i] = '';
+			}
 	    }
 	    // /Criteria Logic
 
@@ -131,6 +141,15 @@
 		loadProblems();
 	    return;
 
+		function applyOrder(){
+			var field = $scope.ordering.sortBy;
+			var order = $scope.ordering.sortOrder; 
+			if(!field)return;
+	    	var withoutNulls = _.filter($scope.problems, field);
+	    	var nullValued   = _.reject($scope.problems, field);
+	    	var np = _.orderBy(withoutNulls, [field], [order]).concat(nullValued);
+	    	$scope.problems = np;
+		}
 	    function refreshFiltered() {
 	        if($scope.problems == null){
 	            $scope.filteredProblems1 = [];
@@ -177,6 +196,7 @@
 	                if ($scope.$$destroyed) return;
 	                if ($scope.problems == null) $scope.problems = [];
 	                $scope.problems.push.apply($scope.problems, data);
+					applyOrder();
 	                refreshFiltered();
 	                if (_.size(data) < qty) return done();
 	                fetch(data[data.length - 1].name,
