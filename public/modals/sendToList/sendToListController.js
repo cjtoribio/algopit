@@ -20,19 +20,19 @@
 
 			$scope.lists = lists;
 			$scope.listsToAdd = _.filter(lists,function(list){
-				return !_.includes(list.problems, problem._id);
+				return !_.find(list.tasks, {problem: problem._id});
 			});
 			$scope.listsToRemove = _.filter(lists,function(list){
-				return _.includes(list.problems, problem._id);
+				return _.find(list.tasks, {problem: problem._id});
 			});
 		});
 
 		$scope.canAddTo = function(list){
-			return !_.includes(list.problems, problem._id);
+			return !_.find(list.tasks, {problem: problem._id});
 		}
 
 		$scope.addToList = function(list){
-			list.problems.push(problem._id);
+			list.tasks.push({problem: problem._id});
 			list.$update(function(){
 				exit(true);	
 			});

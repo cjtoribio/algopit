@@ -19,7 +19,7 @@
                     <a href="javascript:void(0)" ng-click="addToList(list)"
                        ng-repeat="list in listsToAdd" class="list-group-item">
                         {{list.name}}
-                        <span class="badge">{{list.problems.length}}</span>
+                        <span class="badge">{{list.tasks.length}}</span>
                     </a>
                 </div>
                 <h4 ng-if="listsToRemove.length">Remove from:</h4>
@@ -27,7 +27,7 @@
                     <a href="javascript:void(0)" ng-click="removeFromList(list)" 
                        ng-repeat="list in listsToRemove" class="list-group-item">
                         {{list.name}}
-                        <span class="badge">{{list.problems.length}}</span>
+                        <span class="badge">{{list.tasks.length}}</span>
                     </a>
 				</div>
             <div class="aside-footer">
