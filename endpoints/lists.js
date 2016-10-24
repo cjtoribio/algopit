@@ -11,7 +11,7 @@ exports.up = function(ws, model){
     logger.info("Starting");
     ws.get('/api/lists', ensureAuthenticated, function(req, res){
         model.List
-            .find({"$or": [{author: req.user._id}, {party: req.user._id}]})
+            .find({"$or": [{author: req.user._id}, {party: req.user._id}, {admin: req.user._id}]})
             .sort({name: 1})
             .exec(function(err, lists){
                 if(err)return res.status(500).send([]);
