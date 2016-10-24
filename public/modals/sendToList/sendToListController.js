@@ -38,7 +38,7 @@
 			});
 		}
 		$scope.removeFromList = function(list){
-			_.pull(list.problems, problem._id);
+			_.remove(list.tasks, {problem: problem._id});
 			list.$update(function(){
 				exit(true);	
 			});
