@@ -18,7 +18,7 @@
 		$scope.lists = null;
 		Resource.List.query(function(lists){
 			lists = _.filter(lists, function(list){
-				return _.include(list.admins, Auth.currentUser._id) || list.author == Auth.currentUser._id;
+				return _.includes(list.admins, Auth.currentUser._id) || list.author == Auth.currentUser._id;
 			});
 			$scope.lists = lists;
 			$scope.listsToAdd = _.filter(lists,function(list){
