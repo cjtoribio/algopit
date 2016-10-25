@@ -3,7 +3,7 @@
 	var app = angular.module('TodoApp');
 	app.controller('SendToListController', SendToListController);
 
-	function SendToListController($scope, Resource, close, $timeout, problem){
+	function SendToListController($scope, Resource, close, $timeout, problem, Auth){
 		$scope.active = false;
 		$timeout(function() { $scope.active = true; }, 10);
 		var exit = $scope.exit = function(result){
@@ -17,7 +17,9 @@
 		$scope.content = 'Hellos this is a message';
 		$scope.lists = null;
 		Resource.List.query(function(lists){
-
+			lists = _.filter(lists, function(list){
+				return _.include(list.admins, Auth.currentUser._id) || list.author == Auth.currentUser._id;
+			});
 			$scope.lists = lists;
 			$scope.listsToAdd = _.filter(lists,function(list){
 				return !_.find(list.tasks, {problem: problem._id});
