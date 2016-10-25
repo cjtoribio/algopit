@@ -103,6 +103,11 @@ exports.up = function(ws, model){
                     }
                     var nstate = req.query.state || (up.state == 'PENDING_SOLVED' ? 'UNSOLVED' : 'PENDING_SOLVED');
                     up.state = nstate;
+                    if(nstate == 'SOLVED'){
+                        var date  = moment().add(5, 'seconds');
+                        _.set(user, 'codeforces.refresh', date);
+                        user.save();
+                    }
                     up.save(function(){
                         res.status(200).send(up);
                     });

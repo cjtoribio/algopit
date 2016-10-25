@@ -80,8 +80,13 @@
 								</span>
 							</div>
 						</td>
-						<td ng-if="isListParty(list)" >
-                    		<button ng-show="task.$visible" ng-click="toggleSolved(task)" class="btn btn-default btn-xs" >Solved</button>
+						<td>
+							<button ng-show="task.$visible" ng-click="sendToList(task.problem)" class="btn btn-default btn-xs" >
+								&nbsp;
+								<span class="glyphicon glyphicon-list"></span>
+								&nbsp;
+							</button>
+                    		<button ng-if="isListParty(list)" ng-show="task.$visible" ng-click="toggleSolved(task)" class="btn btn-default btn-xs" >Solved</button>
 						</td>
 					</tr>
 				</table>

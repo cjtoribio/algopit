@@ -4,7 +4,7 @@
 	var app = angular.module('TodoApp');
 	app.controller('ViewListController', ViewListController);
 
-	function ViewListController($scope, Resource, $state, $interval, Time, Auth, Alert){
+	function ViewListController($scope, Resource, $state, $interval, Time, Auth, Alert, Aside){
 		$scope.params = $state.params;
 		$scope.list   = null;
 		$scope.remaining = null;
@@ -54,6 +54,13 @@
 
 
 
+	    $scope.sendToList = function(prob){
+	    	Aside.showSendToList(prob).then(
+	    		function(result){
+	    			console.log(result);
+	    		}
+	    	)
+	    };
 	    $scope.toggleSolved = function(task){
 	    	var verdict = GetSetVerdict(task);
 	    	var nverdict= verdict == 'PENDING_SOLVED' ? 'UNSOLVED' : 'PENDING_SOLVED';
