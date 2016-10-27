@@ -156,7 +156,7 @@
 	        }else{
 	            $scope.filteredProblems1 = $filter('filter')(
 	                $scope.problems, 
-	                $scope.criteria
+	                _.omitBy($scope.criteria, function(val){ return !val; })
 	            );
 	        }
 	    }
