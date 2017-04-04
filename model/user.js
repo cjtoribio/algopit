@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var User = new Schema({
     username: { type: String, unique: true },
     password: String,
+    status  : { type: String, enum: ['ACTIVE', 'INACTIVE'] },
     spoj: {
         username: String
     },

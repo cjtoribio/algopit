@@ -14,13 +14,13 @@
 		var judges = $scope.judges = Judge.query();
 
 		$scope.edit = function(judge) {
-			Aside.showInputText({
-				text: judge.name,
-				title: "Judge Name",
-				label: "New Judge Name"
-			}).then(function(name) {
-				judge.name = name;
-				judge.$update();
+			Aside.showEditJudge({
+				judge: judge
+			})
+			.then(function(changed){
+				if(changed){
+					resort();
+				}
 			});
 		};
 
@@ -43,8 +43,16 @@
 				var judge = new Judge({name: name});
 				judge.$save().then(function(argument) {
 					judges.push(judge);
+					resort();
 				});
 			});
 		};
+
+		function resort() {
+			var tem = _.sortBy(judges, 'name');
+			for(var i in tem){
+				judges[i] = tem[i];
+			}
+		}
     }
 })();

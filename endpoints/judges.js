@@ -18,6 +18,7 @@ exports.up = function(ws, model){
         model.Judge.findById(req.params.id, function(err, oJudge){
 
             oJudge.name = judge.name;
+            oJudge.url = judge.url;
             oJudge.save(function(err){
                 if(err)res.status(500).send(err);
                 else res.status(200).send(oJudge);

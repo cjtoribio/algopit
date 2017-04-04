@@ -5,7 +5,8 @@ TodoApp.directive("algoPagination", function(){
         numPerPage: '=?',
         currentPage: '=?',
         src: '=',
-        dst: '='
+        dst: '=',
+        label: '@'
     },
     templateUrl: 'shared/templates/pagination.html',
     controller: function($scope,$attrs) {
@@ -59,8 +60,7 @@ TodoApp.directive("algoPagination2", function($parse){
     templateUrl: 'shared/templates/pagination.html',
     controller: function($scope,$attrs) {
         var sourceExpr = $attrs.src;
-
-
+        $scope['label'] = $attrs.label || 'Problems';
 
         var match = sourceExpr.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+as\s+([\s\S]+?))?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
         if (!match) {

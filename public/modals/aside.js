@@ -46,6 +46,15 @@
 				}
 			}));
 		}
+		service.showEditJudge = function(options){ // {judge: }
+			return wrapWithPromise(ModalService.showModal({
+				controller: 'EditJudgeDialogController',
+				templateUrl: 'modals/judge/editJudge.html',
+				inputs: {
+					judge : _.defaults(options, {judge:null}).judge
+				}
+			}));
+		}
 
 		return service;
 

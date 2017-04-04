@@ -28,6 +28,11 @@ exports.up = function(ws, model){
       model.User.findOne({ username: username }, function(err, user) {
         if (err) return done(err);
         if (!user) return done(null, false);
+        // return done({ message: 'User was deactivated' });
+        if(user.status == 'INACTIVE'){
+            done({ message: 'User was deactivated' });
+            return;
+        }
         user.comparePassword(password, function(err, isMatch) {
           if (err) return done(err);
           if (isMatch) return done(null, user);
@@ -36,9 +41,14 @@ exports.up = function(ws, model){
       });
     }));
     
-    ws.post('/api/login', passport.authenticate('local'), function(req, res) {
-        res.send(req.user);
-    });
+    ws.post('/api/login', passport.authenticate('local'), 
+        function(req, res) {
+            res.send(req.user);
+        },
+        function(err, req, res, next){
+            res.status(500).send(err);
+        }
+    );
     
     ws.post('/api/signup', function(req, res, next){
         var user = new model.User(req.body);
