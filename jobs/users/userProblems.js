@@ -19,13 +19,13 @@ function updateUserProblem(job, done){
     getUsers({
         'refresh' : {'$lte' : new Date()}
     },function(err, users){
-        if(err)return;
+        if (err) return (done||_.noop) (err);
         async.map(
             users,
             processUser,
             function (err, result){
-                (done||_.noop)();
-                if(err)return logger.error(err);
+                (done||_.noop) (err);
+                if (err) return logger.error(err);
                 var dur = moment.duration(moment() - st).asSeconds();
                 logger.info('Finished '  + 
                     brush.cyan(job.toJSON().name) + ' after ' + 
@@ -89,7 +89,7 @@ function updateUserProblemByUser(user, userProblems, next){
                 problem: problemId,
                 user: user._id,
                 attempts: _.property('length')(subs),
-                state : ((_.filter(subs,{verdict: 'ACCEPTED'}).length > 0) ? 'SOLVED' : 'UNSOLVED')
+                state : ((_.filter(subs,{verdict: 'ACCEPTED'}).length > 0) ? 'SOLVED' : 'TRIED')
             }));
         })
     }

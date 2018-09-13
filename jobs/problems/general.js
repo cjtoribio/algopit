@@ -17,25 +17,40 @@ function addInfoToExisting(problems, next){
         judge: _.property('0.judge')(problems)
     }).exec(function(err, probs){
         var probMap = _.keyBy(probs, 'sourceReferenceId');
-        var updatedProbs = 0, newProbs = 0;
+        var updatedProbs = 0, newProbs = 0, noopProbs = 0;
         problems = _.map(problems, function(prob, idx){
             var oldProb = probMap[prob.sourceReferenceId];
-            if(oldProb){
-                // count updated problems
-                updatedProbs++;
+            if (oldProb) {
+                let dirty = false;
                 var allCats = _.uniq(oldProb.categories.concat(prob.categories || []));
                 var allTags = _.uniq(oldProb.tags.concat(prob.tags || []));
+                var extras = _.pick(prob,['computedDifficulty', 'name']);
+                if (!_.isEqual(oldProb.categories, allCats)) {
+                    dirty = true;
+                }
+                if (!_.isEqual(oldProb.tags, allTags)) {
+                    dirty = true;
+                }
+                if (Math.abs(oldProb.computedDifficulty - extras.computedDifficulty) > 1e-9) {
+                    dirty = true;
+                }
+                if (!dirty) {
+                    noopProbs++;
+                    return null;
+                }
+                // count updated problems
                 oldProb.categories = allCats;
-                oldProb.tags       = allTags;
-                _.assign(oldProb, _.pick(prob,['computedDifficulty', 'name']));
+                oldProb.tags = allTags;
+                updatedProbs++;
+                _.assign(oldProb, extras);
                 return oldProb;
-            }else{
+            } else {
                 newProbs++;
                 return prob;
             }
         });
-        logger.info('Updating(' + updatedProbs + ') Inserting(' + newProbs + ')');
-        next(null, problems);
+        logger.info(`NoOp(${noopProbs}) Updating(${updatedProbs}) Inserting(${newProbs})`);
+        next(null, _.filter(problems));
     });
 }
 function wrapInProblemsObject(problems, next){

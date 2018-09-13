@@ -6,6 +6,7 @@ var cheerio = require('cheerio');
 var general = require('./general');
 var logger  = require('../../utils/logger').getLogger();
 var moment  = require('moment');
+var brush   = require('../../utils/brush');
 
 module.exports = {
     updateProblems  : updateProblems
@@ -13,6 +14,7 @@ module.exports = {
 
 function updateProblems(job, done){
     var st = moment();
+    logger.info('Started ' + brush.cyan(job.toJSON().name));
     async.waterfall([
         getAllProblems,          // (next) -> next(null, problems)
         transformProblems,       // (problems,next) -> next(null, problems)
@@ -20,7 +22,10 @@ function updateProblems(job, done){
     ],  function (err, result){
             (done||_.noop)();
             if(err)return logger.error(err);
-            logger.info('codeforces.updateProblems - ' + moment.duration(moment() - st).asSeconds() + 's');
+            var dur = moment.duration(moment() - st).asSeconds();
+            logger.info('Finished '  + 
+                brush.cyan(job.toJSON().name) + ' after ' + 
+                brush.magenta(dur + 's'));
         }
     );
 }

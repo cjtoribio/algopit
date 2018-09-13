@@ -46,6 +46,17 @@
                            limit="12"
                            bs-options="category.name as category.name for category in categories|filter:{name:$viewValue}" />
                 </div>
+                <div class="form-group form-group-sm">
+                    <label  for="s5" class="">Status:</label>
+                    <input id="s5" class="form-control" 
+                           ng-model="criteria.state" 
+                           placeholder="State" 
+                           bs-typeahead
+                           data-auto-select="true"
+                           data-min-length="0"
+                           limit="12"
+                           bs-options="state as state for state in states" />
+                </div>
                 &nbsp;
                 <div class="form-group">                    
                     <button type="button" class="btn btn-default btn-sm" ng-click="reset()">Reset</button>

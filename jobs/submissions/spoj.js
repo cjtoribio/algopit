@@ -10,8 +10,6 @@ module.exports = {
     processSPUser   : processSPUser
 }
 
-// processAllUsers();
-
 // For Spoj
 function processAllUsers(){
     getSPUsers(function(err, users){

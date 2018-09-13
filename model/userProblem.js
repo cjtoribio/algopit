@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var Schema = mongoose.Schema;
-var problemStates = ['PENDING_SOLVED', 'SOLVED', 'TODO', 'UNSOLVED'];
+var problemStates = ['PENDING_SOLVED', 'SOLVED', 'TODO', 'UNSOLVED', 'TRIED'];
 var UserProblem = new Schema({
     user: { type: Schema.ObjectId, ref: 'users' },
     problem: { type: Schema.ObjectId, ref: 'problems' },

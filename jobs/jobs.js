@@ -24,9 +24,9 @@ agenda.define('users.updateUserProblem', users.userProblems.updateUserProblem);
 
 agenda.on('ready', function() {
 
-	agenda.every('5 seconds', 'codeforces.processAllUsers');
-	agenda.every('24 hours', 'codeforces.updateProblems');
-	agenda.every('5 seconds', 'users.updateUserProblem');
+	// agenda.every('5 seconds', 'codeforces.processAllUsers');
+	// agenda.every('24 hours', 'codeforces.updateProblems');
+	// agenda.every('5 seconds', 'users.updateUserProblem');
 
 	// agenda.every('5 seconds', 'spoj.processAllUsers');
 	// agenda.every('5 seconds', 'spoj.processByDemand');
@@ -91,4 +91,4 @@ function printJob(job){
 	logger.info('\tDuration   : ' + moment.duration(moment(job.lastFinishedAt).diff(job.lastRunAt)).asSeconds());
 }
 
-
+module.exports = agenda;

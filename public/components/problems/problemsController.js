@@ -21,6 +21,7 @@
 	    $scope.problemsSolved = {};
 	    // loading
 	    $scope.categories = Category.query();
+	    $scope.states = ['SOLVED', 'TRIED', 'UNSOLVED', 'TODO', 'PENDING_SOLVED'];
 	    $scope.judges = Judge.query();
 	    if(Auth.isAuthenticated()){
 	        UserProblem.query(
@@ -154,9 +155,14 @@
 	        if($scope.problems == null){
 	            $scope.filteredProblems1 = [];
 	        }else{
+	        	var problems = _.chain($scope.problems);
+	        	problems = problems.filter(function(prob) { 
+	        		return !$scope.criteria.state || getProblemState(prob) == $scope.criteria.state; 
+	        	});
+	        	console.log($scope.criteria.state);
 	            $scope.filteredProblems1 = $filter('filter')(
-	                $scope.problems, 
-	                _.omitBy($scope.criteria, function(val){ return !val; })
+	                problems.value(),
+	                _.omitBy(_.omit($scope.criteria, 'state'), function(val){ return !val; })
 	            );
 	        }
 	    }

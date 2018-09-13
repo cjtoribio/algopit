@@ -1,26 +1,26 @@
 var _       = require("lodash");
 var request = require('request');
 var async   = require('async');
-var model   = require('../../model');
+var model   = require('../../../model');
 var cheerio = require('cheerio');
 
 
 function attachProblem(user, submissions, next){
-    var ids = _.chain(submissions)
-                .map('problem')
-                .uniq()
-                .sort()
-                .value();
+    let ids = _.chain(submissions).map('problem').uniq().sort().value();
+    let judges = _.chain(submissions).map('judge').uniq().sort().value();
     model.Problem.find({
         sourceReferenceId: { '$in' : ids },
-        judge: _.property('0.judge')(submissions)
-    }).exec(function(err, probs){
+        judge: { '$in' : judges }
+    })
+    .exec()
+    .then(probs => {
         var probMap = _.keyBy(probs, 'sourceReferenceId');
         _.each(submissions, function(sub){
             sub.problem = _.property('_id')(probMap[sub.problem]);
         });
         next(null, user, submissions);
-    });
+    })
+    .catch(next);
 }
 function removeUknownPrblems(user, submissions, next){
     next(null, user, _.filter(submissions,'problem'));
@@ -68,7 +68,7 @@ function printDetail(user, submissions, next){
     console.log(submissions);
     next(null, user, submissions);
 }
-function countSubmissions(str, user, submissions, next){
+function countSubmissions(str, user, submissions, next) {
     console.log(str + submissions.length + ' for ' + _.property('username')(user));
     return next(null, user, submissions);
 }
@@ -81,7 +81,7 @@ exports.save = function(options){
         save: true,
         printAfterSave: false,
         countAfterSave: true,
-        countReceived: true,
+        countReceived: false,
     });
     return function(user, submissions, next){
         async.waterfall([
