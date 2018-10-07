@@ -17,14 +17,7 @@ var Problem = new Schema({
     writer: String,
     tags: [String]
 }, {
-    timestamps: { createdAt: 'createdAt' }
-});
-
-Problem.pre('save', function(next){
-    if(this.entryDate == null)
-        this.entryDate = new Date();
-    this.lastUpdated = new Date();
-    next();
+    timestamps: {}
 });
 
 exports.Problem = mongoose.model('problems', Problem);
