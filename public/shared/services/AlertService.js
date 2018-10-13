@@ -65,6 +65,10 @@ function($alert){
             success: {
                 type: 'success',
                 content: 'Settings saved.'
+            },
+            error: {
+                type: 'error',
+                content: 'Error while saving settings.'
             } 
         }
     }
