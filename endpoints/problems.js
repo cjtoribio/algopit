@@ -69,7 +69,7 @@ exports.up = function(ws, model){
     
     ws.put('/api/problems/:id', function(req, res){
         var problem = req.body; 
-        model.Problem.update({_id: req.params.id }, problem, function(err, count){
+        model.Problem.update({_id: req.params.id }, _.omit(problem, ['createdAt', 'updatedAt']), function(err, count){
             if(err)res.send(err);
             else res.send({affected: count});
         });
