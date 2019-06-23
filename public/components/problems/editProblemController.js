@@ -74,7 +74,7 @@
 	    				if(!match)return false;
 	    				var contestId = match[2];
 	    				var letter    = match[3];
-	    				problem.sourceReferenceId = contestId + letter;
+	    				problem.sourceReferenceId = contestId + '|' + letter;
 	    				problem.judge = 'Codeforces';
 	    				return true;
 	    			}
