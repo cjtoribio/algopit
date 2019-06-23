@@ -69,13 +69,29 @@
 	    			},
 	    			predict: function () {
 	    				var url = problem.url;
-	    				var regex = /.*codeforces\.com\/(contest|problemset\/problem)\/(\d+).*\/([A-Z])/;
+	    				var regex = /.*codeforces\.com\/(contest|problemset\/problem)\/(\d+).*\/([A-Z0-9]+)/;
 	    				var match = url.match(regex);
 	    				if(!match)return false;
 	    				var contestId = match[2];
 	    				var letter    = match[3];
 	    				problem.sourceReferenceId = contestId + letter;
 	    				problem.judge = 'Codeforces';
+	    				return true;
+	    			}
+	    		}, 
+	    		spoj: {
+	    			belongs: function () {
+	    				var regex = /spoj\.(com|pl)/;
+	    				return regex.exec(problem.url);
+	    			},
+	    			predict: function () {
+	    				var url = problem.url;
+	    				var regex = /.*spoj\.(com|pl)\/problems\/([A-Z0-9]+)/;
+	    				var match = url.match(regex);
+	    				if(!match)return false;
+	    				var sourceId = match[2];
+	    				problem.sourceReferenceId = sourceId;
+	    				problem.judge = 'SPOJ';
 	    				return true;
 	    			}
 	    		}
