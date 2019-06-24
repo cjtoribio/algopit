@@ -73,6 +73,7 @@
 											   'label-info'   : userProb.status == 'PENDING_SOLVED',	
 											   'label-warning': userProb.status == 'TODO',	
 											   'label-light'  : userProb.status == 'UNSOLVED',
+											   'label label-danger' : userProb.status == 'TRIED',
 											  }"
 									
 									title="{{::userProb.status | solved_status}}">
