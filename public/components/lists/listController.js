@@ -62,7 +62,21 @@
 		return;
 		//////////////// NO EXECUTION PASS THIS POINT ////////////////
 		function applyFilter1(criteria){			
-	        $scope.lists1 = $filter('filter')($scope.lists || [], criteria);
+	        $scope.lists1 = $filter('filter')($scope.lists || [], function(e) {
+				return (criteria.name == null || _.includes(e.name, criteria.name))
+					&& (criteria.user == null 
+						|| _(e.admins || []).some(_.partial(userMatchesSearchString, criteria.user))
+						|| _(e.party || []).some(_.partial(userMatchesSearchString, criteria.user))
+						|| _([e.author]).some(_.partial(userMatchesSearchString, criteria.user)));
+			});
+		}
+		function userMatchesSearchString(txt, user) {
+			if (user == null) return false;
+			return txt == null 
+				|| _.includes(user.name, txt) 
+				|| _.includes(user.username, txt)
+				|| _.includes(_.get(user, 'spoj.username'), txt)
+				|| _.includes(_.get(user, 'codeforces.handle'), txt);
 		}
 	}
 })();

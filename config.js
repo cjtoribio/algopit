@@ -12,5 +12,6 @@ var config = {
 }; 
 
 process.env.DEBUG = "endpoints:*,app:*";
+process.env.AGENDA = 'off';
 
 module.exports = config.dev;
