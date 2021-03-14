@@ -12,6 +12,9 @@ exports.up = function(ws, model){
     ws.get('/api/lists', ensureAuthenticated, function(req, res){
         model.List
             .find({"$or": [{author: req.user._id}, {party: req.user._id}, {admins: req.user._id}]})
+            .populate('party')
+            .populate('admins')
+            .populate('author')
             .sort({name: 1})
             .exec(function(err, lists){
                 if(err)return res.status(500).send([]);

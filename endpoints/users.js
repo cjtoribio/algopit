@@ -110,8 +110,7 @@ exports.up = function(ws, model){
     });
 
     ws.put('/api/users/:id', ensureAuthenticated, function(req, res, next){
-        
-        model.User.update( { _id:req.params.id }, req.body, function(err){
+        model.User.update( { _id:req.params.id }, _.omit(req.body, 'createdAt', 'updatedAt'), function(err){
             if(err) 
                 next(err);
             else {

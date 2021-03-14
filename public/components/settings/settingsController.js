@@ -9,6 +9,9 @@
         $scope.save = function(){
             new Resource.User($scope.user).$update(function(){
                 Alert.alert(Alert.messages.settings.success);
+            }, 
+            function(){
+                Alert.alert(Alert.messages.settings.error);
             });
         }
 
