@@ -1,7 +1,7 @@
 var config = {
     "dev" : {
         "db": {
-            "mongodb": 'mongodb://algopit:algopit@ds057934.mongolab.com:57934/algopit'
+            "mongodb": 'mongodb://algopit:algopit@algopit.cpfat.mongodb.net/algopit?retryWrites=true&w=majority'
         },
         "logger": {
             "api": "logs/api.log",

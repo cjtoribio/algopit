@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var config = require("../config.js")
 var logger = require('../utils/logger').getLogger();
 var Q      = require('q');
-mongoose.connect(config.db.mongodb);
+mongoose.connect(config.db.mongodb, {useMongoClient: true});
 mongoose.Promise = Q.Promise;
 
 module.exports = {
