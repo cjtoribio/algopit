@@ -1,7 +1,7 @@
 var config = {
     "dev" : {
         "db": {
-            "mongodb": 'mongodb://algopit:algopit@algopit.cpfat.mongodb.net/algopit?retryWrites=true&w=majority'
+            "mongodb": 'mongodb://algopit:algopit@algopit-shard-00-00.cpfat.mongodb.net:27017,algopit-shard-00-01.cpfat.mongodb.net:27017,algopit-shard-00-02.cpfat.mongodb.net:27017/algopit?ssl=true&replicaSet=atlas-f3224k-shard-0&authSource=admin&retryWrites=true&w=majority'
         },
         "logger": {
             "api": "logs/api.log",
